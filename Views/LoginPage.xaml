@@ -48,8 +48,8 @@
 
         <Label
             Grid.Row="4"
-            BackgroundColor="Red"
             HorizontalTextAlignment="Center"
+            TextColor="DarkGrey"
             Text="If you do not have an account register here"
             VerticalTextAlignment="Center"
             WidthRequest="350">
@@ -98,16 +98,11 @@
                             WidthRequest="100"
                             Color="#422777" />
 
-                        <!--<Button
-                            Grid.Row="3"
-                            Command="{Binding RegisterCommand}"
-                            IsVisible="{Binding IsRegisterVisible}"
-                            Text="Register" />-->
-
                         <Button
                             Grid.Row="3"
                             Command="{Binding RegisterCommand}"
                             CornerRadius="8"
+                            Text="Register"
                             IsVisible="{Binding IsRegisterVisible}" />
                     </Grid>
                 </DataTemplate>

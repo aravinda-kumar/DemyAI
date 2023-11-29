@@ -5,25 +5,13 @@ public class Student {
 
     public string Email { get; set; }
 
-    private string passwordHash; // Store hashed password
-
-    public string Password {
-
-        // Get: Return hashed password
-        get => passwordHash;
-
-        // Set: Hash the provided password and store the hash
-        set {
-            // Hash the password before setting it
-            passwordHash = BCrypt.Net.BCrypt.HashPassword(value);
-        }
-    }
+    public string Password { get; set; }
 
     //public double latitude { get; set; }
 
     //public double longitude { get; set; }
 
-    public static string GenerateRandomNumberString() {
+    public string GenerateRandomNumberString() {
         Random random = new();
         const string chars = "0123456789"; // Digits 0-9
         char[] randomDigits = new char[8]; // Array to store 8 random digits

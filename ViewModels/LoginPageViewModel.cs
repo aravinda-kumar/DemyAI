@@ -1,5 +1,4 @@
-﻿
-namespace DemyAI.ViewModels;
+﻿namespace DemyAI.ViewModels;
 public partial class LoginPageViewModel(IDataService<Student> dataService, IAppService appService, IAuthenticationService authenticationService) : BaseViewModel {
 
     [ObservableProperty]
@@ -12,7 +11,6 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     Student student = new();
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
     bool canEnableRegisterButton = false;
 
     [RelayCommand]
@@ -26,8 +24,20 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
         await appService.NavigateTo($"//{nameof(HomePage)}", true);
     }
 
-    [RelayCommand(CanExecute = nameof(CanRegisterExecute))]
+    [RelayCommand]
     async Task Register() {
+
+        if (string.IsNullOrEmpty(Student.Email)) {
+
+            await appService.DisplayToast("Please enter a email address", ToastDuration.Short, 18);
+            return;
+        }
+
+        if (string.IsNullOrEmpty(Student.Password)) {
+
+            await appService.DisplayToast("Please enter a password", ToastDuration.Short, 18);
+            return;
+        }
 
         IsBusy = true;
         IsRegisterVisible = false;
@@ -35,16 +45,12 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
         var user = await authenticationService.RegisterWithEmailAndPassword(Student.Email, Student.Password);
         if (user != null) {
             IsPopOpen = false;
+            Student.Id = Student.GenerateRandomNumberString();
+            Student.Email = Student.Email;
+            Student.Password = BCrypt.Net.BCrypt.HashPassword(Student.Password);
+
             await dataService.AddAsync("Users", Student);
         }
 
-    }
-
-    private bool CanRegisterExecute() {
-        if (string.IsNullOrEmpty(Student.Email) && string.IsNullOrEmpty(Student.Password)) {
-            return true;
-        }
-
-        return false;
     }
 }
