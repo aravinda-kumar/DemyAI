@@ -1,5 +1,7 @@
-﻿namespace DemyAI.ViewModels;
-public partial class LoginPageViewModel(IDataService<Student> dataService) : BaseViewModel {
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DemyAI.ViewModels;
+public partial class LoginPageViewModel(IDataService<Student> dataService, IAppService appService) : BaseViewModel {
 
     [ObservableProperty]
     bool isVisible = true;
@@ -22,11 +24,16 @@ public partial class LoginPageViewModel(IDataService<Student> dataService) : Bas
 
     [RelayCommand]
     async Task Register() {
+        if (!new EmailAddressAttribute().IsValid(Student.Email)) {
+            await appService.DisplayToast("Please provide a valid email address", ToastDuration.Short, 18);
+            return;
+        }
+        Student.Id = Student.GenerateRandomNumberString();
+        Student.Email = Student.Email;
+
         IsBusy = true;
         IsVisible = false;
         IsPopOpen = false;
-        Student.Id = Student.GenerateRandomNumberString();
-        Student.Email = Student.Email;
         Student.SetPassword(Student.PasswordHash);
 
         var key = await dataService.AddAsync("Users", Student);

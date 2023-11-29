@@ -11,6 +11,31 @@ public class Student {
 
     //public double longitude { get; set; }
 
+    // Method to check if an email is valid
+    public bool IsEmailValid(string email) {
+
+        if (string.IsNullOrWhiteSpace(email))
+            return false;
+
+        try {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        } catch {
+            return false;
+        }
+    }
+
+    // Method to check if a password meets specific criteria
+    public bool IsPasswordValid(string password) {
+
+        if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
+            return false;
+
+        // Check if the password contains at least one uppercase letter
+        bool hasUppercase = password.Any(c => char.IsUpper(c));
+        return hasUppercase;
+    }
+
     public void SetPassword(string password) {
 
         PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
