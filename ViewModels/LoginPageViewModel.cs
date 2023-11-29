@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace DemyAI.ViewModels;
-public partial class LoginPageViewModel(IDataService<Student> dataService, IAppService appService) : BaseViewModel {
+public partial class LoginPageViewModel(IDataService<Student> dataService, IAppService appService, IAuthenticationService authenticationService) : BaseViewModel {
 
     [ObservableProperty]
-    bool isVisible = true;
+    bool isRegisterVisible = true;
 
     [ObservableProperty]
     bool isPopOpen;
@@ -12,35 +11,40 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     [ObservableProperty]
     Student student = new();
 
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
+    bool canEnableRegisterButton = false;
+
     [RelayCommand]
     void OpenPopUp() {
         IsPopOpen = true;
     }
 
     [RelayCommand]
-    Task Login() {
-        return Task.FromResult(0);
+    async Task Login() {
+
+        await Shell.Current.go($"//{nameof(HomePage)}", true);
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanRegisterExecute))]
     async Task Register() {
-        if (!new EmailAddressAttribute().IsValid(Student.Email)) {
-            await appService.DisplayToast("Please provide a valid email address", ToastDuration.Short, 18);
-            return;
-        }
-        Student.Id = Student.GenerateRandomNumberString();
-        Student.Email = Student.Email;
 
         IsBusy = true;
-        IsVisible = false;
-        IsPopOpen = false;
-        Student.SetPassword(Student.PasswordHash);
+        IsRegisterVisible = false;
 
-        var key = await dataService.AddAsync("Users", Student);
-        if (key is not null) {
-            IsBusy = false;
-            IsVisible = true;
+        var user = await authenticationService.RegisterWithEmailAndPassword(Student.Email, Student.Password);
+        if (user != null) {
+            IsPopOpen = false;
+            await dataService.AddAsync("Users", Student);
         }
 
+    }
+
+    private bool CanRegisterExecute() {
+        if (string.IsNullOrEmpty(Student.Email) && string.IsNullOrEmpty(Student.Password)) {
+            return true;
+        }
+
+        return false;
     }
 }

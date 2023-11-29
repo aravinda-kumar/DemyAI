@@ -10,7 +10,7 @@
 
     <Grid
         Margin="20"
-        RowDefinitions="100,80,80,Auto,Auto"
+        RowDefinitions="100,80,80,50,20"
         RowSpacing="40">
 
         <Image
@@ -37,12 +37,12 @@
             Hint="Password"
             IsHintAlwaysFloated="True"
             OutlineCornerRadius="8">
-            <Entry Text="{Binding Student.PasswordHash}" />
+            <Entry Text="{Binding Student.Password}" />
         </inputLayout:SfTextInputLayout>
 
         <Button
             Grid.Row="3"
-            Command="{Binding}"
+            Command="{Binding LoginCommand}"
             CornerRadius="8"
             Text="Login" />
 
@@ -52,7 +52,7 @@
             HorizontalTextAlignment="Center"
             Text="If you do not have an account register here"
             VerticalTextAlignment="Center"
-            WidthRequest="300">
+            WidthRequest="350">
             <Label.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding OpenPopUpCommand}" />
             </Label.GestureRecognizers>
@@ -61,7 +61,7 @@
             x:Name="sfPopup"
             AnimationMode="Zoom"
             HeaderTitle="Register"
-            HeightRequest="300"
+            HeightRequest="350"
             IsOpen="{Binding IsPopOpen}"
             ShowCloseButton="True"
             StaysOpen="True">
@@ -69,13 +69,13 @@
                 <DataTemplate>
                     <Grid
                         Margin="5"
-                        RowDefinitions="80,80,40">
+                        RowDefinitions="80,80,60">
                         <inputLayout:SfTextInputLayout
                             ContainerBackground="White"
                             ContainerType="Outlined"
                             Hint="Email"
                             IsHintAlwaysFloated="True"
-                            IsVisible="{Binding IsVisible}"
+                            IsVisible="{Binding IsRegisterVisible}"
                             OutlineCornerRadius="8">
                             <Entry Text="{Binding Student.Email}" />
                         </inputLayout:SfTextInputLayout>
@@ -86,24 +86,29 @@
                             ContainerType="Outlined"
                             Hint="Password"
                             IsHintAlwaysFloated="True"
-                            IsVisible="{Binding IsVisible}"
+                            IsVisible="{Binding IsRegisterVisible}"
                             OutlineCornerRadius="8">
-                            <Entry Text="{Binding Student.PasswordHash}" />
+                            <Entry Text="{Binding Student.Password}" />
                         </inputLayout:SfTextInputLayout>
 
                         <ActivityIndicator
                             Grid.RowSpan="3"
-                            IsRunning="{Binding IsBusy}"
                             HeightRequest="100"
+                            IsRunning="{Binding IsBusy}"
                             WidthRequest="100"
                             Color="#422777" />
+
+                        <!--<Button
+                            Grid.Row="3"
+                            Command="{Binding RegisterCommand}"
+                            IsVisible="{Binding IsRegisterVisible}"
+                            Text="Register" />-->
 
                         <Button
                             Grid.Row="3"
                             Command="{Binding RegisterCommand}"
                             CornerRadius="8"
-                            IsVisible="{Binding IsVisible}"
-                            Text="Register" />
+                            IsVisible="{Binding IsRegisterVisible}" />
                     </Grid>
                 </DataTemplate>
             </sfPopup:SfPopup.ContentTemplate>

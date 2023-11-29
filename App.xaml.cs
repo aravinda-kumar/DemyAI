@@ -1,9 +1,11 @@
 ﻿namespace DemyAI {
     public partial class App : Application {
-        public App(LoginPage loginPage) {
+        public App(LoginPage shell) {
             InitializeComponent();
 
-            MainPage = loginPage;
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(Constants.LICENSE);
+
+            MainPage = shell;
         }
     }
 }
