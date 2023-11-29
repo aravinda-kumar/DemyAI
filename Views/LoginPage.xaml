@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DemyAI.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+    xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    x:DataType="vm:LoginPageViewModel">
+
+    <Grid
+        Margin="20"
+        RowDefinitions="100,80,80,Auto,Auto"
+        RowSpacing="40">
+
+        <Image
+            Aspect="AspectFit"
+            HeightRequest="100"
+            HorizontalOptions="Center"
+            Source="firebase.png"
+            VerticalOptions="Center"
+            WidthRequest="100" />
+
+        <inputLayout:SfTextInputLayout
+            Grid.Row="1"
+            ContainerType="Outlined"
+            Hint="Email or Student Id"
+            IsHintAlwaysFloated="True"
+            OutlineCornerRadius="8">
+            <Entry Text="{Binding Student.Email}" />
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout
+            Grid.Row="2"
+            ContainerType="Outlined"
+            EnablePasswordVisibilityToggle="True"
+            Hint="Password"
+            IsHintAlwaysFloated="True"
+            OutlineCornerRadius="8">
+            <Entry Text="{Binding Student.PasswordHash}" />
+        </inputLayout:SfTextInputLayout>
+
+        <Button
+            Grid.Row="3"
+            Command="{Binding}"
+            CornerRadius="8"
+            Text="Login" />
+
+        <Label
+            Grid.Row="4"
+            BackgroundColor="Red"
+            HorizontalTextAlignment="Center"
+            Text="If you do not have an account register here"
+            VerticalTextAlignment="Center"
+            WidthRequest="300">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OpenPopUpCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+        <sfPopup:SfPopup
+            x:Name="sfPopup"
+            AnimationMode="Zoom"
+            HeaderTitle="Register"
+            HeightRequest="300"
+            IsOpen="{Binding IsPopOpen}"
+            ShowCloseButton="True"
+            StaysOpen="True">
+            <sfPopup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <Grid
+                        Margin="5"
+                        RowDefinitions="80,80,40">
+                        <inputLayout:SfTextInputLayout
+                            ContainerBackground="White"
+                            ContainerType="Outlined"
+                            Hint="Email"
+                            IsHintAlwaysFloated="True"
+                            IsVisible="{Binding IsVisible}"
+                            OutlineCornerRadius="8">
+                            <Entry Text="{Binding Student.Email}" />
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="1"
+                            ContainerBackground="White"
+                            ContainerType="Outlined"
+                            Hint="Password"
+                            IsHintAlwaysFloated="True"
+                            IsVisible="{Binding IsVisible}"
+                            OutlineCornerRadius="8">
+                            <Entry Text="{Binding Student.PasswordHash}" />
+                        </inputLayout:SfTextInputLayout>
+
+                        <ActivityIndicator
+                            Grid.RowSpan="3"
+                            HeightRequest="100"
+                            WidthRequest="100"
+                            Color="#422777" />
+
+                        <Button
+                            Grid.Row="3"
+                            Command="{Binding RegisterCommand}"
+                            CornerRadius="8"
+                            IsVisible="{Binding IsVisible}"
+                            Text="Register" />
+                    </Grid>
+                </DataTemplate>
+            </sfPopup:SfPopup.ContentTemplate>
+        </sfPopup:SfPopup>
+
+    </Grid>
+
+</ContentPage>
