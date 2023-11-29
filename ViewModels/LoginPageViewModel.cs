@@ -23,7 +23,7 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     [RelayCommand]
     async Task Login() {
 
-        await Shell.Current.go($"//{nameof(HomePage)}", true);
+        await appService.NavigateTo($"//{nameof(HomePage)}", true);
     }
 
     [RelayCommand(CanExecute = nameof(CanRegisterExecute))]
