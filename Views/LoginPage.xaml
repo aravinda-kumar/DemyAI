@@ -93,6 +93,7 @@
 
                         <ActivityIndicator
                             Grid.RowSpan="3"
+                            IsRunning="{Binding IsBusy}"
                             HeightRequest="100"
                             WidthRequest="100"
                             Color="#422777" />
