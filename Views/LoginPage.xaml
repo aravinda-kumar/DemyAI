@@ -11,15 +11,16 @@
     <Grid
         Margin="20"
         RowDefinitions="100,80,80,50,20"
-        RowSpacing="40">
+        RowSpacing="40"
+        WidthRequest="{OnIdiom Desktop=500,
+                               Phone=300}">
 
         <Image
             Aspect="AspectFit"
             HeightRequest="100"
             HorizontalOptions="Center"
             Source="firebase.png"
-            VerticalOptions="Center"
-            WidthRequest="100" />
+            VerticalOptions="Center" />
 
         <inputLayout:SfTextInputLayout
             Grid.Row="1"
@@ -49,10 +50,9 @@
         <Label
             Grid.Row="4"
             HorizontalTextAlignment="Center"
-            TextColor="DarkGrey"
             Text="If you do not have an account register here"
-            VerticalTextAlignment="Center"
-            WidthRequest="350">
+            TextColor="DarkGrey"
+            VerticalTextAlignment="Center">
             <Label.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding OpenPopUpCommand}" />
             </Label.GestureRecognizers>
@@ -69,7 +69,7 @@
                 <DataTemplate>
                     <Grid
                         Margin="5"
-                        RowDefinitions="80,80,60">
+                        RowDefinitions="80,80,50">
                         <inputLayout:SfTextInputLayout
                             ContainerBackground="White"
                             ContainerType="Outlined"
@@ -102,8 +102,8 @@
                             Grid.Row="3"
                             Command="{Binding RegisterCommand}"
                             CornerRadius="8"
-                            Text="Register"
-                            IsVisible="{Binding IsRegisterVisible}" />
+                            IsVisible="{Binding IsRegisterVisible}"
+                            Text="Register" />
                     </Grid>
                 </DataTemplate>
             </sfPopup:SfPopup.ContentTemplate>

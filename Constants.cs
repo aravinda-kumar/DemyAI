@@ -13,5 +13,5 @@ public class Constants {
 
     public const string VIEWS = "Views";
 
-    public const string PAGE = "page";
+    public const string PAGE = "Page";
 }

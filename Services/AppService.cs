@@ -1,9 +1,7 @@
-﻿using CommunityToolkit.Maui.Alerts;
-
-namespace DemyAI.Services;
+﻿namespace DemyAI.Services;
 public class AppService : IAppService {
     public async Task DisplayAlert(string errorMessage, string message, string cancelMessage) {
-      await Shell.Current.DisplayAlert(errorMessage, message, cancelMessage);
+        await Shell.Current.DisplayAlert(errorMessage, message, cancelMessage);
     }
 
     public async Task DisplayToast(string message, ToastDuration toastDuration, double fontSize) {
@@ -12,7 +10,7 @@ public class AppService : IAppService {
     }
 
     public async Task NavigateTo(string pageName, bool isAnimated, Dictionary<string, object> obj) {
-       await Shell.Current.GoToAsync(pageName, isAnimated, obj);
+        await Shell.Current.GoToAsync(pageName, isAnimated, obj);
     }
 
     public async Task NavigateTo(string pageName, bool isAnimated) {
