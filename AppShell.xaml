@@ -7,13 +7,13 @@
     Title="DemyAI">
 
     <ShellContent
-        Title="Home"
-        FlyoutItemIsVisible="False"
-        ContentTemplate="{DataTemplate view:LoginPage}" />
+        ContentTemplate="{DataTemplate view:LoginPage}"
+        FlyoutItemIsVisible="False" />
 
     <FlyoutItem>
         <ShellContent
-            Title="Home"
-            ContentTemplate="{DataTemplate view:HomePage}" />
+            ContentTemplate="{DataTemplate view:HomePage}"
+            NavigationPage.HasNavigationBar="True"
+            Route="HomePage" />
     </FlyoutItem>
 </Shell>

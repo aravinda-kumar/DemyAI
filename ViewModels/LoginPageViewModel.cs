@@ -21,23 +21,18 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     [RelayCommand]
     async Task Login() {
 
-        await appService.NavigateTo($"//{nameof(HomePage)}", true);
+        var user = await authenticationService.LoginWithEmailAndPassword(Student.Email, Student.Password);
+        if (user != null) {
+
+            await appService.NavigateTo($"//{nameof(HomePage)}", true, new Dictionary<string, object>() {
+                {"user", user}
+            });
+        }
+
     }
 
     [RelayCommand]
     async Task Register() {
-
-        if (string.IsNullOrEmpty(Student.Email)) {
-
-            await appService.DisplayToast("Please enter a email address", ToastDuration.Short, 18);
-            return;
-        }
-
-        if (string.IsNullOrEmpty(Student.Password)) {
-
-            await appService.DisplayToast("Please enter a password", ToastDuration.Short, 18);
-            return;
-        }
 
         IsBusy = true;
         IsRegisterVisible = false;
