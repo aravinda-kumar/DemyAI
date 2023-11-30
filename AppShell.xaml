@@ -3,17 +3,81 @@
     x:Class="DemyAI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:view="clr-namespace:DemyAI.Views"
-    Title="DemyAI">
+    xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    Title="DemyAI"
+    x:DataType="vm:AppShellViewModel">
+
+    <Shell.FlyoutHeader>
+        <Grid
+            HeightRequest="200"
+            RowDefinitions="20,60,68">
+            <BoxView
+                Grid.RowSpan="3"
+                BackgroundColor="#2b0b98"
+                HeightRequest="300" />
+            <Image
+                Grid.Row="1"
+                Aspect="AspectFit"
+                HorizontalOptions="Center"
+                Source="user.png"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Row="3"
+                Padding="5"
+                FontAttributes="Bold"
+                FontSize="Body"
+                HorizontalTextAlignment="Center"
+                Text="Demy-IA"
+                TextColor="White" />
+            <Label
+                Grid.Row="3"
+                Margin="0,20,0,0"
+                Padding="5"
+                HorizontalTextAlignment="Center"
+                Text="{Binding User.Email}"
+                TextColor="White" />
+            <Label
+                Grid.Row="3"
+                Padding="5"
+                HorizontalTextAlignment="Center"
+                Text="{Binding User.Id}"
+                TextColor="White"
+                VerticalTextAlignment="End" />
+        </Grid>
+    </Shell.FlyoutHeader>
 
     <ShellContent
         ContentTemplate="{DataTemplate view:LoginPage}"
-        FlyoutItemIsVisible="False" />
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False" />
 
-    <FlyoutItem>
+    <FlyoutItem Title="Home">
         <ShellContent
             ContentTemplate="{DataTemplate view:HomePage}"
-            NavigationPage.HasNavigationBar="True"
             Route="HomePage" />
     </FlyoutItem>
+
+
+    <FlyoutItem Title="New lecture or test">
+        <ShellContent
+            ContentTemplate="{DataTemplate view:NewLecturePage}"
+            Route="NewLecturePage" />
+    </FlyoutItem>
+
+
+    <FlyoutItem Title="Schedule lecture or test">
+        <ShellContent
+            ContentTemplate="{DataTemplate view:ScheduleLecturePage}"
+            Route="ScheduleLecturePage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Create or join a meeting">
+        <ShellContent
+            ContentTemplate="{DataTemplate view:MeetingsPage}"
+            Route="MeetingsPage" />
+    </FlyoutItem>
+
+
 </Shell>

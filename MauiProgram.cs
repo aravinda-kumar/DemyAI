@@ -15,6 +15,7 @@ global using Firebase.Auth.Providers;
 global using Firebase.Database;
 
 global using Microsoft.Extensions.Logging;
+global using Microsoft.Maui.Controls;
 
 global using Syncfusion.Maui.Core.Hosting;
 
@@ -60,6 +61,8 @@ namespace DemyAI {
             builder.Services.AddSingleton<NewLecturePageViewModel>();
             builder.Services.AddSingleton<ScheduleLecturePage>();
             builder.Services.AddSingleton<ScheduleLecturePageViewModel>();
+            builder.Services.AddSingleton<MeetingsPage>();
+            builder.Services.AddSingleton<MeetingsPageViewModel>();
 
             var firebaseAuthClient = new FirebaseAuthClient(firebaseAuthConfig);
 

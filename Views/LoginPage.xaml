@@ -86,6 +86,7 @@
                             ContainerType="Outlined"
                             Hint="Password"
                             IsHintAlwaysFloated="True"
+                            EnablePasswordVisibilityToggle="True"
                             IsVisible="{Binding IsRegisterVisible}"
                             OutlineCornerRadius="8">
                             <Entry Text="{Binding Student.Password}" />

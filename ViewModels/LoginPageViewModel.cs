@@ -1,5 +1,7 @@
 ﻿namespace DemyAI.ViewModels;
-public partial class LoginPageViewModel(IDataService<Student> dataService, IAppService appService, IAuthenticationService authenticationService) : BaseViewModel {
+public partial class LoginPageViewModel(IDataService<Student> dataService, IAppService appService,
+    IAuthenticationService authenticationService,
+    AppShellViewModel appShellViewModel) : BaseViewModel {
 
     [ObservableProperty]
     bool isRegisterVisible = true;
@@ -21,12 +23,17 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     [RelayCommand]
     async Task Login() {
 
-        var user = await authenticationService.LoginWithEmailAndPassword(Student.Email, Student.Password);
-        if (user != null) {
+        //TODO change hard coded string in the view
 
-            await appService.NavigateTo($"//{nameof(HomePage)}", true, new Dictionary<string, object>() {
-                {"user", user}
-            });
+        //var user = await authenticationService.LoginWithEmailAndPassword(Student.Email, Student.Password);
+        var user = await authenticationService.LoginWithEmailAndPassword("admin@admin.com", "111111");
+        if (user != null) {
+            var obj = await dataService.GetByKeyAsync<Student>("Users", user.Uid);
+
+            appShellViewModel.User = obj!;
+
+            await appService.NavigateTo($"//{nameof(HomePage)}", true);
+
         }
 
     }
@@ -37,12 +44,13 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
         IsBusy = true;
         IsRegisterVisible = false;
 
-        var user = await authenticationService.RegisterWithEmailAndPassword(Student.Email, Student.Password);
+        var user = await authenticationService.RegisterWithEmailAndPassword("admin@admin.com", "111111");
         if (user != null) {
             IsPopOpen = false;
             Student.Id = Student.GenerateRandomNumberString();
-            Student.Email = Student.Email;
-            Student.Password = BCrypt.Net.BCrypt.HashPassword(Student.Password);
+            Student.Email = "admin@admin.com";
+            //Student.Password = BCrypt.Net.BCrypt.HashPassword(Student.Password);
+            Student.Uid = user.Uid;
 
             await dataService.AddAsync("Users", Student);
         }

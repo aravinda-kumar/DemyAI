@@ -1,6 +1,8 @@
 ﻿namespace DemyAI.Models;
 public class Student {
 
+    public string Uid { get; set; }
+
     public string Id { get; set; }
 
     public string Email { get; set; }

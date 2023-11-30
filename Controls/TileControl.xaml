@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TemplatedView
+    x:Class="DemyAI.Controls.TileControl"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:DemyAI.Controls"
+    x:DataType="controls:TileControl">
+
+    <TemplatedView.ControlTemplate>
+        <ControlTemplate x:DataType="controls:TileControl">
+            <VerticalStackLayout>
+                <Image
+                    Aspect="AspectFit"
+                    HorizontalOptions="FillAndExpand"
+                    Source="{TemplateBinding ImageSource}"
+                    VerticalOptions="FillAndExpand" />
+
+                <BoxView
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                    Color="{TemplateBinding BoxColor}" />
+
+                <Label
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    Text="{TemplateBinding HeaderText}" />
+            </VerticalStackLayout>
+        </ControlTemplate>
+    </TemplatedView.ControlTemplate>
+</TemplatedView>
