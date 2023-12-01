@@ -31,7 +31,6 @@
                 // Register the route using its name and associated type
                 Routing.RegisterRoute(kvp.Key, kvp.Value);
             }
-
         }
     }
 }

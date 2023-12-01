@@ -17,6 +17,8 @@ global using Firebase.Database;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Maui.Controls;
 
+global using SkiaSharp.Views.Maui.Controls.Hosting;
+
 global using Syncfusion.Maui.Core.Hosting;
 
 global using System.Text.Json;
@@ -34,10 +36,9 @@ namespace DemyAI {
                 }
             };
 
-
-
             builder
                 .UseMauiApp<App>()
+                .UseSkiaSharp()
                 .UseMauiCommunityToolkit()
                 .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts => {
@@ -54,7 +55,7 @@ namespace DemyAI {
             builder.Services.AddSingleton<AppShell>();
             builder.Services.AddSingleton<AppShellViewModel>();
             builder.Services.AddSingleton<LoginPage>();
-            builder.Services.AddSingleton<LoginPageViewModel>();
+            builder.Services.AddTransient<LoginPageViewModel>();
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<HomePageViewModel>();
             builder.Services.AddSingleton<NewLecturePage>();
@@ -63,6 +64,7 @@ namespace DemyAI {
             builder.Services.AddSingleton<ScheduleLecturePageViewModel>();
             builder.Services.AddSingleton<MeetingsPage>();
             builder.Services.AddSingleton<MeetingsPageViewModel>();
+            builder.Services.AddSingleton(Connectivity.Current);
 
             var firebaseAuthClient = new FirebaseAuthClient(firebaseAuthConfig);
 

@@ -5,14 +5,27 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:DemyAI.Controls"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
-    Title="MeetingsPage"
+        xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+    xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+  
     x:DataType="vm:MeetingsPageViewModel">
-    <VerticalStackLayout>
-        <controls:TileControl
-            BoxColor="BlueViolet"
-            HeaderText="Join a meeting"
-            HeightRequest="100"
-            ImageSource="join.png"
-            WidthRequest="100" />
-    </VerticalStackLayout>
+
+    <Grid>
+        <Border
+            Padding="16,8"
+            Background="#7E903C"
+            HeightRequest="150"
+            HorizontalOptions="Center"
+            WidthRequest="150">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Body"
+                HorizontalTextAlignment="Center"
+                Text="Join meeting"
+                VerticalTextAlignment="Center" />
+            <Border.GestureRecognizers>
+                <GestureRecognizer />
+            </Border.GestureRecognizers>
+        </Border>
+    </Grid>
 </ContentPage>

@@ -7,11 +7,13 @@
     xmlns:view="clr-namespace:DemyAI.Views"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     Title="DemyAI"
-    x:DataType="vm:AppShellViewModel">
+    x:DataType="vm:AppShellViewModel"
+    FlyoutBehavior="Flyout">
 
     <Shell.FlyoutHeader>
         <Grid
-            HeightRequest="200"
+            HeightRequest="{OnIdiom Desktop=230,
+                                    Phone=200}"
             RowDefinitions="20,60,68">
             <BoxView
                 Grid.RowSpan="3"
@@ -48,8 +50,20 @@
         </Grid>
     </Shell.FlyoutHeader>
 
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <Button
+                Margin="20"
+                Command="{Binding SignOutCommand}"
+                CornerRadius="8"
+                Text="Log out" />
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
+
+
     <ShellContent
         ContentTemplate="{DataTemplate view:LoginPage}"
+        Route="LoginPage"
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False" />
 
@@ -73,10 +87,18 @@
             Route="ScheduleLecturePage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Create or join a meeting">
+    <FlyoutItem Title="Join a meeting">
         <ShellContent
             ContentTemplate="{DataTemplate view:MeetingsPage}"
             Route="MeetingsPage" />
+    </FlyoutItem>
+
+    <FlyoutItem>
+        <ShellContent
+            ContentTemplate="{DataTemplate view:NoInternetPage}"
+            Route="NoInternetPage"
+            Shell.FlyoutBehavior="Disabled"
+            Shell.FlyoutItemIsVisible="False" />
     </FlyoutItem>
 
 

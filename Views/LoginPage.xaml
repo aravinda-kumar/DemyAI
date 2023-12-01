@@ -15,10 +15,20 @@
         WidthRequest="{OnIdiom Desktop=500,
                                Phone=300}">
 
+        <ActivityIndicator
+            Grid.RowSpan="5"
+            HeightRequest="100"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="100"
+            Color="#422777" />
+
         <Image
             Aspect="AspectFit"
             HeightRequest="100"
             HorizontalOptions="Center"
+            IsVisible="{Binding IsElementVisible}"
             Source="firebase.png"
             VerticalOptions="Center" />
 
@@ -27,6 +37,7 @@
             ContainerType="Outlined"
             Hint="Email or Student Id"
             IsHintAlwaysFloated="True"
+            IsVisible="{Binding IsElementVisible}"
             OutlineCornerRadius="8">
             <Entry Text="{Binding Student.Email}" />
         </inputLayout:SfTextInputLayout>
@@ -37,6 +48,7 @@
             EnablePasswordVisibilityToggle="True"
             Hint="Password"
             IsHintAlwaysFloated="True"
+            IsVisible="{Binding IsElementVisible}"
             OutlineCornerRadius="8">
             <Entry Text="{Binding Student.Password}" />
         </inputLayout:SfTextInputLayout>
@@ -45,11 +57,13 @@
             Grid.Row="3"
             Command="{Binding LoginCommand}"
             CornerRadius="8"
+            IsVisible="{Binding IsElementVisible}"
             Text="Login" />
 
         <Label
             Grid.Row="4"
             HorizontalTextAlignment="Center"
+            IsVisible="{Binding IsElementVisible}"
             Text="If you do not have an account register here"
             TextColor="DarkGrey"
             VerticalTextAlignment="Center">
@@ -57,6 +71,7 @@
                 <TapGestureRecognizer Command="{Binding OpenPopUpCommand}" />
             </Label.GestureRecognizers>
         </Label>
+
         <sfPopup:SfPopup
             x:Name="sfPopup"
             AnimationMode="Zoom"
@@ -75,7 +90,7 @@
                             ContainerType="Outlined"
                             Hint="Email"
                             IsHintAlwaysFloated="True"
-                            IsVisible="{Binding IsRegisterVisible}"
+                            IsVisible="{Binding IsElementVisible}"
                             OutlineCornerRadius="8">
                             <Entry Text="{Binding Student.Email}" />
                         </inputLayout:SfTextInputLayout>
@@ -84,10 +99,10 @@
                             Grid.Row="1"
                             ContainerBackground="White"
                             ContainerType="Outlined"
+                            EnablePasswordVisibilityToggle="True"
                             Hint="Password"
                             IsHintAlwaysFloated="True"
-                            EnablePasswordVisibilityToggle="True"
-                            IsVisible="{Binding IsRegisterVisible}"
+                            IsVisible="{Binding IsElementVisible}"
                             OutlineCornerRadius="8">
                             <Entry Text="{Binding Student.Password}" />
                         </inputLayout:SfTextInputLayout>
@@ -103,7 +118,7 @@
                             Grid.Row="3"
                             Command="{Binding RegisterCommand}"
                             CornerRadius="8"
-                            IsVisible="{Binding IsRegisterVisible}"
+                            IsVisible="{Binding IsElementVisible}"
                             Text="Register" />
                     </Grid>
                 </DataTemplate>
