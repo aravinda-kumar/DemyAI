@@ -4,6 +4,7 @@ public partial class LoginPage : ContentPage {
 
     private readonly IConnectivity _connectivity;
     private readonly IAppService appService;
+    private bool isNavigating;
 
     public LoginPage(LoginPageViewModel loginPageViewModel, IConnectivity connectivity, IAppService appService) {
         InitializeComponent();
@@ -32,8 +33,19 @@ public partial class LoginPage : ContentPage {
 
     protected override async void OnAppearing() {
         base.OnAppearing();
-        // Check internet connectivity when the page appears
-        await CheckInternetAndNavigate();
+
+        if (!isNavigating) {
+
+            bool hasInsternet = CheckInternetConnectivity();
+
+            if (!hasInsternet) {
+                await appService.NavigateTo($"//{nameof(NoInternetPage)}", true);
+            } else {
+                isNavigating = true;
+                await appService.NavigateTo($"//{nameof(LoginPage)}", true);
+
+            }
+        }
     }
 
 }

@@ -8,7 +8,7 @@
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     Title="DemyAI"
     x:DataType="vm:AppShellViewModel"
-    FlyoutBehavior="Flyout">
+    FlyoutBehavior="{OnIdiom Desktop=Locked, Phone=Flyout}">
 
     <Shell.FlyoutHeader>
         <Grid
