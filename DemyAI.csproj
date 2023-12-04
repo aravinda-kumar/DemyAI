@@ -81,8 +81,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\scheduleaLecturePage.xaml.cs">
-	    <DependentUpon>ScheduleaLecturePage.xaml</DependentUpon>
+	  <Compile Update="Views\NewTestPage.xaml.cs">
+	    <DependentUpon>NewTestPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\ScheduleLecturePage.xaml.cs">
+	    <DependentUpon>ScheduleLecturePage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -96,16 +99,19 @@
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\MeetingsPage.xaml">
+	  <MauiXaml Update="Views\NewLecturePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\NewLecturePage.xaml">
+	  <MauiXaml Update="Views\NewTestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\NoInternetPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ScheduleaLecturePage.xaml">
+	  <MauiXaml Update="Views\ScheduleLecturePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ScheduleTestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

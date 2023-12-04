@@ -54,16 +54,25 @@ namespace DemyAI {
             builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
             builder.Services.AddSingleton<AppShell>();
             builder.Services.AddSingleton<AppShellViewModel>();
+
             builder.Services.AddSingleton<LoginPage>();
             builder.Services.AddTransient<LoginPageViewModel>();
+
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<HomePageViewModel>();
+
             builder.Services.AddSingleton<NewLecturePage>();
             builder.Services.AddSingleton<NewLecturePageViewModel>();
+
+            builder.Services.AddSingleton<NewTestPage>();
+            builder.Services.AddSingleton<NewTestPageViewMode>();
+
             builder.Services.AddSingleton<ScheduleLecturePage>();
             builder.Services.AddSingleton<ScheduleLecturePageViewModel>();
-            builder.Services.AddSingleton<MeetingsPage>();
-            builder.Services.AddSingleton<MeetingsPageViewModel>();
+
+            builder.Services.AddSingleton<ScheduleTestPage>();
+            builder.Services.AddSingleton<ScheduleTestPageViewModel>();
+
             builder.Services.AddSingleton(Connectivity.Current);
 
             var firebaseAuthClient = new FirebaseAuthClient(firebaseAuthConfig);

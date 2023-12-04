@@ -28,7 +28,7 @@
             Aspect="AspectFit"
             HeightRequest="100"
             HorizontalOptions="Center"
-            IsVisible="{Binding IsElementVisible}"
+            IsVisible="{Binding isNotBusy}"
             Source="firebase.png"
             VerticalOptions="Center" />
 
@@ -37,7 +37,7 @@
             ContainerType="Outlined"
             Hint="Email or Student Id"
             IsHintAlwaysFloated="True"
-            IsVisible="{Binding IsElementVisible}"
+            IsVisible="{Binding isNotBusy}"
             OutlineCornerRadius="8">
             <Entry Text="{Binding Student.Email}" />
         </inputLayout:SfTextInputLayout>
@@ -48,7 +48,7 @@
             EnablePasswordVisibilityToggle="True"
             Hint="Password"
             IsHintAlwaysFloated="True"
-            IsVisible="{Binding IsElementVisible}"
+            IsVisible="{Binding isNotBusy}"
             OutlineCornerRadius="8">
             <Entry Text="{Binding Student.Password}" />
         </inputLayout:SfTextInputLayout>
@@ -57,13 +57,13 @@
             Grid.Row="3"
             Command="{Binding LoginCommand}"
             CornerRadius="8"
-            IsVisible="{Binding IsElementVisible}"
+            IsVisible="{Binding isNotBusy}"
             Text="Login" />
 
         <Label
             Grid.Row="4"
             HorizontalTextAlignment="Center"
-            IsVisible="{Binding IsElementVisible}"
+            IsVisible="{Binding isNotBusy}"
             Text="If you do not have an account register here"
             TextColor="DarkGrey"
             VerticalTextAlignment="Center">
@@ -90,7 +90,7 @@
                             ContainerType="Outlined"
                             Hint="Email"
                             IsHintAlwaysFloated="True"
-                            IsVisible="{Binding IsElementVisible}"
+                            IsVisible="{Binding isNotBusy}"
                             OutlineCornerRadius="8">
                             <Entry Text="{Binding Student.Email}" />
                         </inputLayout:SfTextInputLayout>
@@ -102,7 +102,7 @@
                             EnablePasswordVisibilityToggle="True"
                             Hint="Password"
                             IsHintAlwaysFloated="True"
-                            IsVisible="{Binding IsElementVisible}"
+                            IsVisible="{Binding isNotBusy}"
                             OutlineCornerRadius="8">
                             <Entry Text="{Binding Student.Password}" />
                         </inputLayout:SfTextInputLayout>
@@ -118,7 +118,7 @@
                             Grid.Row="3"
                             Command="{Binding RegisterCommand}"
                             CornerRadius="8"
-                            IsVisible="{Binding IsElementVisible}"
+                            IsVisible="{Binding isNotBusy}"
                             Text="Register" />
                     </Grid>
                 </DataTemplate>

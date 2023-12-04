@@ -13,18 +13,6 @@ public partial class LoginPage : ContentPage {
         _connectivity = connectivity;
         this.appService = appService;
     }
-
-    private async Task CheckInternetAndNavigate() {
-
-        bool hasInternet = CheckInternetConnectivity();
-
-        if (!hasInternet) {
-            await appService.NavigateTo($"//{nameof(NoInternetPage)}", true);
-        } else {
-            await appService.NavigateTo($"//{nameof(LoginPage)}", true);
-        }
-    }
-
     private bool CheckInternetConnectivity() {
         var current = _connectivity.NetworkAccess;
         return current == NetworkAccess.Internet;

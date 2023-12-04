@@ -8,7 +8,8 @@
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     Title="DemyAI"
     x:DataType="vm:AppShellViewModel"
-    FlyoutBehavior="{OnIdiom Desktop=Locked, Phone=Flyout}">
+    FlyoutBehavior="{OnIdiom Desktop=Locked,
+                             Phone=Flyout}">
 
     <Shell.FlyoutHeader>
         <Grid
@@ -74,32 +75,37 @@
     </FlyoutItem>
 
 
-    <FlyoutItem Title="New lecture or test">
+    <FlyoutItem Title="New lecture">
         <ShellContent
             ContentTemplate="{DataTemplate view:NewLecturePage}"
             Route="NewLecturePage" />
     </FlyoutItem>
 
+    <FlyoutItem Title="New test">
+        <ShellContent
+            ContentTemplate="{DataTemplate view:NewTestPage}"
+            Route="NewTestPage" />
+    </FlyoutItem>
 
-    <FlyoutItem Title="Schedule lecture or test">
+
+    <FlyoutItem Title="Schedule lecture">
         <ShellContent
             ContentTemplate="{DataTemplate view:ScheduleLecturePage}"
             Route="ScheduleLecturePage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Join a meeting">
+    <FlyoutItem Title="Schedule test">
         <ShellContent
-            ContentTemplate="{DataTemplate view:MeetingsPage}"
-            Route="MeetingsPage" />
+            ContentTemplate="{DataTemplate view:ScheduleTestPage}"
+            Route="ScheduleLecturePage" />
     </FlyoutItem>
 
-    <FlyoutItem>
-        <ShellContent
-            ContentTemplate="{DataTemplate view:NoInternetPage}"
-            Route="NoInternetPage"
-            Shell.FlyoutBehavior="Disabled"
-            Shell.FlyoutItemIsVisible="False" />
-    </FlyoutItem>
+    <ShellContent
+        ContentTemplate="{DataTemplate view:NoInternetPage}"
+        Route="NoInternetPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False" />
+
 
 
 </Shell>

@@ -4,16 +4,10 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     AppShellViewModel appShellViewModel) : BaseViewModel {
 
     [ObservableProperty]
-    bool isElementVisible = true;
-
-    [ObservableProperty]
     bool isPopOpen;
 
     [ObservableProperty]
     Student student = new();
-
-    [ObservableProperty]
-    bool canEnableRegisterButton = false;
 
     [RelayCommand]
     void OpenPopUp() {
@@ -23,18 +17,16 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     [RelayCommand]
     async Task Login() {
 
-        IsElementVisible = false;
-        IsBusy = true;
         //TODO change hard coded string in the view
+
+        IsBusy = true;
 
         //var user = await authenticationService.LoginWithEmailAndPassword(Student.Email, Student.Password);
         var user = await authenticationService.LoginWithEmailAndPassword("admin@admin.com", "111111");
         if (user != null) {
-
             await GetStudentAndNavigate(dataService, appService, appShellViewModel, user);
-
         }
-        IsElementVisible = true;
+
         IsBusy = false;
     }
 
@@ -42,7 +34,6 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     async Task Register() {
 
         IsBusy = true;
-        IsElementVisible = false;
 
         var user = await authenticationService.RegisterWithEmailAndPassword(Student.Email, Student.Password);
         if (user != null) {
@@ -57,11 +48,12 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
 
             await GetStudentAndNavigate(dataService, appService, appShellViewModel, user);
         }
-        IsElementVisible = true;
+
         IsBusy = false;
     }
 
-    private static async Task GetStudentAndNavigate(IDataService<Student> dataService, IAppService appService, AppShellViewModel appShellViewModel, User user) {
+    private static async Task GetStudentAndNavigate(IDataService<Student> dataService,
+        IAppService appService, AppShellViewModel appShellViewModel, User user) {
         var obj = await dataService.GetByKeyAsync<Student>("Users", user.Uid);
 
         appShellViewModel.User = obj!;
