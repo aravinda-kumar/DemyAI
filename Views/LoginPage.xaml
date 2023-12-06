@@ -3,6 +3,7 @@
     x:Class="DemyAI.Views.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
@@ -14,7 +15,6 @@
         RowSpacing="40"
         WidthRequest="{OnIdiom Desktop=500,
                                Phone=300}">
-
         <ActivityIndicator
             Grid.RowSpan="5"
             HeightRequest="100"
@@ -34,23 +34,17 @@
 
         <inputLayout:SfTextInputLayout
             Grid.Row="1"
-            ContainerType="Outlined"
             Hint="Email or Student Id"
-            IsHintAlwaysFloated="True"
-            IsVisible="{Binding isNotBusy}"
-            OutlineCornerRadius="8">
-            <Entry Text="{Binding Student.Email}" />
+            IsVisible="{Binding isNotBusy}">
+            <Entry Text="{Binding User.Email}" />
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout
             Grid.Row="2"
-            ContainerType="Outlined"
             EnablePasswordVisibilityToggle="True"
             Hint="Password"
-            IsHintAlwaysFloated="True"
-            IsVisible="{Binding isNotBusy}"
-            OutlineCornerRadius="8">
-            <Entry Text="{Binding Student.Password}" />
+            IsVisible="{Binding isNotBusy}">
+            <Entry Text="{Binding User.Password}" />
         </inputLayout:SfTextInputLayout>
 
         <Button
@@ -76,55 +70,67 @@
             x:Name="sfPopup"
             AnimationMode="Zoom"
             HeaderTitle="Register"
-            HeightRequest="350"
+            HeightRequest="520"
             IsOpen="{Binding IsPopOpen}"
             ShowCloseButton="True"
             StaysOpen="True">
             <sfPopup:SfPopup.ContentTemplate>
                 <DataTemplate>
                     <Grid
-                        Margin="5"
-                        RowDefinitions="80,80,50">
+                        Margin="20"
+                        RowDefinitions="80,80,80,80,70">
+
                         <inputLayout:SfTextInputLayout
-                            ContainerBackground="White"
-                            ContainerType="Outlined"
-                            Hint="Email"
-                            IsHintAlwaysFloated="True"
-                            IsVisible="{Binding isNotBusy}"
-                            OutlineCornerRadius="8">
-                            <Entry Text="{Binding Student.Email}" />
+                            Hint="Name"
+                            IsVisible="{Binding isNotBusy}">
+                            <Entry Text="{Binding User.Name}" />
                         </inputLayout:SfTextInputLayout>
 
                         <inputLayout:SfTextInputLayout
                             Grid.Row="1"
-                            ContainerBackground="White"
-                            ContainerType="Outlined"
+                            Hint="Email"
+                            IsVisible="{Binding isNotBusy}">
+                            <Entry Text="{Binding User.Email}" />
+                        </inputLayout:SfTextInputLayout>
+
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="2"
                             EnablePasswordVisibilityToggle="True"
                             Hint="Password"
-                            IsHintAlwaysFloated="True"
-                            IsVisible="{Binding isNotBusy}"
-                            OutlineCornerRadius="8">
-                            <Entry Text="{Binding Student.Password}" />
+                            IsVisible="{Binding isNotBusy}">
+                            <Entry Text="{Binding User.Password}" />
                         </inputLayout:SfTextInputLayout>
 
                         <ActivityIndicator
                             Grid.RowSpan="3"
                             HeightRequest="100"
+                            HorizontalOptions="Center"
                             IsRunning="{Binding IsBusy}"
+                            VerticalOptions="Center"
                             WidthRequest="100"
                             Color="#422777" />
 
-                        <Button
+                        <inputLayout:SfTextInputLayout
                             Grid.Row="3"
+                            Hint="Role"
+                            IsVisible="{Binding isNotBusy}">
+                            <combobox:SfComboBox
+                                IsEditable="False"
+                                ItemsSource="{Binding User.Roles}"
+                                SelectedItem="{Binding User.Role}" />
+                        </inputLayout:SfTextInputLayout>
+
+                        <Button
+                            HeightRequest="40"
+                            Grid.Row="4"
                             Command="{Binding RegisterCommand}"
                             CornerRadius="8"
                             IsVisible="{Binding isNotBusy}"
                             Text="Register" />
+
                     </Grid>
                 </DataTemplate>
             </sfPopup:SfPopup.ContentTemplate>
         </sfPopup:SfPopup>
-
     </Grid>
-
 </ContentPage>

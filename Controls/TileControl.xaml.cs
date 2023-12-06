@@ -1,31 +1,43 @@
 namespace DemyAI.Controls;
 
-public partial class TileControl : TemplatedView {
+public partial class TileControl : ContentView {
 
-    public static readonly BindableProperty FooterTextProperty = BindableProperty.Create(
-        nameof(HeaderText),  typeof(string), typeof(TileControl), default(string));
-
-    public static readonly BindableProperty BoxColorProperty = BindableProperty.Create(
-        nameof(BoxColor), typeof(Color), typeof(TileControl), Colors.LightGray);
-
-    public static readonly BindableProperty ImageSourceProperty = BindableProperty.Create(
-        nameof(ImageSource), typeof(ImageSource), typeof(TileControl), default(ImageSource));
-
-    public string HeaderText {
-
-        get => (string)GetValue(FooterTextProperty);
-        set => SetValue(FooterTextProperty, value);
+    public TileControl() {
+        InitializeComponent();
     }
 
-    public Color BoxColor {
+    public static readonly BindableProperty TextProperty = BindableProperty.Create(
+        nameof(title), typeof(string), typeof(TileControl), default(string));
 
-        get => (Color)GetValue(BoxColorProperty);
-        set => SetValue(BoxColorProperty, value);
+    public static readonly BindableProperty ColorProperty = BindableProperty.Create(
+        nameof(Color), typeof(Color), typeof(TileControl), Colors.LightGray);
+
+    public static readonly BindableProperty ImageProperty = BindableProperty.Create(
+        nameof(Image), typeof(ImageSource), typeof(TileControl), default(ImageSource));
+
+    public static readonly BindableProperty CommandProperty = BindableProperty.Create(
+        nameof(Command), typeof(RelayCommand), typeof(TileControl));
+
+    public string title {
+
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
     }
-    
-    public ImageSource ImageSource {
 
-        get => (ImageSource)GetValue(ImageSourceProperty); 
-        set => SetValue(ImageSourceProperty, value);
+    public Color Color {
+
+        get => (Color)GetValue(ColorProperty);
+        set => SetValue(ColorProperty, value);
+    }
+
+    public ImageSource Image {
+
+        get => (ImageSource)GetValue(ImageProperty);
+        set => SetValue(ImageProperty, value);
+    }
+
+    public RelayCommand Command {
+        get => (RelayCommand)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
     }
 }

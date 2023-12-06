@@ -1,13 +1,21 @@
-﻿namespace DemyAI.Models;
-public class Student {
+﻿// Ignore Spelling: Demy
+
+namespace DemyAI.Models;
+public class User {
 
     public string Uid { get; set; }
+
+    public string Name { get; set; }
 
     public string Id { get; set; }
 
     public string Email { get; set; }
 
     public string Password { get; set; }
+
+    public string Role { get; set; }
+
+    public List<Roles> Roles => GetUserRoles();
 
     //public double latitude { get; set; }
 
@@ -24,5 +32,10 @@ public class Student {
 
         string randomNumber = new(randomDigits);
         return randomNumber;
+    }
+
+    public List<Roles> GetUserRoles() {
+
+        return [Helpers.Roles.Teacher, Helpers.Roles.Student];
     }
 }

@@ -1,5 +1,17 @@
 ﻿namespace DemyAI.Services;
 public class AuthenticationService(FirebaseAuthClient firebaseAuthClient, IAppService appService) : IAuthenticationService {
+    public async Task<User?> GetLoggedInUser() {
+
+        try {
+
+            return firebaseAuthClient.User;
+
+        } catch (Exception e) {
+
+            await appService.DisplayAlert("error", e.Message, "OK");
+            return null;
+        }
+    }
 
     public async Task<User?> LoginWithEmailAndPassword(string email, string password) {
 

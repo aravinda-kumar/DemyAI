@@ -1,4 +1,5 @@
-﻿namespace DemyAI.Services;
+﻿// Ignore Spelling: namespace DemyAI.Services; uid
+
 public class DataService<T> : IDataService<T> {
 
     readonly FirebaseClient _client;
@@ -18,11 +19,17 @@ public class DataService<T> : IDataService<T> {
         return obj.Key;
     }
 
-    public Task DeleteAsync(string key) {
+    public Task DeleteAsync(string uid) {
         throw new NotImplementedException();
     }
 
-    public async Task<T?> GetByKeyAsync<T>(string nodeName, string uid) {
+    public async Task<IReadOnlyCollection<FirebaseObject<T>>> GetAllAsync<T>(string nodeName) {
+        var Objects = await _client.Child(nodeName).OnceAsync<T>();
+
+        return Objects;
+    }
+
+    public async Task<T?> GetByUidAsync<T>(string nodeName, string uid) {
         var Objects = await _client.Child(nodeName).OnceAsync<T>();
 
         // Iterate through each item in the Objects collection
@@ -43,11 +50,10 @@ public class DataService<T> : IDataService<T> {
             }
         }
 
-
         return default;
     }
 
-    public Task UpdateAsync(string key, T updatedItem) {
+    public Task UpdateAsync(string uid, T updatedItem) {
         throw new NotImplementedException();
     }
 }

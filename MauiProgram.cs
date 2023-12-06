@@ -4,8 +4,8 @@ global using CommunityToolkit.Maui.Core;
 global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
 
+global using DemyAI.Helpers;
 global using DemyAI.Interfaces;
-global using DemyAI.Models;
 global using DemyAI.Services;
 global using DemyAI.ViewModels;
 global using DemyAI.Views;
@@ -21,7 +21,9 @@ global using SkiaSharp.Views.Maui.Controls.Hosting;
 
 global using Syncfusion.Maui.Core.Hosting;
 
+global using System.Collections.ObjectModel;
 global using System.Text.Json;
+
 
 namespace DemyAI {
     public static class MauiProgram {
@@ -74,6 +76,8 @@ namespace DemyAI {
             builder.Services.AddSingleton<ScheduleTestPageViewModel>();
 
             builder.Services.AddSingleton(Connectivity.Current);
+
+            builder.Services.AddSingleton<NoInternetPage>();
 
             var firebaseAuthClient = new FirebaseAuthClient(firebaseAuthConfig);
 

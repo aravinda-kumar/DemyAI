@@ -1,9 +1,15 @@
 ﻿namespace DemyAI.Interfaces;
 public interface IDataService<T> {
 
-    Task<T?> GetByKeyAsync<T>(string nodeName, string key);
+    Task<T?> GetByUidAsync<T>(string nodeName, string uid);
+
+    Task<IReadOnlyCollection<FirebaseObject<T>>> GetAllAsync<T>(string nodeNem);
+
     Task<string> AddAsync(string nodeName, T newItem);
-    Task UpdateAsync(string key, T updatedItem);
-    Task DeleteAsync(string key);
+
+    Task UpdateAsync(string uid, T updatedItem);
+
+    Task DeleteAsync(string uid);
+
 
 }

@@ -1,4 +1,7 @@
-﻿namespace DemyAI {
+﻿using DemyAI.Helpers;
+
+namespace DemyAI
+{
     public partial class App : Application {
         public App(AppShell shell) {
             InitializeComponent();

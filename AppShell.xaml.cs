@@ -1,4 +1,7 @@
-﻿namespace DemyAI {
+﻿using DemyAI.Helpers;
+
+namespace DemyAI
+{
     public partial class AppShell : Shell {
         public AppShell(AppShellViewModel appShellViewModel) {
             InitializeComponent();

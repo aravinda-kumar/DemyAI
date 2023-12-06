@@ -1,5 +1,7 @@
-﻿namespace DemyAI.ViewModels;
-public partial class LoginPageViewModel(IDataService<Student> dataService, IAppService appService,
+﻿using User = DemyAI.Models.User;
+
+namespace DemyAI.ViewModels;
+public partial class LoginPageViewModel(IDataService<User> dataService, IAppService appService,
     IAuthenticationService authenticationService,
     AppShellViewModel appShellViewModel) : BaseViewModel {
 
@@ -7,7 +9,7 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     bool isPopOpen;
 
     [ObservableProperty]
-    Student student = new();
+    User user = new();
 
     [RelayCommand]
     void OpenPopUp() {
@@ -17,14 +19,14 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     [RelayCommand]
     async Task Login() {
 
-        //TODO change hard coded string in the view
-
         IsBusy = true;
 
-        //var user = await authenticationService.LoginWithEmailAndPassword(Student.Email, Student.Password);
+        //var user = await authenticationService.LoginWithEmailAndPassword(User.Email, User.Password);
         var user = await authenticationService.LoginWithEmailAndPassword("admin@admin.com", "111111");
         if (user != null) {
-            await GetStudentAndNavigate(dataService, appService, appShellViewModel, user);
+            await GenerateDemyId(dataService, appShellViewModel, user);
+
+            await appService.NavigateTo($"//{nameof(HomePage)}", true);
         }
 
         IsBusy = false;
@@ -33,31 +35,44 @@ public partial class LoginPageViewModel(IDataService<Student> dataService, IAppS
     [RelayCommand]
     async Task Register() {
 
+        if (string.IsNullOrEmpty(User.Name)
+            && string.IsNullOrEmpty(User.Email)
+            && string.IsNullOrEmpty(User.Password)
+            && string.IsNullOrEmpty(User.Role)) {
+
+            await appService.DisplayAlert("Error", "Please make sure everything is filed", "OK");
+            return;
+        }
+
         IsBusy = true;
 
-        var user = await authenticationService.RegisterWithEmailAndPassword(Student.Email, Student.Password);
+        var user = await authenticationService.RegisterWithEmailAndPassword(User.Email, User.Password);
         if (user != null) {
 
             IsPopOpen = false;
-            Student.Id = Student.GenerateRandomNumberString();
-            Student.Email = Student.Email;
-            Student.Password = BCrypt.Net.BCrypt.HashPassword(Student.Password);
-            Student.Uid = user.Uid;
+            User.Uid = user.Uid;
+            User.Id = User.GenerateRandomNumberString();
+            User.Name = User.Name;
+            User.Email = User.Email;
+            User.Password = BCrypt.Net.BCrypt.HashPassword(User.Password);
+            User.Role = User.Role;
 
-            await dataService.AddAsync("Users", Student);
+            await dataService.AddAsync("Users", User);
 
-            await GetStudentAndNavigate(dataService, appService, appShellViewModel, user);
+            await GenerateDemyId(dataService, appShellViewModel, user);
+
+            await appService.NavigateTo($"//{nameof(HomePage)}", true);
         }
 
         IsBusy = false;
     }
 
-    private static async Task GetStudentAndNavigate(IDataService<Student> dataService,
-        IAppService appService, AppShellViewModel appShellViewModel, User user) {
-        var obj = await dataService.GetByKeyAsync<Student>("Users", user.Uid);
+    private static async Task GenerateDemyId(IDataService<User> dataService,
+        AppShellViewModel appShellViewModel, Firebase.Auth.User user) {
+
+        var obj = await dataService.GetByUidAsync<User>("Users", user.Uid);
 
         appShellViewModel.User = obj!;
 
-        await appService.NavigateTo($"//{nameof(HomePage)}", true);
     }
 }

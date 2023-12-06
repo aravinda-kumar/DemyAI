@@ -7,5 +7,7 @@ public interface IAuthenticationService {
 
     Task<User?> LoginWithEmailAndPassword(string email, string password);
 
+    Task<User?> GetLoggedInUser();
+
     void SignOut();
 }

@@ -3,7 +3,7 @@ public partial class AppShellViewModel(IAuthenticationService authenticationServ
 
     //This will hold the data of the user that is logged in
     [ObservableProperty]
-    public required Student user;
+    public required Models.User user;
 
     [RelayCommand]
     async Task SignOut() {

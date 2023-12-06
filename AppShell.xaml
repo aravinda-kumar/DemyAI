@@ -100,11 +100,18 @@
             Route="ScheduleLecturePage" />
     </FlyoutItem>
 
-    <ShellContent
+    <FlyoutItem Title="Manage contacts">
+        <ShellContent
+            ContentTemplate="{DataTemplate view:ContactPage}"
+            Route="ContactPage" />
+    </FlyoutItem>
+
+
+    <!--<ShellContent
         ContentTemplate="{DataTemplate view:NoInternetPage}"
         Route="NoInternetPage"
         Shell.FlyoutBehavior="Disabled"
-        Shell.FlyoutItemIsVisible="False" />
+        Shell.FlyoutItemIsVisible="False" />-->
 
 
 
