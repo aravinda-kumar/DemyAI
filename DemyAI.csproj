@@ -57,7 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\user.png" />
+	  <None Remove="Resources\Images\users.svg" />
 	  <None Remove="Resources\Raw\no_data.json" />
 	</ItemGroup>
 
@@ -75,10 +75,11 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.86" />
-		<PackageReference Include="Syncfusion.Licensing" Version="23.2.6" />
-		<PackageReference Include="Syncfusion.Maui.Core" Version="23.2.6" />
-		<PackageReference Include="Syncfusion.Maui.Inputs" Version="23.2.6" />
-		<PackageReference Include="Syncfusion.Maui.Popup" Version="23.2.6" />
+		<PackageReference Include="Syncfusion.Licensing" Version="23.2.7" />
+		<PackageReference Include="Syncfusion.Maui.Core" Version="23.2.7" />
+		<PackageReference Include="Syncfusion.Maui.Expander" Version="23.2.7" />
+		<PackageReference Include="Syncfusion.Maui.Inputs" Version="23.2.7" />
+		<PackageReference Include="Syncfusion.Maui.Popup" Version="23.2.7" />
 	</ItemGroup>
 
 	<ItemGroup>

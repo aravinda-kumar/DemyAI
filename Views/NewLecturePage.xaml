@@ -4,11 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:expander="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:model="clr-namespace:DemyAI.Models"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     Title="NewLecturePage"
-    xmlns:model="clr-namespace:DemyAI.Models"
     x:DataType="vm:NewLecturePageViewModel">
 
     <ContentPage.Behaviors>
@@ -18,28 +19,57 @@
     </ContentPage.Behaviors>
 
 
-    <VerticalStackLayout
-        Margin="10"
-        Spacing="10">
+    <VerticalStackLayout Margin="10,5,5,0">
         <inputLayout:SfTextInputLayout Hint="Name of the leture">
             <Entry />
         </inputLayout:SfTextInputLayout>
 
-        <inputLayout:SfTextInputLayout Hint="Members">
-            <combobox:SfComboBox ItemsSource="{Binding Users}">
-                <combobox:SfComboBox.ItemTemplate>
-                    <DataTemplate x:DataType="model:User">
-                        <Grid ColumnDefinitions="*,*" Margin="20,10,0,0">
-                            <Label
-                                Text="{Binding Name}"
-                                VerticalTextAlignment="Center" />
-                            <CheckBox
-                                Grid.Column="1"
-                                HorizontalOptions="End" />
-                        </Grid>
-                    </DataTemplate>
-                </combobox:SfComboBox.ItemTemplate>
-            </combobox:SfComboBox>
-        </inputLayout:SfTextInputLayout>
+        <expander:SfExpander>
+            <expander:SfExpander.Header>
+                <Grid
+                    ColumnDefinitions="50,*"
+                    ColumnSpacing="10"
+                    RowDefinitions="60">
+
+                    <Image
+                        Aspect="AspectFit"
+                        Source="users.png" />
+                    <Label
+                        Grid.Column="1"
+                        Text="Users invited"
+                        VerticalTextAlignment="Center" />
+                </Grid>
+            </expander:SfExpander.Header>
+            <expander:SfExpander.Content>
+                <CollectionView ItemsSource="{Binding Users}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:User">
+                            <Border>
+                                <Grid
+                                    Margin="5"
+                                    ColumnDefinitions="*"
+                                    RowDefinitions="*,*,*">
+                                    <Label Text="{Binding Name}" />
+                                    <Label
+                                        Grid.Row="1"
+                                        BackgroundColor="Gray"
+                                        HeightRequest="1"
+                                        HorizontalOptions="StartAndExpand" />
+                                    <Label
+                                        Grid.Row="3"
+                                        Text="{Binding Email}" />
+                                    <CheckBox
+                                        Grid.RowSpan="3"
+                                        Grid.Column="2"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="End" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </expander:SfExpander.Content>
+        </expander:SfExpander>
+
     </VerticalStackLayout>
 </ContentPage>
