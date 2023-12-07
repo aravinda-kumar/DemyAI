@@ -1,5 +1,7 @@
 ﻿// Ignore Spelling: Demy
 
+using System.Text.Json.Serialization;
+
 namespace DemyAI.Models;
 public class User {
 
@@ -15,6 +17,7 @@ public class User {
 
     public string Role { get; set; }
 
+    [JsonIgnore]
     public List<Roles> Roles => GetUserRoles();
 
     //public double latitude { get; set; }

@@ -19,42 +19,52 @@
     </ContentPage.Behaviors>
 
 
-    <VerticalStackLayout Margin="10,5,5,0">
-        <inputLayout:SfTextInputLayout Hint="Name of the leture">
+    <VerticalStackLayout
+        Margin="10"
+        Spacing="10">
+
+        <Label
+            FontAttributes="Bold"
+            FontSize="Header"
+            HorizontalTextAlignment="Center"
+            Text="Create a new lecture" />
+
+        <inputLayout:SfTextInputLayout
+            Hint="Name of the leture"
+            HorizontalOptions="StartAndExpand">
             <Entry />
         </inputLayout:SfTextInputLayout>
 
-        <expander:SfExpander>
+        <expander:SfExpander HorizontalOptions="StartAndExpand">
             <expander:SfExpander.Header>
                 <Grid
-                    ColumnDefinitions="50,*"
+                    ColumnDefinitions="50,60"
                     ColumnSpacing="10"
                     RowDefinitions="60">
-
                     <Image
                         Aspect="AspectFit"
                         Source="users.png" />
                     <Label
                         Grid.Column="1"
-                        Text="Users invited"
+                        Text="Students"
                         VerticalTextAlignment="Center" />
                 </Grid>
             </expander:SfExpander.Header>
             <expander:SfExpander.Content>
-                <CollectionView ItemsSource="{Binding Users}">
+                <CollectionView
+                    ItemsSource="{Binding Users}"
+                    SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:User">
-                            <Border>
+                            <Border Margin="2">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
                                 <Grid
-                                    Margin="5"
+                                    Margin="5,5,5,0"
                                     ColumnDefinitions="*"
-                                    RowDefinitions="*,*,*">
+                                    RowDefinitions="*,*">
                                     <Label Text="{Binding Name}" />
-                                    <Label
-                                        Grid.Row="1"
-                                        BackgroundColor="Gray"
-                                        HeightRequest="1"
-                                        HorizontalOptions="StartAndExpand" />
                                     <Label
                                         Grid.Row="3"
                                         Text="{Binding Email}" />
@@ -62,7 +72,9 @@
                                         Grid.RowSpan="3"
                                         Grid.Column="2"
                                         HorizontalOptions="End"
-                                        VerticalOptions="End" />
+                                        IsChecked="{Binding Source={RelativeSource AncestorType={Type vm:NewLecturePageViewModel}}, Path=IsChecked}"
+                                        VerticalOptions="End">
+                                    </CheckBox>
                                 </Grid>
                             </Border>
                         </DataTemplate>
