@@ -1,21 +1,18 @@
-﻿using System.Reactive.Linq;
-
-using User = DemyAI.Models.User;
+﻿using User = DemyAI.Models.User;
 
 namespace DemyAI.ViewModels;
 public partial class NewLecturePageViewModel(IAppService appService, IDataService<User> dataService,
     IAuthenticationService authenticationService) : BaseViewModel {
 
-    [ObservableProperty]
-    bool isChecked;
-
-    partial void OnIsCheckedChanged(bool value) {
-
-    }
-
     public ObservableCollection<User> Users { get; set; } = [];
 
     public ObservableCollection<User> Invited { get; set; } = [];
+
+    [RelayCommand]
+    void StartMeeting() {
+
+        Console.WriteLine($"{Invited.Count}");
+    }
 
     [RelayCommand]
     void Appearing() {
@@ -32,7 +29,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IDataServic
             var data = await dataService.GetAllAsync<User>("Users");
 
             var filterUsers = data
-                .Where(u => u.Object.Uid != currenUser?.Uid)
+                .Where(u => u.Object.Uid != currenUser?.Uid && u.Object.Role == Roles.Student.ToString())
                 .Select(u => u.Object)
                 .ToList();
 
@@ -46,10 +43,10 @@ public partial class NewLecturePageViewModel(IAppService appService, IDataServic
     [RelayCommand]
     void HandleCheckBox(User user) {
 
-        if (IsChecked is false) {
-            appService.DisplayToast("False", ToastDuration.Short, 18);
+        if (user.IsInvited) {
+            Invited.Add(user);
         } else {
-            appService.DisplayToast("true", ToastDuration.Short, 18);
+            Invited.Remove(user);
 
         }
 

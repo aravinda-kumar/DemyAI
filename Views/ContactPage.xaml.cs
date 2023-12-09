@@ -1,9 +1,7 @@
 namespace DemyAI.Views;
 
-public partial class ContactPage : ContentPage
-{
-	public ContactPage()
-	{
-		InitializeComponent();
-	}
+public partial class ContactPage : ContentPage {
+    public ContactPage() {
+        InitializeComponent();
+    }
 }

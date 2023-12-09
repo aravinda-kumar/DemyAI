@@ -1,3 +1,3 @@
-﻿namespace DemyAI.ViewModels; 
+﻿namespace DemyAI.ViewModels;
 public class ScheduleLecturePageViewModel {
 }

@@ -8,7 +8,6 @@ public partial class BaseViewModel : ObservableObject {
     [NotifyPropertyChangedFor(nameof(isNotBusy))]
     bool isBusy;
 
-
     public bool isNotBusy => !IsBusy;
 
 }

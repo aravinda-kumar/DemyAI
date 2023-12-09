@@ -1,9 +1,7 @@
 namespace DemyAI.Views;
 
-public partial class ScheduleTestPage : ContentPage
-{
-	public ScheduleTestPage()
-	{
-		InitializeComponent();
-	}
+public partial class ScheduleTestPage : ContentPage {
+    public ScheduleTestPage() {
+        InitializeComponent();
+    }
 }

@@ -3,6 +3,7 @@
     x:Class="DemyAI.Views.NewLecturePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:chechbox="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:expander="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
@@ -19,9 +20,9 @@
     </ContentPage.Behaviors>
 
 
-    <VerticalStackLayout
+    <Grid
         Margin="10"
-        Spacing="10">
+        RowDefinitions="Auto,80,*">
 
         <Label
             FontAttributes="Bold"
@@ -30,12 +31,16 @@
             Text="Create a new lecture" />
 
         <inputLayout:SfTextInputLayout
+            Grid.Row="1"
             Hint="Name of the leture"
-            HorizontalOptions="StartAndExpand">
+            HorizontalOptions="StartAndExpand"
+            OutlineCornerRadius="8">
             <Entry />
         </inputLayout:SfTextInputLayout>
 
-        <expander:SfExpander HorizontalOptions="StartAndExpand">
+        <expander:SfExpander
+            Grid.Row="2"
+            HorizontalOptions="Start">
             <expander:SfExpander.Header>
                 <Grid
                     ColumnDefinitions="50,60"
@@ -62,19 +67,26 @@
                                 </Border.StrokeShape>
                                 <Grid
                                     Margin="5,5,5,0"
-                                    ColumnDefinitions="*"
+                                    ColumnDefinitions="*,*"
                                     RowDefinitions="*,*">
-                                    <Label Text="{Binding Name}" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="{Binding Name}" />
                                     <Label
                                         Grid.Row="3"
+                                        Grid.Column="1"
                                         Text="{Binding Email}" />
-                                    <CheckBox
+                                    <chechbox:SfCheckBox
                                         Grid.RowSpan="3"
-                                        Grid.Column="2"
                                         HorizontalOptions="End"
-                                        IsChecked="{Binding Source={RelativeSource AncestorType={Type vm:NewLecturePageViewModel}}, Path=IsChecked}"
+                                        IsChecked="{Binding IsInvited}"
                                         VerticalOptions="End">
-                                    </CheckBox>
+                                        <chechbox:SfCheckBox.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={Type vm:NewLecturePageViewModel}}, Path=HandleCheckBoxCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        </chechbox:SfCheckBox.GestureRecognizers>
+                                    </chechbox:SfCheckBox>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -83,5 +95,11 @@
             </expander:SfExpander.Content>
         </expander:SfExpander>
 
-    </VerticalStackLayout>
+        <Button
+            Grid.Row="3"
+            Text="Start meeting"
+            Command="{Binding StartMeetingCommand}"
+            VerticalOptions="EndAndExpand" />
+
+    </Grid>
 </ContentPage>

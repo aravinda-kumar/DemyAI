@@ -1,5 +1,6 @@
 ﻿namespace DemyAI.Services;
 public class AppService : IAppService {
+
     public async Task DisplayAlert(string errorMessage, string message, string cancelMessage) {
         await Shell.Current.DisplayAlert(errorMessage, message, cancelMessage);
     }

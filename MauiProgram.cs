@@ -22,8 +22,8 @@ global using SkiaSharp.Views.Maui.Controls.Hosting;
 global using Syncfusion.Maui.Core.Hosting;
 
 global using System.Collections.ObjectModel;
+global using System.Net.Http.Json;
 global using System.Text.Json;
-
 
 namespace DemyAI {
     public static class MauiProgram {
@@ -48,12 +48,13 @@ namespace DemyAI {
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            var firebaseAuthClient = new FirebaseAuthClient(firebaseAuthConfig);
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-            builder.Services.AddSingleton<IAppService, AppService>();
-            builder.Services.AddTransient(typeof(IDataService<>), typeof(DataService<>));
-            builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddSingleton<HttpClient>();
+
             builder.Services.AddSingleton<AppShell>();
             builder.Services.AddSingleton<AppShellViewModel>();
 
@@ -75,11 +76,13 @@ namespace DemyAI {
             builder.Services.AddSingleton<ScheduleTestPage>();
             builder.Services.AddSingleton<ScheduleTestPageViewModel>();
 
-            builder.Services.AddSingleton(Connectivity.Current);
-
             builder.Services.AddSingleton<NoInternetPage>();
 
-            var firebaseAuthClient = new FirebaseAuthClient(firebaseAuthConfig);
+            builder.Services.AddSingleton<IAppService, AppService>();
+            builder.Services.AddTransient(typeof(IDataService<>), typeof(DataService<>));
+            builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+
+            builder.Services.AddSingleton(Connectivity.Current);
 
             builder.Services.AddSingleton(firebaseAuthClient);
 
@@ -89,6 +92,7 @@ namespace DemyAI {
                 return new AuthenticationService(authService, appService);
             });
 
+            builder.Services.AddSingleton<IMeetingService, MeetingService>();
 
             return builder.Build();
         }

@@ -14,5 +14,4 @@ public partial class AppShellViewModel(IAuthenticationService authenticationServ
 
     }
 
-
 }

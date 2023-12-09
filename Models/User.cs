@@ -1,9 +1,7 @@
-﻿// Ignore Spelling: Demy
-
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace DemyAI.Models;
-public class User {
+public partial class User : BaseViewModel {
 
     public string Uid { get; set; }
 
@@ -19,6 +17,9 @@ public class User {
 
     [JsonIgnore]
     public List<Roles> Roles => GetUserRoles();
+
+    [ObservableProperty]
+    public bool isInvited;
 
     //public double latitude { get; set; }
 

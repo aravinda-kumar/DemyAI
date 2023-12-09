@@ -18,7 +18,6 @@ public partial class LoginPage : ContentPage {
         return current == NetworkAccess.Internet;
     }
 
-
     protected override async void OnAppearing() {
         base.OnAppearing();
 

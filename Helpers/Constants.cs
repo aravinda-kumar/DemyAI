@@ -1,6 +1,5 @@
 ﻿namespace DemyAI.Helpers;
-public class Constants
-{
+public class Constants {
 
     //syncfusion Key
 

@@ -29,7 +29,9 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
             await appService.NavigateTo($"//{nameof(HomePage)}", true);
         }
 
-        IsBusy = false;
+        await
+
+                IsBusy = false;
     }
 
     [RelayCommand]
