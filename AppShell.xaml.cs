@@ -1,12 +1,15 @@
 ﻿namespace DemyAI;
 
 public partial class AppShell : Shell {
-    public AppShell(AppShellViewModel appShellViewModel) {
+    public AppShell(AppShellViewModel appShellViewModel, IAppService appService) {
         InitializeComponent();
 
         BindingContext = appShellViewModel;
         RegisterPages();
-        WeakReferenceMessenger.Default.Register<object>(this, OnUserLoggedIn);
+        WeakReferenceMessenger.Default.Register<User>(this, (sender, data) => {
+            // Handle received user data here
+            // Example: Store it in a property or use it within AppShell
+        });
     }
 
     private void OnUserLoggedIn(object recipient, object message) {
