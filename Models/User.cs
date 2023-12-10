@@ -1,6 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿namespace DemyAI.Models;
 
-namespace DemyAI.Models;
 public partial class User : BaseViewModel {
 
     public string Uid { get; set; }
@@ -40,6 +39,6 @@ public partial class User : BaseViewModel {
 
     public List<Roles> GetUserRoles() {
 
-        return [Helpers.Roles.Teacher, Helpers.Roles.Student];
+        return [Helpers.Roles.Teacher, Helpers.Roles.Student, Helpers.Roles.Admin];
     }
 }

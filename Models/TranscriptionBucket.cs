@@ -1,4 +1,5 @@
 ﻿namespace DemyAI.Models;
+
 public class TranscriptionBucket {
 
     public string BucketName { get; set; }

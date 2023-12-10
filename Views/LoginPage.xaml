@@ -127,7 +127,6 @@
                             CornerRadius="8"
                             IsVisible="{Binding isNotBusy}"
                             Text="Register" />
-
                     </Grid>
                 </DataTemplate>
             </sfPopup:SfPopup.ContentTemplate>

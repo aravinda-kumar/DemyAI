@@ -1,6 +1,7 @@
 ﻿namespace DemyAI.Models;
 
 public class RecordingsBucket {
+
     public string BucketName { get; set; }
 
     public string BucketRegion { get; set; }

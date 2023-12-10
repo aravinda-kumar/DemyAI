@@ -1,5 +1,4 @@
 namespace DemyAI.Views;
-
 public partial class LoginPage : ContentPage {
 
     private readonly IConnectivity _connectivity;

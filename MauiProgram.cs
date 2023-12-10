@@ -3,6 +3,7 @@ global using CommunityToolkit.Maui.Alerts;
 global using CommunityToolkit.Maui.Core;
 global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
+global using CommunityToolkit.Mvvm.Messaging;
 
 global using DemyAI.Helpers;
 global using DemyAI.Interfaces;
@@ -24,6 +25,7 @@ global using Syncfusion.Maui.Core.Hosting;
 global using System.Collections.ObjectModel;
 global using System.Net.Http.Json;
 global using System.Text.Json;
+global using System.Text.Json.Serialization;
 
 namespace DemyAI {
     public static class MauiProgram {
@@ -59,7 +61,7 @@ namespace DemyAI {
             builder.Services.AddSingleton<AppShellViewModel>();
 
             builder.Services.AddSingleton<LoginPage>();
-            builder.Services.AddTransient<LoginPageViewModel>();
+            builder.Services.AddSingleton<LoginPageViewModel>();
 
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<HomePageViewModel>();

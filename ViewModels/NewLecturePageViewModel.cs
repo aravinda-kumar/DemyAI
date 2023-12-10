@@ -15,11 +15,11 @@ public partial class NewLecturePageViewModel(IAppService appService, IDataServic
     }
 
     [RelayCommand]
-    void Appearing() {
-        GetUsers();
+    async Task Appearing() {
+        await GetUsers();
     }
 
-    private async void GetUsers() {
+    private async Task GetUsers() {
         Users.Clear();
 
         var currenUser = await authenticationService.GetLoggedInUser();
