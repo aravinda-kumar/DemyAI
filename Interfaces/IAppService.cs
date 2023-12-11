@@ -35,10 +35,10 @@ public interface IAppService {
     /// <summary>
     /// Displays an alert with an error message, a message, and a cancel option.
     /// </summary>
-    /// <param name="errorMessage">Error message to be displayed in the alert.</param>
+    /// <param name="title">Title of the alert to be displayed in the alert.</param>
     /// <param name="message">Message to be displayed in the alert.</param>
     /// <param name="cancelMessage">Text for the cancel option in the alert.</param>
     /// <returns>Task representing the asynchronous operation.</returns>
     /// 
-    Task DisplayAlert(string errorMessage, string message, string cancelMessage);
+    Task DisplayAlert(string title, string message, string cancelMessage);
 }

@@ -5,16 +5,9 @@ public partial class AppShell : Shell {
         InitializeComponent();
 
         BindingContext = appShellViewModel;
-        RegisterPages();
-        WeakReferenceMessenger.Default.Register<User>(this, (sender, data) => {
-            // Handle received user data here
-            // Example: Store it in a property or use it within AppShell
-        });
+        RegisterPages();       
     }
 
-    private void OnUserLoggedIn(object recipient, object message) {
-        throw new NotImplementedException();
-    }
 
     private void RegisterPages() {
         // Get the assembly where this code is executing

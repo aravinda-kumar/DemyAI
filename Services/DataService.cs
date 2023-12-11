@@ -1,4 +1,5 @@
 ﻿// Ignore Spelling: namespace DemyAI.Services; uid
+
 namespace DemyAI.Services;
 
 public class DataService<T> : IDataService<T> {
@@ -11,12 +12,9 @@ public class DataService<T> : IDataService<T> {
 
     public async Task<string> AddAsync(string nodeName, T newItem) {
         var obj = await _client.Child(nodeName).PostAsync(JsonSerializer.Serialize(newItem));
-        return obj.Key;
+        return obj.Object;
     }
 
-    public Task DeleteAsync(string uid) {
-        throw new NotImplementedException();
-    }
 
     public Task DeleteAsync(string NodeName, string uid) {
         throw new NotImplementedException();
@@ -58,4 +56,5 @@ public class DataService<T> : IDataService<T> {
     public Task UpdateAsync(string uid, T updatedItem) {
         throw new NotImplementedException();
     }
+
 }

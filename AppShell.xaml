@@ -13,43 +13,28 @@
                              Phone=Flyout}">
 
     <Shell.FlyoutHeader>
-        <Grid
-            HeightRequest="{OnIdiom Desktop=200,
-                                    Phone=200}"
-            RowDefinitions="20,60,68">
+        <Grid>
             <BoxView
-                Grid.RowSpan="3"
-                VerticalOptions="Start"
-                BackgroundColor="#2b0b98"
-                HeightRequest="200" />
-            <Image
-                Grid.Row="1"
-                Aspect="AspectFit"
-                HorizontalOptions="Center"
-                Source="user.png"
-                VerticalOptions="Center" />
-            <Label
-                Grid.Row="3"
-                Padding="5"
-                FontAttributes="Bold"
-                FontSize="Body"
-                HorizontalTextAlignment="Center"
-                Text="Demy-IA"
-                TextColor="White" />
-            <!--<Label
-                Grid.Row="3"
-                Margin="0,20,0,0"
-                Padding="5"
-                HorizontalTextAlignment="Center"
-                Text="{Binding User.Email}"
-                TextColor="White" />
-            <Label
-                Grid.Row="3"
-                Padding="5"
-                HorizontalTextAlignment="Center"
-                Text="{Binding User.Id}"
-                TextColor="White"
-                VerticalTextAlignment="End" />-->
+                BackgroundColor="#522cd4"
+                HeightRequest="142" />
+            <VerticalStackLayout>
+                <Image
+                    HeightRequest="80"
+                    Source="User.png"
+                    WidthRequest="80" />
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding User.Id}"
+                    TextColor="White" />
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding User.Email}"
+                    TextColor="White" />
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding User.Role}"
+                    TextColor="White" />
+            </VerticalStackLayout>
         </Grid>
     </Shell.FlyoutHeader>
 
@@ -70,57 +55,55 @@
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False" />
 
-    <FlyoutItem Title="Home">
+    <FlyoutItem Title="Courses">
         <ShellContent
             ContentTemplate="{DataTemplate view:HomePage}"
-            Route="HomePage" />
+            Route="HomePage"
+            Shell.FlyoutItemIsVisible="{Binding IsStudent}" />
     </FlyoutItem>
 
 
     <FlyoutItem Title="New lecture">
         <ShellContent
             ContentTemplate="{DataTemplate view:NewLecturePage}"
-            Route="NewLecturePage" />
+            Route="NewLecturePage"
+            Shell.FlyoutItemIsVisible="{Binding IsTeacher}" />
     </FlyoutItem>
 
     <FlyoutItem Title="New test">
         <ShellContent
             ContentTemplate="{DataTemplate view:NewTestPage}"
-            Route="NewTestPage" />
+            Route="NewTestPage"
+            Shell.FlyoutItemIsVisible="{Binding IsTeacher}" />
     </FlyoutItem>
 
 
     <FlyoutItem Title="Schedule lecture">
         <ShellContent
             ContentTemplate="{DataTemplate view:ScheduleLecturePage}"
-            Route="ScheduleLecturePage" />
+            Route="ScheduleLecturePage"
+            Shell.FlyoutItemIsVisible="{Binding IsTeacher}" />
     </FlyoutItem>
 
     <FlyoutItem Title="Schedule test">
         <ShellContent
             ContentTemplate="{DataTemplate view:ScheduleTestPage}"
-            Route="ScheduleLecturePage" />
+            Route="ScheduleLecturePage"
+            Shell.FlyoutItemIsVisible="{Binding IsTeacher}" />
     </FlyoutItem>
 
     <FlyoutItem Title="Manage participants">
         <ShellContent
             ContentTemplate="{DataTemplate view:ContactPage}"
-            Route="ContactPage" />
+            Route="ContactPage"
+            Shell.FlyoutItemIsVisible="{Binding IsAdmin}" />
     </FlyoutItem>
 
     <FlyoutItem Title="Manage courses">
         <ShellContent
             ContentTemplate="{DataTemplate view:CoursesPage}"
-            Route="CoursesPage" />
+            Route="CoursesPage"
+            Shell.FlyoutItemIsVisible="{Binding IsAdmin}" />
     </FlyoutItem>
-
-
-    <!--<ShellContent
-        ContentTemplate="{DataTemplate view:NoInternetPage}"
-        Route="NoInternetPage"
-        Shell.FlyoutBehavior="Disabled"
-        Shell.FlyoutItemIsVisible="False" />-->
-
-
 
 </Shell>

@@ -2,7 +2,7 @@
 
 namespace DemyAI.ViewModels;
 public partial class LoginPageViewModel(IDataService<User> dataService, IAppService appService,
-    IAuthenticationService authenticationService) : BaseViewModel {
+    IAuthenticationService authenticationService, AppShellViewModel appShellViewModel) : BaseViewModel {
 
     [ObservableProperty]
     bool isPopOpen;
@@ -22,13 +22,13 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
         //var user = await authenticationService.LoginWithEmailAndPassword(User.Email, User.Password);
         var user = await authenticationService.LoginWithEmailAndPassword("admin@admin.com", "111111");
-        if (user != null) {
+        if(user != null) {
 
             var currentUser = await dataService.GetByUidAsync<User>("Users", user.Uid);
 
-            if (currentUser != null) {
+            if(currentUser != null) {
 
-                WeakReferenceMessenger.Default.Send(currentUser, "UserLoggedIn");
+                ManageFlyoutItemsVisibility(currentUser.Role);
 
                 await appService.NavigateTo($"//{nameof(HomePage)}", true);
             }
@@ -39,16 +39,17 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
         IsBusy = false;
     }
 
+
     [RelayCommand]
     async Task Register() {
 
         var IsFilled = await VerifyUserAsync(User);
 
-        if (IsFilled) {
+        if(IsFilled) {
             IsBusy = true;
 
             var user = await authenticationService.RegisterWithEmailAndPassword(User.Email, User.Password);
-            if (user != null) {
+            if(user != null) {
 
                 IsPopOpen = false;
                 User.Uid = user.Uid;
@@ -60,18 +61,18 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
                 await dataService.AddAsync("Users", User);
 
-                await appService.NavigateTo($"//{nameof(HomePage)}", true);
+                await appService.DisplayAlert("Congratulations", "Registration successful", "OK");
+
+                IsPopOpen = false;
+
+                IsBusy = false;
             }
         }
-
-
-
-        IsBusy = false;
     }
 
     private async Task<bool> VerifyUserAsync(User user) {
 
-        if (string.IsNullOrEmpty(user.Name)
+        if(string.IsNullOrEmpty(user.Name)
             && string.IsNullOrEmpty(user.Email)
             && string.IsNullOrEmpty(user.Password)
             && string.IsNullOrEmpty(user.Role)) {
@@ -81,7 +82,23 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
         }
 
         return true;
-
-
     }
+
+    private void ManageFlyoutItemsVisibility(string role) {
+
+        switch(role) {
+            case nameof(Roles.Admin):
+                appShellViewModel.IsAdmin = true;
+                break;
+            case nameof(Roles.Teacher):
+                appShellViewModel.IsTeacher = true;
+                break;
+            case nameof(Roles.Student):
+                appShellViewModel.IsStudent = true;
+                break;
+            default:
+                break;
+        }
+    }
+
 }
