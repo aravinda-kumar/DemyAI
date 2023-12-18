@@ -1,4 +1,6 @@
-﻿namespace DemyAI.Interfaces;
+﻿using User = Firebase.Auth.User;
+
+namespace DemyAI.Interfaces;
 
 /// <summary>
 /// Interface defining the contract for authentication-related services.
@@ -11,7 +13,7 @@ public interface IAuthenticationService {
     /// <param name="password">User's password.</param>
     /// <returns>Task returning a nullable User object upon successful registration.</returns>
 
-    Task<User?> RegisterWithEmailAndPassword(string email, string password);
+    Task<User?> RegisterWithEmailAndPassword(string email, string password, string DisplayName);
 
     /// <summary>
     /// Logs in using a student ID.

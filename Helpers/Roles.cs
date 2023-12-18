@@ -4,5 +4,5 @@ public enum Roles {
 
     Teacher,
     Student,
-    Admin,
+    Coordinator,
 }

@@ -47,8 +47,6 @@ public partial class NewLecturePageViewModel(IAppService appService, IDataServic
             Invited.Add(user);
         } else {
             Invited.Remove(user);
-
         }
-
     }
 }

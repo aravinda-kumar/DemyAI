@@ -121,10 +121,10 @@
                         </inputLayout:SfTextInputLayout>
 
                         <Button
-                            HeightRequest="40"
                             Grid.Row="4"
                             Command="{Binding RegisterCommand}"
                             CornerRadius="8"
+                            HeightRequest="40"
                             IsVisible="{Binding isNotBusy}"
                             Text="Register" />
                     </Grid>

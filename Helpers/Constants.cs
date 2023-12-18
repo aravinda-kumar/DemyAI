@@ -14,4 +14,8 @@ public class Constants {
     public const string VIEWS = "Views";
 
     public const string PAGE = "Page";
+
+    //bing maps api
+
+    public const string MAPKEY = "2MJcwb3sDhOi7KnZYZFz~kBuOXKu5oDgZhJzhgiR6Tg~Akm14AZMJcKfXhu0JgJPCOuYTWsnRF3VWJ91UX0_nHRYa4zl082ffWsy7DV-id6a";
 }

@@ -1,4 +1,6 @@
-﻿namespace DemyAI.Services;
+﻿using User = Firebase.Auth.User;
+
+namespace DemyAI.Services;
 
 public class AuthenticationService(FirebaseAuthClient firebaseAuthClient, IAppService appService) : IAuthenticationService {
 
@@ -8,7 +10,7 @@ public class AuthenticationService(FirebaseAuthClient firebaseAuthClient, IAppSe
 
             return firebaseAuthClient.User;
 
-        } catch (Exception e) {
+        } catch(Exception e) {
 
             await appService.DisplayAlert("error", e.Message, "OK");
             return null;
@@ -22,7 +24,7 @@ public class AuthenticationService(FirebaseAuthClient firebaseAuthClient, IAppSe
             var user = await firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
             return user.User;
 
-        } catch (Exception e) {
+        } catch(Exception e) {
 
             await appService.DisplayAlert("error", e.Message, "OK");
             return null;
@@ -35,14 +37,14 @@ public class AuthenticationService(FirebaseAuthClient firebaseAuthClient, IAppSe
         throw new NotImplementedException();
     }
 
-    public async Task<User?> RegisterWithEmailAndPassword(string email, string password) {
+    public async Task<User?> RegisterWithEmailAndPassword(string email, string password, string name) {
 
         try {
 
-            var user = await firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(email, password);
+            var user = await firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(email, password, name);
             return user.User;
 
-        } catch (Exception e) {
+        } catch(Exception e) {
 
             await appService.DisplayAlert("error", e.Message, "OK");
             return null;

@@ -7,7 +7,7 @@ public partial class AppShellViewModel(IAuthenticationService authenticationServ
     User? user;
 
     [ObservableProperty]
-    bool isAdmin;
+    bool isCoordinator;
 
     [ObservableProperty]
     bool isStudent;

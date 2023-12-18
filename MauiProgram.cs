@@ -3,10 +3,10 @@ global using CommunityToolkit.Maui.Alerts;
 global using CommunityToolkit.Maui.Core;
 global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
-global using CommunityToolkit.Mvvm.Messaging;
 
 global using DemyAI.Helpers;
 global using DemyAI.Interfaces;
+global using DemyAI.Models;
 global using DemyAI.Services;
 global using DemyAI.ViewModels;
 global using DemyAI.Views;
@@ -48,6 +48,9 @@ namespace DemyAI {
                 .ConfigureFonts(fonts => {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                })
+                .ConfigureEssentials(essentials => {
+                    essentials.UseMapServiceToken(Constants.MAPKEY);
                 });
 
             var firebaseAuthClient = new FirebaseAuthClient(firebaseAuthConfig);
@@ -63,8 +66,11 @@ namespace DemyAI {
             builder.Services.AddSingleton<LoginPage>();
             builder.Services.AddSingleton<LoginPageViewModel>();
 
-            builder.Services.AddSingleton<HomePage>();
-            builder.Services.AddSingleton<HomePageViewModel>();
+            builder.Services.AddSingleton<WelcomePage>();
+            builder.Services.AddSingleton<WelcomePageViewModel>();
+
+            builder.Services.AddSingleton<CoursesPage>();
+            builder.Services.AddSingleton<CoursesPageViewModel>();
 
             builder.Services.AddSingleton<NewLecturePage>();
             builder.Services.AddSingleton<NewLecturePageViewModel>();
@@ -79,6 +85,8 @@ namespace DemyAI {
             builder.Services.AddSingleton<ScheduleTestPageViewModel>();
 
             builder.Services.AddSingleton<NoInternetPage>();
+
+            builder.Services.AddSingleton<ManagePage>();
 
             builder.Services.AddSingleton<IAppService, AppService>();
             builder.Services.AddTransient(typeof(IDataService<>), typeof(DataService<>));

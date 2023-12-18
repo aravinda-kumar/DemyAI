@@ -28,9 +28,11 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
             if(currentUser != null) {
 
+                appShellViewModel.User = currentUser;
+
                 ManageFlyoutItemsVisibility(currentUser.Role);
 
-                await appService.NavigateTo($"//{nameof(HomePage)}", true);
+                await appService.NavigateTo($"//{nameof(WelcomePage)}", true);
             }
 
 
@@ -48,16 +50,18 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
         if(IsFilled) {
             IsBusy = true;
 
-            var user = await authenticationService.RegisterWithEmailAndPassword(User.Email, User.Password);
+            var user = await authenticationService.RegisterWithEmailAndPassword(User.Email, User.Password, User.Name);
             if(user != null) {
 
                 IsPopOpen = false;
                 User.Uid = user.Uid;
-                User.Id = User.GenerateRandomNumberString();
+                User.Id = NumberGenerator.GenerateRandomNumberString(8);
                 User.Name = User.Name;
                 User.Email = User.Email;
                 User.Password = BCrypt.Net.BCrypt.HashPassword(User.Password);
                 User.Role = User.Role;
+                User.Location = await LocationHelper.GetMyLocationAsync();
+
 
                 await dataService.AddAsync("Users", User);
 
@@ -87,8 +91,8 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
     private void ManageFlyoutItemsVisibility(string role) {
 
         switch(role) {
-            case nameof(Roles.Admin):
-                appShellViewModel.IsAdmin = true;
+            case nameof(Roles.Coordinator):
+                appShellViewModel.IsCoordinator = true;
                 break;
             case nameof(Roles.Teacher):
                 appShellViewModel.IsTeacher = true;
@@ -100,5 +104,7 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
                 break;
         }
     }
+
+
 
 }
