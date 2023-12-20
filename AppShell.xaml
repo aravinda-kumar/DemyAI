@@ -61,7 +61,7 @@
         Route="WelcomePage"
         Shell.FlyoutItemIsVisible="False" />
 
-    <FlyoutItem Title="Courses" IsVisible="{Binding IsStudent}">
+    <FlyoutItem Title="My courses" IsVisible="{Binding IsStudent}">
         <ShellContent
             ContentTemplate="{DataTemplate view:CoursesPage}"
             Route="CoursesPage" />
@@ -101,8 +101,8 @@
 
     <FlyoutItem Title="Manage courses" IsVisible="{Binding IsCoordinator}">
         <ShellContent
-            ContentTemplate="{DataTemplate view:ManagePage}"
-            Route="ManagePage" />
+            ContentTemplate="{DataTemplate view:ManageCoursePage}"
+            Route="ManageCoursePage" />
     </FlyoutItem>
 
 </Shell>

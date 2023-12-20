@@ -1,7 +1,7 @@
 ﻿using User = DemyAI.Models.User;
 
 namespace DemyAI.ViewModels;
-public partial class ManagePageViewModel(DataService<User> dataService) : ObservableObject {
+public partial class ManageCoursePageViewModel(DataService<User> dataService) : ObservableObject {
 
     public ObservableCollection<User> Users { get; set; } = [];
 

@@ -87,8 +87,8 @@ namespace DemyAI {
 
             builder.Services.AddSingleton<NoInternetPage>();
 
-            builder.Services.AddSingleton<ManagePage>();
-            builder.Services.AddSingleton<ManagePageViewModel>();
+            builder.Services.AddSingleton<ManageCoursePage>();
+            builder.Services.AddSingleton<ManageCoursePageViewModel>();
 
             builder.Services.AddSingleton<IAppService, AppService>();
             builder.Services.AddTransient(typeof(IDataService<>), typeof(DataService<>));

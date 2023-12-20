@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="DemyAI.Views.ManagePage"
+    x:Class="DemyAI.Views.ManageCoursePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
@@ -9,7 +9,7 @@
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
-    x:DataType="vm:ManagePageViewModel">
+    x:DataType="vm:ManageCoursePageViewModel">
 
     <ContentPage.Behaviors>
         <mct:EventToCommandBehavior
