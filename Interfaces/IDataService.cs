@@ -7,16 +7,20 @@ public interface IDataService<T> {
     /// <summary>
     /// Retrieves an entity by its UID asynchronously.
     /// </summary>
-    /// <param name="nodeName">Name of the node where the entity is located.</param>
+    /// <param name="nodeName">UID of the node where the entity is located.</param>
     /// <param name="uid">UID (Unique Identifier) of the entity to retrieve.</param>
     /// <returns>Task returning a nullable entity object of type T.</returns>
 
     Task<T?> GetByUidAsync<T>(string nodeName, string uid);
 
+    // TODO Create comment
+
+    Task<ObservableCollection<T>> GetByRole<T>(string nodeName, string role);
+
     /// <summary>
     /// Retrieves all entities of type T from the specified node asynchronously.
     /// </summary>
-    /// <param name="nodeNem">Name of the node from which to retrieve entities.</param>
+    /// <param name="nodeNem">ROLE of the node from which to retrieve entities.</param>
     /// <returns>Task returning a read-only collection of FirebaseObject containing entities of type T.</returns>
 
     Task<IReadOnlyCollection<FirebaseObject<T>>> GetAllAsync<T>(string nodeName);
@@ -24,7 +28,7 @@ public interface IDataService<T> {
     /// <summary>
     /// Adds a new item of type T to the specified node asynchronously.
     /// </summary>
-    /// <param name="nodeName">Name of the node where the new item will be added.</param>
+    /// <param name="nodeName">ROLE of the node where the new item will be added.</param>
     /// <param name="newItem">Item of type T to be added.</param>
     /// <returns>Task returning the UID (Unique Identifier) of the newly added item as a string.</returns>
 

@@ -55,7 +55,7 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
                 IsPopOpen = false;
                 User.Uid = user.Uid;
-                User.Id = NumberGenerator.GenerateRandomNumberString(8);
+                User.DemyId = NumberGenerator.GenerateRandomNumberString(8);
                 User.Name = User.Name;
                 User.Email = User.Email;
                 User.Password = BCrypt.Net.BCrypt.HashPassword(User.Password);

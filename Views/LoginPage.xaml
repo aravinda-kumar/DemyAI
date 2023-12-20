@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:helpers="clr-namespace:DemyAI.Helpers"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
@@ -24,13 +25,13 @@
             WidthRequest="100"
             Color="#422777" />
 
-        <Image
-            Aspect="AspectFit"
-            HeightRequest="100"
-            HorizontalOptions="Center"
+        <Label
+            FontFamily="Mat"
+            FontSize="94"
+            HorizontalTextAlignment="Center"
             IsVisible="{Binding isNotBusy}"
-            Source="firebase.png"
-            VerticalOptions="Center" />
+            Text="{Static helpers:IconFont.Cloud_queue}"
+            VerticalTextAlignment="Center" />
 
         <inputLayout:SfTextInputLayout
             Grid.Row="1"

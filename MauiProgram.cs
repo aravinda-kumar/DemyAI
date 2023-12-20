@@ -48,6 +48,7 @@ namespace DemyAI {
                 .ConfigureFonts(fonts => {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("MaterialIconsRound-Regular.otf", "Mat");
                 })
                 .ConfigureEssentials(essentials => {
                     essentials.UseMapServiceToken(Constants.MAPKEY);
@@ -87,6 +88,7 @@ namespace DemyAI {
             builder.Services.AddSingleton<NoInternetPage>();
 
             builder.Services.AddSingleton<ManagePage>();
+            builder.Services.AddSingleton<ManagePageViewModel>();
 
             builder.Services.AddSingleton<IAppService, AppService>();
             builder.Services.AddTransient(typeof(IDataService<>), typeof(DataService<>));

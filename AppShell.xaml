@@ -20,11 +20,11 @@
             <VerticalStackLayout>
                 <Image
                     HeightRequest="80"
-                    Source="User.png"
+                    Source="user.png"
                     WidthRequest="80" />
                 <Label
                     HorizontalTextAlignment="Center"
-                    Text="{Binding User.Id}"
+                    Text="{Binding User.DemyId}"
                     TextColor="White" />
                 <Label
                     HorizontalTextAlignment="Center"

@@ -16,34 +16,24 @@ public partial class NewLecturePageViewModel(IAppService appService, IDataServic
 
     [RelayCommand]
     async Task Appearing() {
-        await GetUsers();
+        await GetStudents();
     }
 
-    private async Task GetUsers() {
+    private async Task GetStudents() {
         Users.Clear();
 
-        var currenUser = await authenticationService.GetLoggedInUser();
+        var data = await dataService.GetByRole<User>("Users", Roles.Student.ToString());
 
-        if (currenUser != null) {
+        foreach(var filterUser in data) {
 
-            var data = await dataService.GetAllAsync<User>("Users");
-
-            var filterUsers = data
-                .Where(u => u.Object.Uid != currenUser?.Uid && u.Object.Role == Roles.Student.ToString())
-                .Select(u => u.Object)
-                .ToList();
-
-            foreach (var filterUser in filterUsers) {
-
-                Users.Add(filterUser);
-            }
+            Users.Add(filterUser);
         }
     }
 
     [RelayCommand]
     void HandleCheckBox(User user) {
 
-        if (user.IsInvited) {
+        if(user.IsInvited) {
             Invited.Add(user);
         } else {
             Invited.Remove(user);

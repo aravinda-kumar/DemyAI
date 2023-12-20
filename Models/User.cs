@@ -6,7 +6,7 @@ public partial class User : BaseViewModel {
 
     public string Name { get; set; }
 
-    public string Id { get; set; }
+    public string DemyId { get; set; }
 
     public string Email { get; set; }
 

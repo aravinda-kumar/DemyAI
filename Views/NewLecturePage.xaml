@@ -6,11 +6,11 @@
     xmlns:chechbox="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:expander="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
+    xmlns:helpers="clr-namespace:DemyAI.Helpers"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:model="clr-namespace:DemyAI.Models"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
-    Title="NewLecturePage"
     x:DataType="vm:NewLecturePageViewModel">
 
     <ContentPage.Behaviors>
@@ -46,9 +46,12 @@
                     ColumnDefinitions="50,60"
                     ColumnSpacing="10"
                     RowDefinitions="60">
-                    <Image
-                        Aspect="AspectFit"
-                        Source="users.png" />
+                    <Label
+                        FontFamily="Mat"
+                        FontSize="Header"
+                        HorizontalTextAlignment="Center"
+                        Text="{Static helpers:IconFont.Group}"
+                        VerticalTextAlignment="Center" />
                     <Label
                         Grid.Column="1"
                         Text="Students"
@@ -97,8 +100,8 @@
 
         <Button
             Grid.Row="3"
-            Text="Start meeting"
             Command="{Binding StartMeetingCommand}"
+            Text="Start meeting"
             VerticalOptions="EndAndExpand" />
 
     </Grid>

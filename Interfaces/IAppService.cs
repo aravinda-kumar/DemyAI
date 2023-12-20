@@ -6,7 +6,7 @@ public interface IAppService {
     /// <summary>
     /// Navigates to a specified page with animation and optional parameters.
     /// </summary>
-    /// <param name="pageName">Name of the page to navigate to.</param>
+    /// <param name="pageName">UID of the page to navigate to.</param>
     /// <param name="isAnimated">Boolean indicating if navigation includes animation.</param>
     /// <param name="obj">Dictionary of optional parameters for the navigation.</param>
     /// <returns>Task representing the asynchronous operation.</returns>
@@ -16,7 +16,7 @@ public interface IAppService {
     /// <summary>
     /// Navigates to a specified page with animation.
     /// </summary>
-    /// <param name="pageName">Name of the page to navigate to.</param>
+    /// <param name="pageName">UID of the page to navigate to.</param>
     /// <param name="isAnimated">Boolean indicating if navigation includes animation.</param>
     /// <returns>Task representing the asynchronous operation.</returns>
     /// 
