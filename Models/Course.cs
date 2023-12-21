@@ -8,13 +8,20 @@ public class Course {
 
     public string Name { get; set; }
 
-    public string Description { get; set; }
+    public string ProfessorName { get; set; }
+
+    public string ProfessorEmail { get; set; }
 
     public string teacher { get; set; }
 
-    public DateTime initialDate { get; set; }
+    public DateTime? initialDate { get; set; }
 
-    public DateTime endDate { get; set; }
+    public DateTime? endDate { get; set; }
+
+    public List<string>? students { get; set; }
+
+    public bool isTeacher { get; set; }
+
 
 }
 

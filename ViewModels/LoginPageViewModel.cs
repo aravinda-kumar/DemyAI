@@ -54,14 +54,6 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
             if(user != null) {
 
                 IsPopOpen = false;
-                User.Uid = user.Uid;
-                User.DemyId = NumberGenerator.GenerateRandomNumberString(8);
-                User.Name = User.Name;
-                User.Email = User.Email;
-                User.Password = BCrypt.Net.BCrypt.HashPassword(User.Password);
-                User.Role = User.Role;
-                User.Location = await LocationHelper.GetMyLocationAsync();
-
 
                 await dataService.AddAsync("Users", User);
 
@@ -78,7 +70,6 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
         if(string.IsNullOrEmpty(user.Name)
             && string.IsNullOrEmpty(user.Email)
-            && string.IsNullOrEmpty(user.Password)
             && string.IsNullOrEmpty(user.Role)) {
 
             await appService.DisplayAlert("Error", "Please make sure everything is filed", "OK");

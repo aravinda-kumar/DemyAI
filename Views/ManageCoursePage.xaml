@@ -4,10 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
+    xmlns:chechbox="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:expander="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
     xmlns:helpers="clr-namespace:DemyAI.Helpers"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:models="clr-namespace:DemyAI.Models"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     x:DataType="vm:ManageCoursePageViewModel">
 
@@ -16,44 +19,111 @@
             Command="{Binding AppearingCommand}"
             EventName="Appearing" />
     </ContentPage.Behaviors>
-    
-    <Grid
-        Margin="10"
-        ColumnDefinitions="*,*"
-        RowDefinitions="100,100,100,*">
-        <inputLayout:SfTextInputLayout
-            Grid.ColumnSpan="2"
-            Hint="Coure name"
-            IsHintAlwaysFloated="True"
-            OutlineCornerRadius="8">
-            <Entry />
-        </inputLayout:SfTextInputLayout>
 
-        <expander:SfExpander
-            Grid.Row="1"
-            Grid.ColumnSpan="2">
-            <expander:SfExpander.Header>
-                <Grid
-                    ColumnDefinitions="80,280"
-                    ColumnSpacing="10"
-                    RowDefinitions="60">
-                    <Label
-                        FontFamily="Mat"
-                        FontSize="Header"
-                        HorizontalTextAlignment="Center"
-                        Text="{Static helpers:IconFont.Group}"
-                        VerticalTextAlignment="Center" />
-                    <Label
-                        Grid.Column="1"
-                        Text="Select the range of dates for registration"
-                        VerticalTextAlignment="Center" />
-                </Grid>
-            </expander:SfExpander.Header>
-            <expander:SfExpander.Content>
-                <CollectionView>
-                    
-                </CollectionView>
-            </expander:SfExpander.Content>
-        </expander:SfExpander>
-    </Grid>
+    <ScrollView>
+        <Grid
+            Margin="10"
+            ColumnDefinitions="*,*"
+            RowDefinitions="100,Auto,Auto,*"
+            RowSpacing="5">
+            <inputLayout:SfTextInputLayout
+                Grid.ColumnSpan="2"
+                Hint="Coure name"
+                IsHintAlwaysFloated="True"
+                OutlineCornerRadius="8">
+                <Entry Text="{Binding Course.Name}" />
+            </inputLayout:SfTextInputLayout>
+
+            <expander:SfExpander
+                Grid.Row="1"
+                Grid.ColumnSpan="2">
+                <expander:SfExpander.Header>
+                    <Grid
+                        ColumnDefinitions="Auto,*"
+                        ColumnSpacing="10">
+                        <Label
+                            FontFamily="Mat"
+                            FontSize="Header"
+                            Text="{Static helpers:IconFont.Group}" />
+                        <Label
+                            Grid.Column="1"
+                            Text="Teachers" />
+                    </Grid>
+                </expander:SfExpander.Header>
+                <expander:SfExpander.Content>
+                    <CollectionView ItemsSource="{Binding Teachers}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:User">
+                                <Border Margin="0,10,0,0">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*"
+                                        RowDefinitions="25,35">
+                                        <Label
+                                            Grid.Column="1"
+                                            Text="{Binding Name}" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Text="{Binding Email}" />
+                                        <chechbox:SfCheckBox IsChecked="{Binding IsAssigned}">
+                                            <chechbox:SfCheckBox.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={Type vm:ManageCoursePageViewModel}}, Path=HandleCheckBoxCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            </chechbox:SfCheckBox.GestureRecognizers>
+                                        </chechbox:SfCheckBox>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </expander:SfExpander.Content>
+            </expander:SfExpander>
+
+            <expander:SfExpander
+                Grid.Row="2"
+                Grid.ColumnSpan="2">
+                <expander:SfExpander.Header>
+                    <Grid
+                        ColumnDefinitions="Auto,*"
+                        ColumnSpacing="10">
+                        <Label
+                            FontFamily="Mat"
+                            FontSize="Header"
+                            Text="{Static helpers:IconFont.Calendar_month}" />
+                        <Label
+                            Grid.Column="1"
+                            Text="Registration period" />
+                    </Grid>
+                </expander:SfExpander.Header>
+                <expander:SfExpander.Content>
+                    <Border
+                        HorizontalOptions="Start"
+                        WidthRequest="400">
+                        <calendar:SfCalendar
+                            x:Name="calendar"
+                            EnableSwipeSelection="True"
+                            HeightRequest="300"
+                            HorizontalOptions="Start"
+                            MinimumDate="{Binding Source={Static sys:DateTime.Today}}"
+                            SelectionMode="Range"
+                            VerticalOptions="Center"
+                            WidthRequest="300" />
+                    </Border>
+
+
+                </expander:SfExpander.Content>
+            </expander:SfExpander>
+
+            <Button
+                Grid.Row="4"
+                Grid.ColumnSpan="2"
+                Margin="10"
+                Command="{Binding CreateCourseCommand}"
+                CommandParameter="{Binding Source={x:Reference calendar}, Path=SelectedDateRange}"
+                Text="Create course"
+                VerticalOptions="End" />
+        </Grid>
+    </ScrollView>
+
 </ContentPage>

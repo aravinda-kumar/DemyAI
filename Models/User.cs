@@ -2,15 +2,20 @@
 
 public partial class User : BaseViewModel {
 
+    private string _password;
+
     public string Uid { get; set; }
 
     public string Name { get; set; }
 
-    public string DemyId { get; set; }
+    public string DemyId => NumberGenerator.GenerateRandomNumberString(8);
 
     public string Email { get; set; }
 
-    public string Password { get; set; }
+    public string Password {
+        get => _password;
+        private init => _password = BCrypt.Net.BCrypt.HashPassword(value);
+    }
 
     public string Role { get; set; }
 
@@ -21,6 +26,9 @@ public partial class User : BaseViewModel {
 
     [ObservableProperty]
     public bool isInvited;
+
+    [ObservableProperty]
+    public bool isAssigned;
 
     //public double latitude { get; set; }
 

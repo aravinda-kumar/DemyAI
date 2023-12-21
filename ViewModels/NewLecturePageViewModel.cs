@@ -1,8 +1,8 @@
 ﻿using User = DemyAI.Models.User;
 
 namespace DemyAI.ViewModels;
-public partial class NewLecturePageViewModel(IAppService appService, IDataService<User> dataService,
-    IAuthenticationService authenticationService) : BaseViewModel {
+
+public partial class NewLecturePageViewModel(IAppService appService, IDataService<User> dataService) : BaseViewModel {
 
     public ObservableCollection<User> Users { get; set; } = [];
 
@@ -32,6 +32,8 @@ public partial class NewLecturePageViewModel(IAppService appService, IDataServic
 
     [RelayCommand]
     void HandleCheckBox(User user) {
+
+        //TODO Update database
 
         if(user.IsInvited) {
             Invited.Add(user);
