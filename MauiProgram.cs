@@ -87,6 +87,8 @@ namespace DemyAI {
 
             builder.Services.AddSingleton<NoInternetPage>();
 
+            builder.Services.AddSingleton<CourseRegistrationPage>();
+
             builder.Services.AddSingleton<ManageCoursePage>();
             builder.Services.AddSingleton<ManageCoursePageViewModel>();
 

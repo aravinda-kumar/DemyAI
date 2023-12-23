@@ -92,6 +92,9 @@
 	  <Compile Update="Views\NewTestPage.xaml.cs">
 	    <DependentUpon>NewTestPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\CourseRegistrationPage.xaml.cs">
+	    <DependentUpon>CourseRegistrationPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\ScheduleLecturePage.xaml.cs">
 	    <DependentUpon>ScheduleLecturePage.xaml</DependentUpon>
 	  </Compile>

@@ -15,6 +15,20 @@ public partial class AppShellViewModel(IAuthenticationService authenticationServ
     [ObservableProperty]
     bool isTeacher;
 
+    [ObservableProperty]
+    bool isRegisterOpen;
+
+    public void CheckRegistrationReminderOpen(IReadOnlyCollection<FirebaseObject<Course>> courses) {
+
+        var today = DateTime.Today;
+        bool isOpen = courses.Any(course => {
+            DateTime dateTime = DateTime.Parse(course.Object.EndRegistrationDate);
+            return today <= dateTime;
+        });
+        IsRegisterOpen = isOpen;
+
+    }
+
     [RelayCommand]
     async Task SignOut() {
 

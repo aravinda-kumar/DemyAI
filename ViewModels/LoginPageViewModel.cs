@@ -28,9 +28,12 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
             if(currentUser != null) {
 
-                appShellViewModel.User = currentUser;
+                var courses = await dataService.GetAllAsync<Course>("Courses"); 
+                appShellViewModel.CheckRegistrationReminderOpen(courses);
 
                 ManageFlyoutItemsVisibility(currentUser.Role);
+
+                appShellViewModel.User = currentUser;
 
                 await appService.NavigateTo($"//{nameof(WelcomePage)}", true);
             }
@@ -54,6 +57,8 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
             if(user != null) {
 
                 IsPopOpen = false;
+
+                User.DemyId = NumberGenerator.GenerateRandomNumberString(8);
 
                 await dataService.AddAsync("Users", User);
 
@@ -95,7 +100,4 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
                 break;
         }
     }
-
-
-
 }

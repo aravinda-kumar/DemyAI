@@ -61,45 +61,67 @@
         Route="WelcomePage"
         Shell.FlyoutItemIsVisible="False" />
 
-    <FlyoutItem Title="My courses" IsVisible="{Binding IsStudent}">
+    <FlyoutItem
+        Title="My courses"
+        IsVisible="{Binding IsStudent}">
         <ShellContent
             ContentTemplate="{DataTemplate view:CoursesPage}"
             Route="CoursesPage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Join Meeting" IsVisible="{Binding IsStudent}">
+    <FlyoutItem
+        Title="Join Meeting"
+        IsVisible="{Binding IsStudent}">
         <ShellContent
             ContentTemplate="{DataTemplate view:JoinMeetingPage}"
             Route="JoinMeetingPage" />
     </FlyoutItem>
 
 
-    <FlyoutItem Title="New lecture" IsVisible="{Binding IsTeacher}">
+    <FlyoutItem
+        Title="New lecture"
+        IsVisible="{Binding IsTeacher}">
         <ShellContent
             ContentTemplate="{DataTemplate view:NewLecturePage}"
             Route="NewLecturePage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="New test" IsVisible="{Binding IsTeacher}">
+    <FlyoutItem
+        Title="New test"
+        IsVisible="{Binding IsTeacher}">
         <ShellContent
             ContentTemplate="{DataTemplate view:NewTestPage}"
             Route="NewTestPage" />
     </FlyoutItem>
 
 
-    <FlyoutItem Title="Schedule lecture" IsVisible="{Binding IsTeacher}">
+    <FlyoutItem
+        Title="Schedule lecture"
+        IsVisible="{Binding IsTeacher}">
         <ShellContent
             ContentTemplate="{DataTemplate view:ScheduleLecturePage}"
             Route="ScheduleLecturePage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Schedule test" IsVisible="{Binding IsTeacher}">
+    <FlyoutItem
+        Title="Schedule test"
+        IsVisible="{Binding IsTeacher}">
         <ShellContent
             ContentTemplate="{DataTemplate view:ScheduleTestPage}"
             Route="ScheduleLecturePage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Manage courses" IsVisible="{Binding IsCoordinator}">
+    <FlyoutItem
+        Title="Registration Reminder"
+        IsVisible="{Binding IsRegisterOpen}">
+        <ShellContent
+            ContentTemplate="{DataTemplate view:CourseRegistrationPage}"
+            Route="CourseRegistrationPage" />
+    </FlyoutItem>
+
+    <FlyoutItem
+        Title="Manage courses"
+        IsVisible="{Binding IsCoordinator}">
         <ShellContent
             ContentTemplate="{DataTemplate view:ManageCoursePage}"
             Route="ManageCoursePage" />

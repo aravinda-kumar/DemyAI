@@ -4,7 +4,7 @@ public class Course {
 
     public string Uid { get; set; }
 
-    public string DemyId { get; set; } = NumberGenerator.GenerateRandomNumberString(4);
+    public string DemyId { get; set; }
 
     public string Name { get; set; }
 
@@ -12,16 +12,14 @@ public class Course {
 
     public string ProfessorEmail { get; set; }
 
-    public string teacher { get; set; }
+    public string InitialRegistrationDate { get; set; }
 
-    public DateTime? initialDate { get; set; }
-
-    public DateTime? endDate { get; set; }
+    public string EndRegistrationDate { get; set; }
 
     public List<string>? students { get; set; }
 
-    public bool isTeacher { get; set; }
+    public string professorAssigned { get; set; }
 
-
+    public bool isCourseOpen { get; set; }
 }
 

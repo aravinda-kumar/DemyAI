@@ -32,7 +32,7 @@ public interface IDataService<T> {
     /// <param name="newItem">Item of type T to be added.</param>
     /// <returns>Task returning the UID (Unique Identifier) of the newly added item as a string.</returns>
 
-    Task<string> AddAsync(string nodeName, T newItem);
+    Task<string> AddAsync<T>(string nodeName, T newItem);
 
     /// <summary>
     /// Updates an existing item of type T identified by its UID asynchronously.
@@ -41,7 +41,7 @@ public interface IDataService<T> {
     /// <param name="updatedItem">Updated item of type T.</param>
     /// <returns>Task representing the completion of the update operation.</returns>
 
-    Task UpdateAsync(string uid, T updatedItem);
+    Task UpdateAsync<T>(string nodeName, string Key, string propertyValue, string propertyName);
 
     /// <summary>
     /// Deletes an item identified by its UID asynchronously.
@@ -49,4 +49,6 @@ public interface IDataService<T> {
     /// <param name="uid">UID (Unique Identifier) of the item to delete.</param>
     /// <returns>Task representing the completion of the delete operation.</returns>
     Task DeleteAsync(string NodeName, string uid);
+
+    Task<bool> UpdateRegistrationCourseVisibility();
 }

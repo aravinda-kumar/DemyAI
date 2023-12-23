@@ -1,19 +1,21 @@
 ﻿// Ignore Spelling: namespace DemyAI.Services; uid
 
+using Firebase.Database.Query;
 namespace DemyAI.Services;
 
 public class DataService<T> : IDataService<T> {
     private const string UID = "Uid";
     private const string ROLE = "Role";
+    private const string Courses = "Courses";
     readonly FirebaseClient _client;
 
     public DataService() {
         _client = new FirebaseClient(Constants.DATABASE_URL);
     }
 
-    public async Task<string> AddAsync(string nodeName, T newItem) {
+    public async Task<string> AddAsync<T>(string nodeName, T newItem) {
         var obj = await _client.Child(nodeName).PostAsync(JsonSerializer.Serialize(newItem));
-        return obj.Object;
+        return obj.Key;
     }
 
 
@@ -82,8 +84,28 @@ public class DataService<T> : IDataService<T> {
     }
 
 
-    public Task UpdateAsync(string uid, T updatedItem) {
-        throw new NotImplementedException();
+    public async Task UpdateAsync<T>(string nodeName, string Key, string propertyValue, string propertyName) {
+
+        await _client.Child(nodeName).Child(Key).PatchAsync($"{{ \"{propertyName}\" : \"{propertyValue}\" }}");
     }
 
+
+
+    public async Task<bool> UpdateRegistrationCourseVisibility() {
+
+        var todaysdate = DateTime.Now;
+
+        var corseslist = await _client.Child(Courses).OnceAsync<Course>();
+
+        foreach(var item in corseslist) {
+
+            var endRegitrationDate = DateTime.Parse(item.Object.EndRegistrationDate).Date;
+
+            if(todaysdate < endRegitrationDate) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
