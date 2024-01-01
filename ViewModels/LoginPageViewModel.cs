@@ -21,14 +21,14 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
         IsBusy = true;
 
         //var user = await authenticationService.LoginWithEmailAndPassword(User.Email, User.Password);
-        var user = await authenticationService.LoginWithEmailAndPassword("admin@admin.com", "111111");
+        var user = await authenticationService.LoginWithEmailAndPassword("egomezr@outlook.com", "111111");
         if(user != null) {
 
             var currentUser = await dataService.GetByUidAsync<User>("Users", user.Uid);
 
             if(currentUser != null) {
 
-                var courses = await dataService.GetAllAsync<Course>("Courses"); 
+                var courses = await dataService.GetAllAsync<Course>("Courses");
                 appShellViewModel.CheckRegistrationReminderOpen(courses);
 
                 ManageFlyoutItemsVisibility(currentUser.Role);

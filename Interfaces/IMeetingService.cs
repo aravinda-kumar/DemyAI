@@ -7,5 +7,5 @@ public interface IMeetingService {
     /// <param name="title"> Title of the meeting </param>
     /// <returns> Returns the url of the meeting </returns>
 
-    Task<string> CreateMeetingAsync(string title);
+    Task<string> CreateMeetingAsync(string title, MeetingOptions meetingOptions, string authToken);
 }

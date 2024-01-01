@@ -1,3 +1,3 @@
 ﻿namespace DemyAI.ViewModels;
-public class ScheduleLecturePageViewModel {
+public class ScheduleLecturePageViewModel : BaseViewModel {
 }

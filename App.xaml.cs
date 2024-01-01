@@ -7,4 +7,5 @@ public partial class App : Application {
 
         MainPage = shell;
     }
+
 }

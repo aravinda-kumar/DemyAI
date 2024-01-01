@@ -70,7 +70,7 @@
                                             Grid.Row="1"
                                             Grid.Column="1"
                                             Text="{Binding Email}" />
-                                        <chechbox:SfCheckBox IsChecked="{Binding IsAssigned}">
+                                        <chechbox:SfCheckBox IsChecked="{Binding IsAssignedToCourse}">
                                             <chechbox:SfCheckBox.GestureRecognizers>
                                                 <TapGestureRecognizer
                                                     Command="{Binding Source={RelativeSource AncestorType={Type vm:ManageCoursePageViewModel}}, Path=HandleCheckBoxCommand}"

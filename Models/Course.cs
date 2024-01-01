@@ -16,10 +16,10 @@ public class Course {
 
     public string EndRegistrationDate { get; set; }
 
-    public List<string>? students { get; set; }
+    public List<string> Students { get; set; } = [];
 
-    public string professorAssigned { get; set; }
+    public List<string> ProfessorsAssigned { get; set; } = [];
 
-    public bool isCourseOpen { get; set; }
+    public bool IsCourseOpen { get; set; }
 }
 

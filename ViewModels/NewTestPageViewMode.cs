@@ -1,3 +1,3 @@
 ﻿namespace DemyAI.ViewModels;
-class NewTestPageViewMode {
+public class NewTestPageViewMode : BaseViewModel {
 }

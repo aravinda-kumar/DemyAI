@@ -1,4 +1,4 @@
-﻿using Syncfusion.Maui.Calendar;
+﻿
 
 using User = DemyAI.Models.User;
 
@@ -36,6 +36,23 @@ public partial class ManageCoursePageViewModel(IDataService<User> dataService, I
     [RelayCommand]
     async Task CreateCourse(CalendarDateRange dateRange) {
 
+        if(string.IsNullOrEmpty(Course.Name)) {
+            await appService.DisplayAlert("Error", "You cannot create a course without a name", "OK");
+            return;
+        }
+
+        if(User is null) {
+            await appService.DisplayAlert("Error", "You cannot create a course without assigning a teacher", "OK");
+            return;
+        }
+
+        if(dateRange is null) {
+            await appService.DisplayAlert("Error", "You cannot create a course without registration dates", "OK");
+            return;
+        }
+
+
+
         var todayDate = DateTime.Today.ToString("d");
 
         Course.Uid = string.Empty;
@@ -45,10 +62,10 @@ public partial class ManageCoursePageViewModel(IDataService<User> dataService, I
         Course.EndRegistrationDate = dateRange.EndDate!.Value.ToString("d");
         Course.ProfessorName = User.Name;
         Course.ProfessorEmail = User.Email;
-        Course.professorAssigned = User.Uid;
+        Course.ProfessorsAssigned.Add(User.Uid);
 
         if(todayDate == Course.InitialRegistrationDate) {
-            Course.isCourseOpen = true;
+            Course.IsCourseOpen = true;
         }
 
         var cousesList = await dataService.GetAllAsync<Course>("Courses");
@@ -77,8 +94,7 @@ public partial class ManageCoursePageViewModel(IDataService<User> dataService, I
     [RelayCommand]
     void HandleCheckBox(User user) {
 
-        if(user != null && user.IsAssigned == true) {
-
+        if(user != null && user.IsAssignedToCourse == true) {
             User = user;
         }
     }

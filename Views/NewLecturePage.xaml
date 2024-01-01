@@ -35,7 +35,7 @@
             Hint="Name of the leture"
             HorizontalOptions="StartAndExpand"
             OutlineCornerRadius="8">
-            <Entry />
+            <Entry Text="{Binding RoomName}" />
         </inputLayout:SfTextInputLayout>
 
         <expander:SfExpander
@@ -70,7 +70,7 @@
                                 </Border.StrokeShape>
                                 <Grid
                                     Margin="5,5,5,0"
-                                    ColumnDefinitions="*,*"
+                                    ColumnDefinitions="40,*"
                                     RowDefinitions="*,*">
                                     <Label
                                         Grid.Column="1"
@@ -82,7 +82,7 @@
                                     <chechbox:SfCheckBox
                                         Grid.RowSpan="3"
                                         HorizontalOptions="End"
-                                        IsChecked="{Binding IsInvited}"
+                                        IsChecked="{Binding IsParticipant}"
                                         VerticalOptions="End">
                                         <chechbox:SfCheckBox.GestureRecognizers>
                                             <TapGestureRecognizer

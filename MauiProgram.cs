@@ -20,10 +20,12 @@ global using Microsoft.Maui.Controls;
 
 global using SkiaSharp.Views.Maui.Controls.Hosting;
 
+global using Syncfusion.Maui.Calendar;
 global using Syncfusion.Maui.Core.Hosting;
 
 global using System.Collections.ObjectModel;
 global using System.Net.Http.Json;
+global using System.Text;
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
 
@@ -61,40 +63,33 @@ namespace DemyAI {
 #endif
             builder.Services.AddSingleton<HttpClient>();
 
-            builder.Services.AddSingleton<AppShell>();
-            builder.Services.AddSingleton<AppShellViewModel>();
+            builder.Services.AddSingleton<AppShell, AppShellViewModel>();
 
-            builder.Services.AddSingleton<LoginPage>();
-            builder.Services.AddSingleton<LoginPageViewModel>();
+            builder.Services.AddSingleton<LoginPage, LoginPageViewModel>();
 
-            builder.Services.AddSingleton<WelcomePage>();
-            builder.Services.AddSingleton<WelcomePageViewModel>();
+            builder.Services.AddSingleton<WelcomePage, WelcomePageViewModel>();
 
-            builder.Services.AddSingleton<CoursesPage>();
-            builder.Services.AddSingleton<CoursesPageViewModel>();
+            builder.Services.AddSingleton<CoursesPage, CoursesPageViewModel>();
 
-            builder.Services.AddSingleton<NewLecturePage>();
-            builder.Services.AddSingleton<NewLecturePageViewModel>();
+            builder.Services.AddSingleton<NewLecturePage, NewLecturePageViewModel>();
 
-            builder.Services.AddSingleton<NewTestPage>();
-            builder.Services.AddSingleton<NewTestPageViewMode>();
+            builder.Services.AddSingleton<NewTestPage, NewTestPageViewMode>();
 
-            builder.Services.AddSingleton<ScheduleLecturePage>();
-            builder.Services.AddSingleton<ScheduleLecturePageViewModel>();
+            builder.Services.AddSingleton<ScheduleLecturePage, ScheduleLecturePageViewModel>();
 
-            builder.Services.AddSingleton<ScheduleTestPage>();
-            builder.Services.AddSingleton<ScheduleTestPageViewModel>();
+            builder.Services.AddSingleton<ScheduleTestPage, ScheduleTestPageViewModel>();
+
+            builder.Services.AddSingleton<NotificationsPage, NotificationsPageViewModel>();
 
             builder.Services.AddSingleton<NoInternetPage>();
 
-            builder.Services.AddSingleton<CourseRegistrationPage>();
-
-            builder.Services.AddSingleton<ManageCoursePage>();
-            builder.Services.AddSingleton<ManageCoursePageViewModel>();
+            builder.Services.AddSingleton<ManageCoursePage, ManageCoursePageViewModel>();
 
             builder.Services.AddSingleton<IAppService, AppService>();
             builder.Services.AddTransient(typeof(IDataService<>), typeof(DataService<>));
             builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+
+            builder.Services.AddSingleton<IHttpService, HttpService>();
 
             builder.Services.AddSingleton(Connectivity.Current);
 

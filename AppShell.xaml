@@ -3,6 +3,8 @@
     x:Class="DemyAI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:helpers="clr-namespace:DemyAI.Helpers"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:view="clr-namespace:DemyAI.Views"
@@ -48,6 +50,14 @@
         </DataTemplate>
     </Shell.FlyoutFooterTemplate>
 
+
+    <FlyoutItem
+        Title="Notifications"
+        IsVisible="{Binding IsTeacher}">
+        <ShellContent
+            ContentTemplate="{DataTemplate view:NotificationsPage}"
+            Route="NotificationsPage" />
+    </FlyoutItem>
 
     <ShellContent
         ContentTemplate="{DataTemplate view:LoginPage}"
@@ -109,14 +119,6 @@
         <ShellContent
             ContentTemplate="{DataTemplate view:ScheduleTestPage}"
             Route="ScheduleLecturePage" />
-    </FlyoutItem>
-
-    <FlyoutItem
-        Title="Registration Reminder"
-        IsVisible="{Binding IsRegisterOpen}">
-        <ShellContent
-            ContentTemplate="{DataTemplate view:CourseRegistrationPage}"
-            Route="CourseRegistrationPage" />
     </FlyoutItem>
 
     <FlyoutItem
