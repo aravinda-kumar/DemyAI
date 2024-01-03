@@ -1,8 +1,11 @@
-﻿using User = DemyAI.Models.User;
+﻿using System.Net.Mail;
+
+using User = DemyAI.Models.User;
 
 namespace DemyAI.ViewModels;
 
-public partial class NewLecturePageViewModel(IAppService appService, IDataService<User> dataService, IMeetingService meetingService) : BaseViewModel {
+public partial class NewLecturePageViewModel(IAppService appService, IDataService<User> dataService, IMeetingService meetingService,
+    IAuthenticationService authenticationService) : BaseViewModel {
 
     public ObservableCollection<User> Users { get; set; } = [];
 
@@ -48,11 +51,9 @@ public partial class NewLecturePageViewModel(IAppService appService, IDataServic
             return;
         }
 
-        if(Invited.Count <= 0) {
-            await appService.DisplayAlert("Error", "You cannot create a Lecture without students", "OK");
-            return;
-        }
+        var loogedUser = await authenticationService.GetLoggedInUser();
 
+        var teacher = await dataService.GetByUidAsync<User>("Users", loogedUser!.Uid);
 
         var meetingOptions = new MeetingOptions {
             EnableAdvancedChat = true,
@@ -69,14 +70,45 @@ public partial class NewLecturePageViewModel(IAppService appService, IDataServic
         };
 
         try {
-            var room = await meetingService.CreateMeetingAsync(RoomName, meetingOptions, Constants.DAILY);
+            var roomURL = await meetingService.CreateMeetingAsync(RoomName, meetingOptions, Constants.DAILY);
 
-            await appService.DisplayAlert("Meeting created", $"this is the link: {room}", "OK?");
-
+            foreach(var userInvited in Invited) {
+                string userEmail = userInvited.Email;
+                await SendEmail(userEmail, roomURL, teacher);
+            }
 
         } catch(Exception ex) {
             // Handle any exceptions that might occur during the meeting creation
             Console.WriteLine($"Error creating meeting: {ex.Message}");
+        }
+    }
+
+    private async Task SendEmail(string userEmail, string MeetingLink, User? teacher) {
+        try {
+
+            var mail = new MailMessage("eduardogr88@gmail.com", userEmail) {
+                Subject = "Meeting Link",
+                IsBodyHtml = true
+            };
+
+            var body = HttmlGenerator.GenerateHttmlTemplate(RoomName!, MeetingLink, teacher!.Name);
+
+            mail.Body = body;
+
+            var smtpClient = new SmtpClient("smtp.gmail.com") {
+                EnableSsl = true,
+                UseDefaultCredentials = false,
+                Credentials = new System.Net.NetworkCredential("eduardogr88@gmail.com", "svzq gwda mnwc rwvz"),
+                Port = 587,
+            };
+
+            await smtpClient.SendMailAsync(mail);
+
+            await appService.DisplayAlert("Success", "Email sent successfully", "OK");
+
+        } catch(Exception e) {
+
+            await appService.DisplayAlert("Eroor", e.Message, "OK");
         }
     }
 }

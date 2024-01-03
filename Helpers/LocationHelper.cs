@@ -13,9 +13,7 @@ public class LocationHelper {
             });
 
         if(location is null) {
-
             await Console.Out.WriteLineAsync("Error!");
-
         }
 
         var CurrentAdress = await GetGeocodeReverseData(location!.Latitude, location!.Longitude);

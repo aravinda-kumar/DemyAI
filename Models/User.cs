@@ -21,8 +21,6 @@ public partial class User : BaseViewModel {
 
     public string Role { get; set; }
 
-    public string Location { get; set; }
-
     //public double latitude { get; set; }
 
     //public double longitude { get; set; }

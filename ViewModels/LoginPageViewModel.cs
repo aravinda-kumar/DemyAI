@@ -28,9 +28,6 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
             if(currentUser != null) {
 
-                var courses = await dataService.GetAllAsync<Course>("Courses");
-                appShellViewModel.CheckRegistrationReminderOpen(courses);
-
                 ManageFlyoutItemsVisibility(currentUser.Role);
 
                 appShellViewModel.User = currentUser;
