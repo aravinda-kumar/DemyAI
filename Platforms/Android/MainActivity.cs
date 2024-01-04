@@ -9,26 +9,14 @@ namespace DemyAI {
     [IntentFilter([Intent.ActionView],
                         DataScheme = "https",
                         DataHost = "demy-ia.daily.co",
-                        DataPathPrefix = "//Programming",
+                        DataPathPattern = "/.*",
                         AutoVerify = true,
                         Categories = [Intent.ActionView, Intent.CategoryDefault, Intent.CategoryBrowsable])]
     public class MainActivity : MauiAppCompatActivity {
-
-        protected override void OnCreate(Bundle? savedInstanceState) {
-            base.OnCreate(savedInstanceState);
-
-            //test
-            OnNewIntent(Intent!);
-        }
-
-        protected override void OnNewIntent(Intent? intent) {
+        protected override void OnNewIntent(Intent? intent)     {
             base.OnNewIntent(intent);
 
-            var data = intent!.DataString;
-
-            if(Intent.ActionView == intent.Action && !string.IsNullOrEmpty(data)) {
-
-            }
+            var res = intent!.Data;
         }
     }
 }

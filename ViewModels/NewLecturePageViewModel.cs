@@ -1,6 +1,4 @@
-﻿using System.Net.Mail;
-
-using User = DemyAI.Models.User;
+﻿using User = DemyAI.Models.User;
 
 namespace DemyAI.ViewModels;
 
@@ -53,7 +51,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IDataServic
 
         var loogedUser = await authenticationService.GetLoggedInUser();
 
-        var teacher = await dataService.GetByUidAsync<User>("Users", loogedUser!.Uid);
+        var databaseUer = await dataService.GetByUidAsync<User>("Users", loogedUser!.Uid);
 
         var meetingOptions = new MeetingOptions {
             EnableAdvancedChat = true,
@@ -74,41 +72,12 @@ public partial class NewLecturePageViewModel(IAppService appService, IDataServic
 
             foreach(var userInvited in Invited) {
                 string userEmail = userInvited.Email;
-                await SendEmail(userEmail, roomURL, teacher);
+                await EmailHelper.SendEmail(userEmail, RoomName, databaseUer, roomURL, null);
             }
 
         } catch(Exception ex) {
             // Handle any exceptions that might occur during the meeting creation
             Console.WriteLine($"Error creating meeting: {ex.Message}");
-        }
-    }
-
-    private async Task SendEmail(string userEmail, string MeetingLink, User? teacher) {
-        try {
-
-            var mail = new MailMessage("eduardogr88@gmail.com", userEmail) {
-                Subject = "Meeting Link",
-                IsBodyHtml = true
-            };
-
-            var body = HttmlGenerator.GenerateHttmlTemplate(RoomName!, MeetingLink, teacher!.Name);
-
-            mail.Body = body;
-
-            var smtpClient = new SmtpClient("smtp.gmail.com") {
-                EnableSsl = true,
-                UseDefaultCredentials = false,
-                Credentials = new System.Net.NetworkCredential("eduardogr88@gmail.com", "svzq gwda mnwc rwvz"),
-                Port = 587,
-            };
-
-            await smtpClient.SendMailAsync(mail);
-
-            await appService.DisplayAlert("Success", "Email sent successfully", "OK");
-
-        } catch(Exception e) {
-
-            await appService.DisplayAlert("Eroor", e.Message, "OK");
         }
     }
 }
