@@ -22,4 +22,10 @@ public class Constants {
     //dialy.com api
 
     public const string DAILY = "6eb2d560c351dea79d419afd8c0eaaf6d00107dc852d01ce2537f622cd7ed59c";
+
+    //MailJet 
+
+    public const string MAILJETAPIKEY = "60d8bbe616e622a4d20ff8ee02f02286";
+
+    public const string MAILJETSECRETKEY = "ca0a843e8862f94f1a6301da706d6fb0";
 }

@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:chechbox="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-    xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:expander="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
     xmlns:helpers="clr-namespace:DemyAI.Helpers"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
@@ -19,90 +18,92 @@
             EventName="Appearing" />
     </ContentPage.Behaviors>
 
+    <ScrollView>
+        <Grid
+            Margin="10"
+            RowDefinitions="Auto,80,*">
 
-    <Grid
-        Margin="10"
-        RowDefinitions="Auto,80,*">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Header"
+                HorizontalTextAlignment="Center"
+                Text="Create lecture" />
 
-        <Label
-            FontAttributes="Bold"
-            FontSize="Header"
-            HorizontalTextAlignment="Center"
-            Text="Create a new lecture" />
+            <inputLayout:SfTextInputLayout
+                Grid.Row="1"
+                Hint="Name of the leture"
+                HorizontalOptions="StartAndExpand"
+                OutlineCornerRadius="8">
+                <Entry Text="{Binding RoomName}" />
+            </inputLayout:SfTextInputLayout>
 
-        <inputLayout:SfTextInputLayout
-            Grid.Row="1"
-            Hint="Name of the leture"
-            HorizontalOptions="StartAndExpand"
-            OutlineCornerRadius="8">
-            <Entry Text="{Binding RoomName}" />
-        </inputLayout:SfTextInputLayout>
+            <expander:SfExpander
+                Grid.Row="2"
+                Margin="0,-8,0,0"
+                HorizontalOptions="Start">
+                <expander:SfExpander.Header>
+                    <Grid
+                        ColumnDefinitions="50,60"
+                        ColumnSpacing="10"
+                        RowDefinitions="60">
+                        <Label
+                            FontFamily="Mat"
+                            FontSize="Header"
+                            HorizontalTextAlignment="Center"
+                            Text="{Static helpers:IconFont.Group}"
+                            VerticalTextAlignment="Center" />
+                        <Label
+                            Grid.Column="1"
+                            Text="Students"
+                            VerticalTextAlignment="Center" />
+                    </Grid>
+                </expander:SfExpander.Header>
+                <expander:SfExpander.Content>
+                    <CollectionView
+                        ItemsSource="{Binding Users}"
+                        SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:User">
+                                <Border Margin="2">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Grid
+                                        Margin="5,5,5,0"
+                                        ColumnDefinitions="40,*"
+                                        RowDefinitions="*,*">
+                                        <Label
+                                            Grid.Column="1"
+                                            Text="{Binding Name}" />
+                                        <Label
+                                            Grid.Row="3"
+                                            Grid.Column="1"
+                                            Text="{Binding Email}" />
+                                        <chechbox:SfCheckBox
+                                            Grid.RowSpan="3"
+                                            HorizontalOptions="End"
+                                            IsChecked="{Binding IsParticipant}"
+                                            VerticalOptions="End">
+                                            <chechbox:SfCheckBox.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={Type vm:NewLecturePageViewModel}}, Path=HandleCheckBoxCommand}"
+                                                    CommandParameter="{Binding .}" />
+                                            </chechbox:SfCheckBox.GestureRecognizers>
+                                        </chechbox:SfCheckBox>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </expander:SfExpander.Content>
+            </expander:SfExpander>
 
-        <expander:SfExpander
-            Grid.Row="2"
-            HorizontalOptions="Start">
-            <expander:SfExpander.Header>
-                <Grid
-                    ColumnDefinitions="50,60"
-                    ColumnSpacing="10"
-                    RowDefinitions="60">
-                    <Label
-                        FontFamily="Mat"
-                        FontSize="Header"
-                        HorizontalTextAlignment="Center"
-                        Text="{Static helpers:IconFont.Group}"
-                        VerticalTextAlignment="Center" />
-                    <Label
-                        Grid.Column="1"
-                        Text="Students"
-                        VerticalTextAlignment="Center" />
-                </Grid>
-            </expander:SfExpander.Header>
-            <expander:SfExpander.Content>
-                <CollectionView
-                    ItemsSource="{Binding Users}"
-                    SelectionMode="None">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:User">
-                            <Border Margin="2">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="8" />
-                                </Border.StrokeShape>
-                                <Grid
-                                    Margin="5,5,5,0"
-                                    ColumnDefinitions="40,*"
-                                    RowDefinitions="*,*">
-                                    <Label
-                                        Grid.Column="1"
-                                        Text="{Binding Name}" />
-                                    <Label
-                                        Grid.Row="3"
-                                        Grid.Column="1"
-                                        Text="{Binding Email}" />
-                                    <chechbox:SfCheckBox
-                                        Grid.RowSpan="3"
-                                        HorizontalOptions="End"
-                                        IsChecked="{Binding IsParticipant}"
-                                        VerticalOptions="End">
-                                        <chechbox:SfCheckBox.GestureRecognizers>
-                                            <TapGestureRecognizer
-                                                Command="{Binding Source={RelativeSource AncestorType={Type vm:NewLecturePageViewModel}}, Path=HandleCheckBoxCommand}"
-                                                CommandParameter="{Binding .}" />
-                                        </chechbox:SfCheckBox.GestureRecognizers>
-                                    </chechbox:SfCheckBox>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </expander:SfExpander.Content>
-        </expander:SfExpander>
+            <Button
+                Grid.Row="3"
+                Command="{Binding StartMeetingCommand}"
+                Text="Start meeting"
+                VerticalOptions="EndAndExpand" />
 
-        <Button
-            Grid.Row="3"
-            Command="{Binding StartMeetingCommand}"
-            Text="Start meeting"
-            VerticalOptions="EndAndExpand" />
-
-    </Grid>
+        </Grid>
+    </ScrollView>
 </ContentPage>

@@ -1,4 +1,7 @@
-﻿using System.Net.Mail;
+﻿using Mailjet.Client.Resources;
+using Mailjet.Client;
+
+using System.Net.Mail;
 
 namespace DemyAI.Helpers;
 
@@ -46,6 +49,8 @@ public class EmailHelper {
 
     public static async Task SendEmail(string userEmail, string roomName, Models.User? user, string meetingLink, DateTime? dateTimeMeeting) {
 
+        var client = new MailjetClient(Constants.MAILJETAPIKEY, Constants.MAILJETSECRETKEY);
+
         var mail = new MailMessage("eduardogr88@gmail.com", userEmail) {
             Subject = "DemyIA meeting",
             IsBodyHtml = true
@@ -60,6 +65,7 @@ public class EmailHelper {
             UseDefaultCredentials = false,
             Credentials = new System.Net.NetworkCredential("eduardogr88@gmail.com", "svzq gwda mnwc rwvz"),
             Port = 587,
+            DeliveryMethod = SmtpDeliveryMethod.Network
         };
 
         await smtpClient.SendMailAsync(mail);

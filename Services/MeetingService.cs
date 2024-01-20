@@ -1,6 +1,4 @@
-﻿
-
-namespace DemyAI.Services;
+﻿namespace DemyAI.Services;
 
 public class MeetingService(IHttpService httpService) : IMeetingService {
 

@@ -1,12 +1,87 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DemyAI.Views.ScheduleLecturePage"
-             Title="scheduleaLecturePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="DemyAI.Views.ScheduleLecturePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:DemyAI.Controls"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:picker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Picker"
+    xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    x:DataType="vm:ScheduleLecturePageViewModel">
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior
+            Command="{Binding AppearingCommand}"
+            EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <ScrollView>
+        <Grid
+            Margin="10"
+            ColumnDefinitions="*,*"
+            RowDefinitions="Auto,50,60,*">
+            <controls:UserDetailsExpander
+                Grid.ColumnSpan="2"
+                HandleCheckBoxCommand="{Binding HandleCheckBoxCommand}"
+                Hint="Name of leture"
+                PageTitle="Schedule a lecture"
+                RoomName="{Binding RoomName}"
+                Users="{Binding Users}" />
+
+            <editors:SfComboBox
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,0"
+                ItemsSource="{Binding TimeZones}"
+                Placeholder="Select time zone"
+                TextMemberPath="{Binding .}" />
+
+            <picker:SfDateTimePicker
+                x:Name="TimeZonePicker"
+                Mode="Dialog"
+                SelectedDate="{Binding SelectedDateTime, Mode=TwoWay}">
+
+                <picker:SfDateTimePicker.FooterView>
+                    <picker:PickerFooterView
+                        Height="40"
+                        ShowOkButton="True" />
+                </picker:SfDateTimePicker.FooterView>
+
+                <picker:SfDateTimePicker.Behaviors>
+                    <mct:EventToCommandBehavior
+                        Command="{Binding DateTimeOkButtonCommand}"
+                        CommandParameter="{x:Reference TimeZonePicker}"
+                        EventName="OkButtonClicked" />
+                    <mct:EventToCommandBehavior
+                        Command="{Binding DateTimeCanelButtonCommand}"
+                        CommandParameter="{x:Reference TimeZonePicker}"
+                        EventName="CancelButtonClicked" />
+                </picker:SfDateTimePicker.Behaviors>
+            </picker:SfDateTimePicker>
+
+            <Button
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,0"
+                Command="{Binding OpenPickerCommand}"
+                CommandParameter="{x:Reference TimeZonePicker}"
+                HorizontalOptions="StartAndExpand"
+                Text="Open Date Time picker"
+                WidthRequest="180" />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="2"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="End"
+                IsVisible="{Binding IsDateTimeSelected}"
+                Text="{Binding SelectedDateTime}"
+                VerticalTextAlignment="Center" />
+
+
+        </Grid>
+    </ScrollView>
+
+
 </ContentPage>

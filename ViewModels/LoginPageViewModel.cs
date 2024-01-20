@@ -22,6 +22,8 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
         //var user = await authenticationService.LoginWithEmailAndPassword(User.Email, User.Password);
         var user = await authenticationService.LoginWithEmailAndPassword("egomezr@outlook.com", "111111");
+
+        
         if(user != null) {
 
             var currentUser = await dataService.GetByUidAsync<User>("Users", user.Uid);
@@ -34,7 +36,6 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
                 await appService.NavigateTo($"//{nameof(WelcomePage)}", true);
             }
-
 
         }
 
@@ -81,7 +82,7 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
         return true;
     }
 
-    private void ManageFlyoutItemsVisibility(string role) {
+    public void ManageFlyoutItemsVisibility(string role) {
 
         switch(role) {
             case nameof(Roles.Coordinator):

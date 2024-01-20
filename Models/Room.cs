@@ -62,5 +62,9 @@ public class MeetingOptions {
 
     [JsonPropertyName("experimental_optimize_large_calls")]
     public bool ExperimentalOptimizeLargeCalls { get; set; }
+
+    [JsonPropertyName("nbf")]
+    public int Notbefore { get; set; }
+
 }
 

@@ -1,7 +1,9 @@
 namespace DemyAI.Views;
 
 public partial class ScheduleTestPage : ContentPage {
-    public ScheduleTestPage() {
+
+    public ScheduleTestPage(ScheduleTestPageViewModel scheduleTestPageViewModel) {
         InitializeComponent();
+        BindingContext = scheduleTestPageViewModel;
     }
 }

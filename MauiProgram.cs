@@ -17,17 +17,22 @@ global using Firebase.Database;
 
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Maui.Controls;
+global using Syncfusion.Maui.Picker;
 
 global using SkiaSharp.Views.Maui.Controls.Hosting;
 
 global using Syncfusion.Maui.Calendar;
 global using Syncfusion.Maui.Core.Hosting;
 
+global using System.Collections;
 global using System.Collections.ObjectModel;
 global using System.Net.Http.Json;
 global using System.Text;
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
+
+using Microsoft.Maui.LifecycleEvents;
+
 
 namespace DemyAI {
     public static class MauiProgram {
@@ -47,6 +52,15 @@ namespace DemyAI {
                 .UseSkiaSharp()
                 .UseMauiCommunityToolkit()
                 .ConfigureSyncfusionCore()
+                .ConfigureLifecycleEvents(events => {
+#if WINDOWS
+                    events.AddWindows(windows => windows
+                            .OnLaunched((window, args) => {
+
+                                var commandLineArgs = Environment.GetCommandLineArgs();
+                            }));
+#endif
+                })
                 .ConfigureFonts(fonts => {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");

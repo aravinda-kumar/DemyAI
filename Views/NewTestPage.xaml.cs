@@ -1,7 +1,8 @@
 namespace DemyAI.Views;
 
 public partial class NewTestPage : ContentPage {
-    public NewTestPage() {
+    public NewTestPage(NewTestPageViewMode newTestPageViewMode) {
         InitializeComponent();
+        BindingContext = newTestPageViewMode;
     }
 }
