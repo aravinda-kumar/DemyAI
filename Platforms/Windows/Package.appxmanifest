@@ -2,6 +2,7 @@
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"  
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
@@ -38,14 +39,13 @@
 			</uap:VisualElements>
 
 			<Extensions>
-				<uap:Extension Category="windows.protocol">
-					<uap:Protocol Name="demy-ia.daily.co">
-						<uap:Logo>images\icon.png</uap:Logo>
-						<uap:DisplayName>Your App Name</uap:DisplayName>
-					</uap:Protocol>
-				</uap:Extension>
-			</Extensions>
-
+              <uap:Extension Category="windows.protocol">             
+                  <uap:Protocol Name="demy-ia">                      
+                      <uap:DisplayName>demy-ia</uap:DisplayName>
+                  </uap:Protocol>
+              </uap:Extension>
+          </Extensions>
+			
 		</Application>
 	</Applications>
 	<Capabilities>

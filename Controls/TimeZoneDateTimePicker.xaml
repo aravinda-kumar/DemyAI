@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="DemyAI.Controls.TimeZoneDateTimePicker"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:picker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Picker"
+    Margin="10">
+
+    <Grid
+        ColumnDefinitions="*,*"
+        RowDefinitions="60">
+
+        <picker:SfDateTimePicker
+            x:Name="DateTimePicker"
+            Mode="Dialog"
+            OkButtonClicked="DateTimePicker_OkButtonClicked">
+
+            <picker:SfDateTimePicker.FooterView>
+                <picker:PickerFooterView
+                    Height="40"
+                    OkButtonText="Select timezone" />
+            </picker:SfDateTimePicker.FooterView>
+        </picker:SfDateTimePicker>
+
+        <picker:SfPicker
+            x:Name="CustomTimeZonePicker"
+            OkButtonClicked="TimeZonePicker_OkButtonClicked">
+            <picker:SfPicker.FooterView>
+                <picker:PickerFooterView
+                    OkButtonText="Select TimeZone"
+                    ShowOkButton="True" />
+            </picker:SfPicker.FooterView>
+        </picker:SfPicker>
+
+        <Button
+            x:Name="CustomPickerOpen"
+            Clicked="CustomPickerOpen_Clicked"
+            HorizontalOptions="StartAndExpand"
+            Text="Open Date Time picker"
+            WidthRequest="180" />
+
+        <Label
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="0,0,40,0"
+            FontAttributes="Bold"
+            HorizontalTextAlignment="End"
+            VerticalTextAlignment="Center" />
+    </Grid>
+</ContentView>

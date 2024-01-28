@@ -17,16 +17,17 @@ global using Firebase.Database;
 
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Maui.Controls;
-global using Syncfusion.Maui.Picker;
 
 global using SkiaSharp.Views.Maui.Controls.Hosting;
 
 global using Syncfusion.Maui.Calendar;
 global using Syncfusion.Maui.Core.Hosting;
+global using Syncfusion.Maui.Picker;
 
 global using System.Collections;
 global using System.Collections.ObjectModel;
 global using System.Net.Http.Json;
+global using System.Net.Mail;
 global using System.Text;
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
@@ -54,11 +55,20 @@ namespace DemyAI {
                 .ConfigureSyncfusionCore()
                 .ConfigureLifecycleEvents(events => {
 #if WINDOWS
-                    events.AddWindows(windows => windows
-                            .OnLaunched((window, args) => {
+                    //events.AddWindows(windows => windows
+                    //        .OnLaunched((window, args) => {
 
-                                var commandLineArgs = Environment.GetCommandLineArgs();
-                            }));
+                    //            var activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+
+                    //            Windows.ApplicationModel.Activation.ProtocolActivatedEventArgs? appActivationArguments =
+                    //            activatedEventArgs.Data as Windows.ApplicationModel.Activation.ProtocolActivatedEventArgs;
+
+                    //            var MeettingURL = appActivationArguments?.Uri;
+
+                    //            if(MeettingURL != null) {
+                    //                HandleUri(MeettingURL);
+                    //            }
+                    //        }));
 #endif
                 })
                 .ConfigureFonts(fonts => {
@@ -95,6 +105,8 @@ namespace DemyAI {
 
             builder.Services.AddSingleton<NotificationsPage, NotificationsPageViewModel>();
 
+            builder.Services.AddSingleton<JoinMeetingPage, JoinMeetingPageViewModel>();
+
             builder.Services.AddSingleton<NoInternetPage>();
 
             builder.Services.AddSingleton<ManageCoursePage, ManageCoursePageViewModel>();
@@ -118,6 +130,12 @@ namespace DemyAI {
             builder.Services.AddSingleton<IMeetingService, MeetingService>();
 
             return builder.Build();
+        }
+
+        private static void HandleUri(Uri? MeettingURL) {
+            Shell.Current.GoToAsync($"//{nameof(JoinMeetingPage)}", true, new Dictionary<string, object>() {
+                                        {"MeettingURL", MeettingURL!}
+                                    });
         }
     }
 }

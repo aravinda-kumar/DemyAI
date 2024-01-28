@@ -1,7 +1,4 @@
-﻿using Mailjet.Client.Resources;
-using Mailjet.Client;
-
-using System.Net.Mail;
+﻿using User = DemyAI.Models.User;
 
 namespace DemyAI.Helpers;
 
@@ -9,66 +6,75 @@ public class EmailHelper {
 
     private static string GenerateHttmlTemplate(string roomName, string meetingLink, string userName, DateTime? dateTime = null) {
 
-        string htmlBody = $@"
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <style>
-                /* CSS for the button */
-                .button {{
-                    background-color: #5C3E88; /* Button background color */
-                    color: white; /* Text color */
-                    text-decoration: none;
-                    padding: 10px 20px; /* Padding around text */
-                    border-radius: 5px; /* Rounded corners */
-                    display: inline-block;
-                }}
-            </style>
-        </head>
-        <body>
-            <p>Here are the meeting details:</p>
-            <br> <!-- Add a line break -->
-            <p><strong>Meeting Name:</strong> {roomName}</p>
-            <p><strong>Teacher Name:</strong> {userName}</p>
-            <p>Click the button below to join the meeting:</p>
-            <p><a class='button' href='{meetingLink}'>Join</a></p>";
-
-        if(dateTime.HasValue) {
-            htmlBody += $@"
-            <p><strong>Date and Time:</strong> {dateTime.Value}</p>";
-            // You can format the DateTime value as needed, e.g., dateTime.Value.ToString("yyyy-MM-dd HH:mm:ss")
-        }
-
-        htmlBody += @"
-        </body>
-        </html>";
-
-        return htmlBody;
-
+        return $@"
+            <html>
+            <head>
+                <style>
+                    /* CSS for the button */
+                    .button {{
+                        background-color: #5C3E88; /* Button background color */
+                        color: white; /* Text color */
+                        text-decoration: none;
+                        padding: 10px 20px; /* Padding around text */
+                        border-radius: 5px; /* Rounded corners */
+                        display: inline-block;
+                    }}
+                </style>
+            </head>
+            <body>
+                <p>Here are the meeting details:</p>
+                <br> <!-- Add a line break -->
+                <p><strong>Meeting Name:</strong> {roomName}</p>
+                <p><strong>Teacher Name:</strong> {userName}</p>
+                <p>Click the button below to join the meeting:</p>
+                <p><a class='button' href='{meetingLink}'>Join</a></p>
+            </body>
+            </html>";
     }
 
-    public static async Task SendEmail(string userEmail, string roomName, Models.User? user, string meetingLink, DateTime? dateTimeMeeting) {
+    public static async Task SendEmail(ObservableCollection<User> users, string roomName, User? user, DateTime? dateTimeMeeting) {
 
-        var client = new MailjetClient(Constants.MAILJETAPIKEY, Constants.MAILJETSECRETKEY);
+        try {
+            var meetingLink = string.Empty;
+            using(var smtpClient = new SmtpClient("smtp.gmail.com")) {
+                smtpClient.Port = 587;
+                smtpClient.Credentials = new System.Net.NetworkCredential(Constants.EMAIL, Constants.APP_PASSWORD);
+                smtpClient.EnableSsl = true;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-        var mail = new MailMessage("eduardogr88@gmail.com", userEmail) {
-            Subject = "DemyIA meeting",
-            IsBodyHtml = true
-        };
 
-        var body = GenerateHttmlTemplate(roomName, meetingLink, user!.Name, dateTimeMeeting);
+                //if(DeviceInfo.Platform == DevicePlatform.WinUI) {
+                //    string protocol = "demy-ia";
+                //    meetingLink = $"{protocol}://{roomName}";
+                //} else {
+                //    meetingLink = $"{Constants.BASETTING_URL}{roomName}";
+                //}
 
-        mail.Body = body;
+                Console.WriteLine(meetingLink);
 
-        var smtpClient = new SmtpClient("smtp.gmail.com") {
-            EnableSsl = true,
-            UseDefaultCredentials = false,
-            Credentials = new System.Net.NetworkCredential("eduardogr88@gmail.com", "svzq gwda mnwc rwvz"),
-            Port = 587,
-            DeliveryMethod = SmtpDeliveryMethod.Network
-        };
+                foreach(var recipient in users) {
+                    var mail = new MailMessage() {
+                        From = new MailAddress(Constants.EMAIL),
+                        Subject = "DemyIA meeting",
+                        IsBodyHtml = true,
+                    };
 
-        await smtpClient.SendMailAsync(mail);
+                    var body = GenerateHttmlTemplate(roomName, meetingLink, user!.Name, dateTimeMeeting);
 
+                    mail.Body = body;
+
+                    // Add the recipient to the message
+                    mail.To.Add(recipient.Email);
+
+                    // Send the email asynchronously and await the task
+                    smtpClient.Send(mail);
+                }
+            }
+
+            Console.WriteLine("Email sent successfully to the SMTP server.");
+
+        } catch(Exception e) {
+            await Console.Out.WriteLineAsync(e.Message);
+        }
     }
 }

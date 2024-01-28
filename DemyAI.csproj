@@ -108,6 +108,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Controls\TimeZoneDateTimePicker.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Controls\UserDetailsExpander.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

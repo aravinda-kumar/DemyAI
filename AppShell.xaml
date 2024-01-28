@@ -79,9 +79,7 @@
             Route="CoursesPage" />
     </FlyoutItem>
 
-    <FlyoutItem
-        Title="Join Meeting"
-        IsVisible="{Binding IsStudent}">
+    <FlyoutItem Title="Join Meeting">
         <ShellContent
             ContentTemplate="{DataTemplate view:JoinMeetingPage}"
             Route="JoinMeetingPage" />

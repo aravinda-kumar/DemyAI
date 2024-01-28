@@ -5,36 +5,24 @@ public partial class AppShell : Shell {
         InitializeComponent();
 
         BindingContext = appShellViewModel;
-        RegisterPages();       
+        RegisterPages();
     }
 
 
     private void RegisterPages() {
-        // Get the assembly where this code is executing
-        var assembly = GetType().Assembly;
 
-        // Define the namespace where the views are located using a constant or variable
-        var viewNamespace = $"{assembly.GetName()}.{Constants.VIEWS}";
+        Routing.RegisterRoute(nameof(CoursesPage), typeof(CoursesPage));
+        Routing.RegisterRoute(nameof(JoinMeetingPage), typeof(JoinMeetingPage));
+        Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+        Routing.RegisterRoute(nameof(ManageCoursePage), typeof(ManageCoursePage));
+        Routing.RegisterRoute(nameof(NewLecturePage), typeof(NewLecturePage));
+        Routing.RegisterRoute(nameof(NewTestPage), typeof(NewTestPage));
+        Routing.RegisterRoute(nameof(NoInternetPage), typeof(NoInternetPage));
+        Routing.RegisterRoute(nameof(NotificationsPage), typeof(NotificationsPage));
+        Routing.RegisterRoute(nameof(RegisterStudentPage), typeof(RegisterStudentPage));
+        Routing.RegisterRoute(nameof(ScheduleLecturePage), typeof(ScheduleLecturePage));
+        Routing.RegisterRoute(nameof(ScheduleTestPage), typeof(ScheduleTestPage));
+        Routing.RegisterRoute(nameof(WelcomePage), typeof(WelcomePage));
 
-        // Dictionary to hold discovered routes, mapping route names to their respective types
-        var pageRoutes = new Dictionary<string, Type>();
-
-        // Loop through types in the assembly to find view pages and map them to their routes
-        foreach (var item in assembly.GetTypes()) {
-            // Check if the type belongs to the specified view namespace and ends with a defined "Page" suffix
-            if (item.Namespace == viewNamespace && item.Name.EndsWith(Constants.PAGE)) {
-                // Get the route name from the type's name
-                var routeName = item.Name;
-
-                // Add the route name and its associated type to the dictionary
-                pageRoutes.Add(routeName, item);
-            }
-        }
-
-        // Register each discovered route in the application's routing system
-        foreach (var kvp in pageRoutes) {
-            // Register the route using its name and associated type
-            Routing.RegisterRoute(kvp.Key, kvp.Value);
-        }
     }
 }

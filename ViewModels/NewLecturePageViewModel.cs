@@ -79,7 +79,9 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     void HandleCheckBox(User user) {
 
         if(user.IsParticipant) {
-            Invited.Add(user);
+            if(!Invited.Contains(user)) {
+                Invited.Add(user);
+            }
         } else {
             Invited.Remove(user);
         }
@@ -112,17 +114,23 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
             // Set other meeting option properties as needed
         };
 
+        string? roomURL = null;
+
         try {
-            var roomURL = await meetingService.CreateMeetingAsync(RoomName, meetingOptions, Constants.DAILY);
-
-            foreach(var userInvited in Invited) {
-                string userEmail = userInvited.Email;
-                await EmailHelper.SendEmail(userEmail, RoomName, databaseUser, roomURL, null);
-            }
-
+            roomURL = await meetingService.CreateMeetingAsync(RoomName, meetingOptions, Constants.DAILY);
         } catch(Exception ex) {
             // Handle any exceptions that might occur during the meeting creation
             await appService.DisplayAlert("Error", $"Error creating meeting: {ex.Message}", "OK");
         }
+
+        if(DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS) {
+            await EmailHelper.SendEmail(Invited, RoomName.Trim(), databaseUser, null);
+        } else if(DeviceInfo.Platform == DevicePlatform.WinUI) {
+            await Clipboard.Default.SetTextAsync(roomURL);
+        }
+
+        //await appService.DisplayToast("the meeting url has been copied o the clipboard", ToastDuration.Short, 18);
+
+
     }
 }

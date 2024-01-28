@@ -23,20 +23,9 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
         //var user = await authenticationService.LoginWithEmailAndPassword(User.Email, User.Password);
         var user = await authenticationService.LoginWithEmailAndPassword("egomezr@outlook.com", "111111");
 
-        
         if(user != null) {
-
-            var currentUser = await dataService.GetByUidAsync<User>("Users", user.Uid);
-
-            if(currentUser != null) {
-
-                ManageFlyoutItemsVisibility(currentUser.Role);
-
-                appShellViewModel.User = currentUser;
-
-                await appService.NavigateTo($"//{nameof(WelcomePage)}", true);
-            }
-
+            await SecureStorage.SetAsync("CurrentUser", user.Uid);
+            await RoleVisibility.ManageFlyoutItemsVisibility(appShellViewModel, dataService, user.Uid, appService);
         }
 
         IsBusy = false;
@@ -51,7 +40,9 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
         if(IsFilled) {
             IsBusy = true;
 
-            var user = await authenticationService.RegisterWithEmailAndPassword(User.Email, User.Password, User.Name);
+            var user = await authenticationService.RegisterWithEmailAndPassword(User.Email, User.Password,
+                User.Name);
+
             if(user != null) {
 
                 IsPopOpen = false;
@@ -80,22 +71,5 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
         }
 
         return true;
-    }
-
-    public void ManageFlyoutItemsVisibility(string role) {
-
-        switch(role) {
-            case nameof(Roles.Coordinator):
-                appShellViewModel.IsCoordinator = true;
-                break;
-            case nameof(Roles.Teacher):
-                appShellViewModel.IsTeacher = true;
-                break;
-            case nameof(Roles.Student):
-                appShellViewModel.IsStudent = true;
-                break;
-            default:
-                break;
-        }
     }
 }
