@@ -4,28 +4,28 @@ public partial class User : BaseViewModel {
 
     //private string _password;
 
-    public string Uid { get; set; }
+    public string? Uid { get; set; }
 
-    public string DemyId { get; set; }
+    public string? DemyId { get; set; }
 
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
-    public string Email { get; set; }
+    public string? Email { get; set; }
 
-    public string Password { get; set; }
+    public string? Password { get; set; }
 
     //public string Password {
     //    get => _password;
     //    private init => _password = BCrypt.Net.BCrypt.HashPassword(value);
     //}
 
-    public string Role { get; set; }
+    public string? Role { get; set; }
 
     //public double latitude { get; set; }
 
     //public double longitude { get; set; }
 
-    public List<string> Rooms { get; set; }
+    public List<string>? Rooms { get; set; }
 
     public bool IsAssignedToCourse { get; set; }
 

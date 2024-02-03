@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DemyAI.Views.JoinMeetingPage"
-             Title="JoinMeetingPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="join a meeting"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="DemyAI.Views.JoinMeetingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:mc="clr-namespace:CommunityToolkit.Maui.ApplicationModel;assembly=CommunityToolkit.Maui.Core"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    x:DataType="vm:JoinMeetingPageViewModel">
+
+    <Grid
+        x:Name="JoinGrid"
+        Margin="10"
+        ColumnDefinitions="*,100"
+        RowDefinitions="60,*">
+
+        <Entry
+            IsVisible="{Binding ControlsVisibility}"
+            Placeholder="Paste your url here"
+            Text="{Binding Text}">
+            <Entry.Behaviors>
+                <mct:EventToCommandBehavior
+                    Command="{Binding EntryCompletedCommand}"
+                    EventName="Completed" />
+            </Entry.Behaviors>
+        </Entry>
+
+        <Button
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            Command="{Binding SearchCommand}"
+            IsVisible="{Binding ControlsVisibility}"
+            Text="Search" />
+
+        <WebView
+            x:Name="JoinWebView"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            IsVisible="{Binding IsWebViewVisible}"
+            Source="{Binding Text}" />
+
+    </Grid>
 </ContentPage>

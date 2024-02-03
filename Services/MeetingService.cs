@@ -18,11 +18,11 @@ public class MeetingService(IHttpService httpService) : IMeetingService {
             if(response != null && response.IsSuccessStatusCode) {
 
                 var responseContent = await response.Content.ReadFromJsonAsync<RoomResponse>();
-                return responseContent!.url;
+                return responseContent?.url!;
 
             } else {
                 var statusCode = response?.StatusCode;
-                Console.WriteLine($"Failed to create room. Status code: {statusCode}");
+                await Shell.Current.DisplayAlert("Error", response!.Content.ReadAsStringAsync().Result, "OK");
                 return string.Empty;
             }
 

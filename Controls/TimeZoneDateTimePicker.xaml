@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:picker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Picker"
+    x:Name="CustomPicker"
     Margin="10">
 
     <Grid
@@ -12,40 +13,61 @@
         RowDefinitions="60">
 
         <picker:SfDateTimePicker
-            x:Name="DateTimePicker"
+            x:Name="TimeZonePicker"
+            CancelButtonClicked="TimeZonePicker_CancelButtonClicked"
             Mode="Dialog"
-            OkButtonClicked="DateTimePicker_OkButtonClicked">
+            OkButtonClicked="TimeZonePicker_OkButtonClicked">
 
             <picker:SfDateTimePicker.FooterView>
                 <picker:PickerFooterView
                     Height="40"
+                    CancelButtonText="Exit"
                     OkButtonText="Select timezone" />
             </picker:SfDateTimePicker.FooterView>
         </picker:SfDateTimePicker>
 
+
         <picker:SfPicker
-            x:Name="CustomTimeZonePicker"
-            OkButtonClicked="TimeZonePicker_OkButtonClicked">
+            x:Name="Picker"
+            HeightRequest="600"
+            Mode="Dialog"
+            OkButtonClicked="Picker_OkButtonClicked"
+            SelectionChanged="Picker_SelectionChanged">
+
+            <picker:SfPicker.Columns>
+                <picker:PickerColumn
+                    HeaderText="Time Zones"
+                    ItemsSource="{Binding Items, Source={x:Reference CustomPicker}}"  />
+            </picker:SfPicker.Columns>
+
             <picker:SfPicker.FooterView>
                 <picker:PickerFooterView
-                    OkButtonText="Select TimeZone"
+                    Height="40"
+                    OkButtonText="OK"
                     ShowOkButton="True" />
             </picker:SfPicker.FooterView>
         </picker:SfPicker>
 
+
         <Button
-            x:Name="CustomPickerOpen"
-            Clicked="CustomPickerOpen_Clicked"
+            x:Name="OpenPicker"
+            Clicked="OpenPicker_Clicked"
             HorizontalOptions="StartAndExpand"
             Text="Open Date Time picker"
             WidthRequest="180" />
 
+
         <Label
+            x:Name="label"
             Grid.Row="1"
             Grid.Column="1"
             Margin="0,0,40,0"
             FontAttributes="Bold"
             HorizontalTextAlignment="End"
+            Text="Time Zone Label"
             VerticalTextAlignment="Center" />
+
+
     </Grid>
+
 </ContentView>

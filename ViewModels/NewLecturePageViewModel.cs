@@ -3,17 +3,20 @@
 namespace DemyAI.ViewModels;
 
 public partial class NewLecturePageViewModel(IAppService appService, IHttpService httpService,
-    IDataService<User> dataService, IMeetingService meetingService,
-    IAuthenticationService authenticationService) : BaseViewModel {
+    IDataService<User> dataService, IMeetingService meetingService) : BaseViewModel {
 
     public ObservableCollection<User> Users { get; set; } = [];
 
     public ObservableCollection<User> Invited { get; set; } = [];
 
-    public ObservableCollection<string> TimeZones { get; set; } = [];
+    public Dictionary<int, object> TimeZones { get; set; } = [];
+
 
     [ObservableProperty]
     DateTime selectedDateTime;
+
+    [ObservableProperty]
+    bool isMeetingLinkPopUpOpen;
 
     [ObservableProperty]
     bool isDateTimeSelected;
@@ -21,8 +24,14 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     [ObservableProperty]
     string? roomName;
 
+    [ObservableProperty]
+    string? roomURL;
+
+    private const string UID = "Uid";
+
     [RelayCommand]
     async Task Appearing() {
+
         await GetStudents();
         await GetTimeZones();
     }
@@ -42,9 +51,6 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
             IsDateTimeSelected = true;
             picker.IsOpen = false;
         }
-
-
-
     }
 
     [RelayCommand]
@@ -55,11 +61,11 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     }
 
     private async Task GetTimeZones() {
+
         var zones = await httpService.GetAsync<List<string>>("https://www.timeapi.io/api/TimeZone/AvailableTimeZones");
 
-        TimeZones.Clear();
-        foreach(var item in zones!) {
-            TimeZones.Add(item);
+        for(int i = 0; i <= zones!.Count - 1; ++i) {
+            TimeZones.Add(i, zones[i]);
         }
     }
 
@@ -96,9 +102,9 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
             return;
         }
 
-        var loogedUser = await authenticationService.GetLoggedInUser();
+        var currUserUID = await SecureStorage.GetAsync("CurrentUser");
 
-        var databaseUser = await dataService.GetByUidAsync<User>("Users", loogedUser!.Uid);
+        var databaseUser = await dataService.GetByUidAsync<User>("Users", currUserUID!);
 
         var meetingOptions = new MeetingOptions {
             EnableAdvancedChat = true,
@@ -114,23 +120,43 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
             // Set other meeting option properties as needed
         };
 
-        string? roomURL = null;
 
-        try {
-            roomURL = await meetingService.CreateMeetingAsync(RoomName, meetingOptions, Constants.DAILY);
-        } catch(Exception ex) {
-            // Handle any exceptions that might occur during the meeting creation
-            await appService.DisplayAlert("Error", $"Error creating meeting: {ex.Message}", "OK");
+        RoomURL = await meetingService.CreateMeetingAsync(RoomName.Replace(" ", string.Empty), meetingOptions, Constants.DAILY);
+
+        if(!string.IsNullOrEmpty(RoomURL)) {
+            List<string> studentNames = [];
+
+            foreach(var item in Invited) {
+                studentNames.Add(item.Name!);
+            }
+
+            var meeting = new Meeting() { Name = RoomName, StudentList = studentNames, Uid = string.Empty };
+
+            var uid = await dataService.AddAsync("Meetings", meeting);
+
+            await dataService.UpdateAsync<Meeting>("Meetings", uid, uid, UID);
+            IsMeetingLinkPopUpOpen = true;
         }
 
-        if(DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS) {
-            await EmailHelper.SendEmail(Invited, RoomName.Trim(), databaseUser, null);
-        } else if(DeviceInfo.Platform == DevicePlatform.WinUI) {
-            await Clipboard.Default.SetTextAsync(roomURL);
+        //if(!string.IsNullOrEmpty(RoomURL)) {
+        //    IsMeetingLinkPopUpOpen = true;
+        //    if(IsMeetingLinkPopUpOpen) {
+        //        if(DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS) {
+        //            await EmailHelper.SendEmail(Invited, RoomName.Trim(), databaseUser, null);
+        //        }
+        //    }
+        //}
+
+
+    }
+
+    [RelayCommand]
+    async Task CopyRoomURLAsync() {
+
+        if(!string.IsNullOrEmpty(RoomURL)) {
+            await Share.Default.RequestAsync(new ShareTextRequest {
+                Text = $"This is the meeting URL \n\n{RoomURL}",
+            });
         }
-
-        //await appService.DisplayToast("the meeting url has been copied o the clipboard", ToastDuration.Short, 18);
-
-
     }
 }

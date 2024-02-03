@@ -15,6 +15,7 @@
     </ContentPage.Behaviors>
 
     <ScrollView>
+
         <Grid Margin="10">
             <controls:UserDetailsExpander
                 HandleCheckBoxCommand="{Binding HandleCheckBoxCommand}"
@@ -22,7 +23,9 @@
                 PageTitle="Create a test"
                 RoomName="{Binding RoomName}"
                 Users="{Binding Users}" />
+
             <Button
+                Command="{Binding StartMeetingCommand}"
                 Text="Start test"
                 VerticalOptions="EndAndExpand" />
         </Grid>

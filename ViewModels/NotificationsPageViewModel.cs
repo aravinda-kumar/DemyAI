@@ -2,7 +2,7 @@
 
 namespace DemyAI.ViewModels;
 
-public partial class NotificationsPageViewModel(IDataService<User> dataService, IAuthenticationService authenticationService) : BaseViewModel {
+public partial class NotificationsPageViewModel(IDataService<User> dataService) : BaseViewModel {
 
     public ObservableCollection<Course> Courses { get; set; } = [];
     bool areCousesLoaded;
@@ -34,7 +34,7 @@ public partial class NotificationsPageViewModel(IDataService<User> dataService, 
         var objects = await dataService.GetAllAsync<Course>("Courses");
 
         var coursesAssigned = objects
-                                              .Where(c => c.Object.ProfessorsAssigned.Contains(currentUser!.Uid))
+                                              .Where(c => c.Object.ProfessorsAssigned.Contains(currentUser!.Uid!))
                                               .Select(c => c.Object);
 
         foreach(var item in coursesAssigned) {

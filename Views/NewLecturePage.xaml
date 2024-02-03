@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:chechbox="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+    xmlns:controls="clr-namespace:DemyAI.Controls"
     xmlns:expander="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
     xmlns:helpers="clr-namespace:DemyAI.Helpers"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
@@ -19,90 +20,25 @@
     </ContentPage.Behaviors>
 
     <ScrollView>
-        <Grid
-            Margin="10"
-            RowDefinitions="Auto,80,*">
 
-            <Label
-                FontAttributes="Bold"
-                FontSize="Header"
-                HorizontalTextAlignment="Center"
-                Text="Create lecture" />
+        <Grid Margin="10">
 
-            <inputLayout:SfTextInputLayout
-                Grid.Row="1"
-                Hint="Name of the leture"
-                HorizontalOptions="StartAndExpand"
-                OutlineCornerRadius="8">
-                <Entry Text="{Binding RoomName}" />
-            </inputLayout:SfTextInputLayout>
-
-            <expander:SfExpander
-                Grid.Row="2"
-                Margin="0,-8,0,0"
-                HorizontalOptions="Start">
-                <expander:SfExpander.Header>
-                    <Grid
-                        ColumnDefinitions="50,60"
-                        ColumnSpacing="10"
-                        RowDefinitions="60">
-                        <Label
-                            FontFamily="Mat"
-                            FontSize="Header"
-                            HorizontalTextAlignment="Center"
-                            Text="{Static helpers:IconFont.Group}"
-                            VerticalTextAlignment="Center" />
-                        <Label
-                            Grid.Column="1"
-                            Text="Students"
-                            VerticalTextAlignment="Center" />
-                    </Grid>
-                </expander:SfExpander.Header>
-                <expander:SfExpander.Content>
-                    <CollectionView
-                        ItemsSource="{Binding Users}"
-                        SelectionMode="None">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="model:User">
-                                <Border Margin="2">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="8" />
-                                    </Border.StrokeShape>
-                                    <Grid
-                                        Margin="5,5,5,0"
-                                        ColumnDefinitions="40,*"
-                                        RowDefinitions="*,*">
-                                        <Label
-                                            Grid.Column="1"
-                                            Text="{Binding Name}" />
-                                        <Label
-                                            Grid.Row="3"
-                                            Grid.Column="1"
-                                            Text="{Binding Email}" />
-                                        <chechbox:SfCheckBox
-                                            Grid.RowSpan="3"
-                                            HorizontalOptions="End"
-                                            IsChecked="{Binding IsParticipant}"
-                                            VerticalOptions="End">
-                                            <chechbox:SfCheckBox.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Command="{Binding Source={RelativeSource AncestorType={Type vm:NewLecturePageViewModel}}, Path=HandleCheckBoxCommand}"
-                                                    CommandParameter="{Binding .}" />
-                                            </chechbox:SfCheckBox.GestureRecognizers>
-                                        </chechbox:SfCheckBox>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </expander:SfExpander.Content>
-            </expander:SfExpander>
+            <controls:UserDetailsExpander
+                HandleCheckBoxCommand="{Binding HandleCheckBoxCommand}"
+                Hint="Name of the test"
+                PageTitle="Create a test"
+                RoomName="{Binding RoomName}"
+                Users="{Binding Users}" />
 
             <Button
-                Grid.Row="3"
                 Command="{Binding StartMeetingCommand}"
-                Text="Start meeting"
+                Text="Start lecture"
                 VerticalOptions="EndAndExpand" />
+
+            <controls:SharingPopUp
+                CopyRoomURLCommand="{Binding CopyRoomURLCommand}"
+                IsOpen="{Binding IsMeetingLinkPopUpOpen}"
+                RoomLink="{Binding RoomURL}" />
 
         </Grid>
     </ScrollView>

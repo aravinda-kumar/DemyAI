@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="DemyAI.Controls.SharingPopUp"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helprs="clr-namespace:DemyAI.Helpers"
+    xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+    x:Name="popUpMeeting">
+
+    <sfPopup:SfPopup
+        x:Name="sfPopup"
+        AnimationEasing="SinIn"
+        AnimationMode="Zoom"
+        AutoSizeMode="Width"
+        IsOpen="{Binding IsOpen, Source={x:Reference popUpMeeting}}">
+        <sfPopup:SfPopup.ContentTemplate>
+            <DataTemplate>
+                <Grid
+                    Margin="10"
+                    ColumnDefinitions="600,*">
+                    <inputLayout:SfTextInputLayout>
+                        <Entry
+                            IsEnabled="False"
+                            Text="{Binding RoomLink, Source={x:Reference popUpMeeting}}" />
+                    </inputLayout:SfTextInputLayout>
+                    
+                    <Button
+                        Grid.Column="1"
+                        Margin="10,0,0,20"
+                        Command="{Binding CopyRoomURLCommand, Source={x:Reference popUpMeeting}}"
+                        CornerRadius="8"
+                        HeightRequest="64"
+                        VerticalOptions="Center">
+                        <Button.ImageSource>
+                            <FontImageSource
+                                FontFamily="Mat"
+                                Glyph="{Static helprs:IconFont.Content_copy}" />
+                        </Button.ImageSource>
+                    </Button>
+                </Grid>
+            </DataTemplate>
+        </sfPopup:SfPopup.ContentTemplate>
+    </sfPopup:SfPopup>
+
+</ContentView>

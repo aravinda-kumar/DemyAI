@@ -1,6 +1,4 @@
-﻿
-
-using User = DemyAI.Models.User;
+﻿using User = DemyAI.Models.User;
 
 namespace DemyAI.ViewModels;
 
@@ -62,7 +60,7 @@ public partial class ManageCoursePageViewModel(IDataService<User> dataService, I
         Course.EndRegistrationDate = dateRange.EndDate!.Value.ToString("d");
         Course.ProfessorName = User.Name;
         Course.ProfessorEmail = User.Email;
-        Course.ProfessorsAssigned.Add(User.Uid);
+        Course.ProfessorsAssigned.Add(User.Uid!);
 
         if(todayDate == Course.InitialRegistrationDate) {
             Course.IsCourseOpen = true;
