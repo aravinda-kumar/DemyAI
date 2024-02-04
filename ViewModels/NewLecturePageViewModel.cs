@@ -9,6 +9,9 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
     public ObservableCollection<User> Invited { get; set; } = [];
 
+    public Dictionary<int, object> TimeZones { get; set; } = [];
+
+
     [ObservableProperty]
     DateTime selectedDateTime;
 
@@ -28,7 +31,9 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
     [RelayCommand]
     async Task Appearing() {
+
         await GetStudents();
+        await GetTimeZones();
     }
 
     [RelayCommand]
@@ -52,6 +57,15 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     void DateTimeCanelButton(SfDateTimePicker picker) {
         if(picker != null) {
             picker.IsOpen = false;
+        }
+    }
+
+    private async Task GetTimeZones() {
+
+        var zones = await httpService.GetAsync<List<string>>("https://www.timeapi.io/api/TimeZone/AvailableTimeZones");
+
+        for(int i = 0; i <= zones!.Count - 1; ++i) {
+            TimeZones.Add(i, zones[i]);
         }
     }
 

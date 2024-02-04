@@ -3,31 +3,24 @@ namespace DemyAI.Controls;
 public partial class TimeZoneDateTimePicker : ContentView {
 
     DateTime SelectedTime;
-    int? TimeZone;
-    private HttpClient _httpClient;
-
-    ObservableCollection<string> Data = [];
+    string SelectedTimeZone;
 
     public TimeZoneDateTimePicker() {
         InitializeComponent();
     }
 
-    private async void OpenPicker_Clicked(object sender, EventArgs e) {
+    public static readonly BindableProperty ItemsProperty = BindableProperty.Create(
+        nameof(Items), typeof(IDictionary<int, string>), typeof(TimeZoneDateTimePicker));
+
+    public IDictionary<int, string> Items {
+        get => (IDictionary<int, string>)GetValue(ItemsProperty);
+        set => SetValue(ItemsProperty, value);
+    }
+
+
+    private void OpenPicker_Clicked(object sender, EventArgs e) {
         if(TimeZonePicker != null) {
             TimeZonePicker.IsOpen = true;
-
-            _httpClient = new HttpClient();
-
-            var res = await _httpClient.GetAsync("https://www.timeapi.io/api/TimeZone/AvailableTimeZones");
-
-            if(res.IsSuccessStatusCode) {
-
-                var data = await res.Content.ReadFromJsonAsync<List<string>>();
-
-                for(int i = 0; i < data!.Count - 1; i++) {
-                    Data.Add(data[i]);
-                }
-            }
         }
     }
 
@@ -46,7 +39,6 @@ public partial class TimeZoneDateTimePicker : ContentView {
     }
 
     private void Picker_SelectionChanged(object sender, PickerSelectionChangedEventArgs e) {
-
-        //Select the timeZone
+        //Concatenate DateTime with TimeZone and sen it to the NewLectureViewModel, need help
     }
 }
