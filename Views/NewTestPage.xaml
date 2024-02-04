@@ -17,6 +17,7 @@
     <ScrollView>
 
         <Grid Margin="10">
+            
             <controls:UserDetailsExpander
                 HandleCheckBoxCommand="{Binding HandleCheckBoxCommand}"
                 Hint="Name of the test"

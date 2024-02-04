@@ -17,10 +17,12 @@
     </ContentPage.Behaviors>
 
     <ScrollView>
+        
         <Grid
             Margin="10"
             ColumnDefinitions="*,*"
             RowDefinitions="Auto,50,60,*">
+            
             <controls:UserDetailsExpander
                 Grid.ColumnSpan="2"
                 HandleCheckBoxCommand="{Binding HandleCheckBoxCommand}"
@@ -29,55 +31,7 @@
                 RoomName="{Binding RoomName}"
                 Users="{Binding Users}" />
 
-            <editors:SfComboBox
-                Grid.Row="1"
-                Grid.ColumnSpan="2"
-                Margin="0,10,0,0"
-                ItemsSource="{Binding TimeZones}"
-                Placeholder="Select time zone"
-                TextMemberPath="{Binding .}" />
-
-            <picker:SfDateTimePicker
-                x:Name="TimeZonePicker"
-                Mode="Dialog"
-                SelectedDate="{Binding SelectedDateTime, Mode=TwoWay}">
-
-                <picker:SfDateTimePicker.FooterView>
-                    <picker:PickerFooterView
-                        Height="40"
-                        ShowOkButton="True" />
-                </picker:SfDateTimePicker.FooterView>
-
-                <picker:SfDateTimePicker.Behaviors>
-                    <mct:EventToCommandBehavior
-                        Command="{Binding DateTimeOkButtonCommand}"
-                        CommandParameter="{x:Reference TimeZonePicker}"
-                        EventName="OkButtonClicked" />
-                    <mct:EventToCommandBehavior
-                        Command="{Binding DateTimeCanelButtonCommand}"
-                        CommandParameter="{x:Reference TimeZonePicker}"
-                        EventName="CancelButtonClicked" />
-                </picker:SfDateTimePicker.Behaviors>
-            </picker:SfDateTimePicker>
-
-            <Button
-                Grid.Row="2"
-                Grid.ColumnSpan="2"
-                Margin="0,10,0,0"
-                Command="{Binding OpenPickerCommand}"
-                CommandParameter="{x:Reference TimeZonePicker}"
-                HorizontalOptions="StartAndExpand"
-                Text="Open Date Time picker"
-                WidthRequest="180" />
-
-            <Label
-                Grid.Row="2"
-                Grid.Column="2"
-                FontAttributes="Bold"
-                HorizontalTextAlignment="End"
-                IsVisible="{Binding IsDateTimeSelected}"
-                Text="{Binding SelectedDateTime}"
-                VerticalTextAlignment="Center" />
+            <controls:TimeZoneDateTimePicker/>
 
 
         </Grid>

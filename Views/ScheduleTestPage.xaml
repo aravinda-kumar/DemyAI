@@ -27,13 +27,6 @@
                 RoomName="{Binding RoomName}"
                 Users="{Binding Users}" />
 
-            <editors:SfComboBox
-                Grid.Row="1"
-                Margin="0,10,0,0"
-                ItemsSource="{Binding TimeZones}"
-                Placeholder="Select time zone"
-                TextMemberPath="{Binding .}" />
-
             <Button/>
         </Grid>
     </ScrollView>

@@ -37,7 +37,7 @@
             <picker:SfPicker.Columns>
                 <picker:PickerColumn
                     HeaderText="Time Zones"
-                    ItemsSource="{Binding Items, Source={x:Reference CustomPicker}}"  />
+                    ItemsSource="{Binding Data, Source={x:Reference CustomPicker}}"  />
             </picker:SfPicker.Columns>
 
             <picker:SfPicker.FooterView>

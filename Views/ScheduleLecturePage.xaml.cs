@@ -5,8 +5,4 @@ public partial class ScheduleLecturePage : ContentPage {
         InitializeComponent();
         BindingContext = scheduleLecturePageViewModel;
     }
-
-    private void TimeZonePicker_OkButtonClicked(object sender, EventArgs e) {
-        
-    }
 }
