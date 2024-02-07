@@ -13,6 +13,8 @@ public interface IDataService<T> {
 
     Task<T?> GetByUidAsync<T>(string nodeName, string uid);
 
+    Task<T?> GetByNameAsync<T>(string nodeName);
+
     // TODO Create comment
 
     Task<ObservableCollection<T>> GetByRole<T>(string nodeName, string role);

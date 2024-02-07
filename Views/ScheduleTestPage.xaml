@@ -20,6 +20,7 @@
         <Grid
             Margin="10"
             RowDefinitions="Auto,50,*">
+            
             <controls:UserDetailsExpander
                 HandleCheckBoxCommand="{Binding HandleCheckBoxCommand}"
                 Hint="Test name"

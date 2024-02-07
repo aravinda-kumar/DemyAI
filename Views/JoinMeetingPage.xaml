@@ -3,6 +3,7 @@
     x:Class="DemyAI.Views.JoinMeetingPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:DemyAI.Controls"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:mc="clr-namespace:CommunityToolkit.Maui.ApplicationModel;assembly=CommunityToolkit.Maui.Core"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -11,34 +12,57 @@
 
     <Grid
         x:Name="JoinGrid"
-        Margin="10"
-        ColumnDefinitions="*,100"
-        RowDefinitions="60,*">
+        Margin="10,0,10,10"
+        ColumnDefinitions="*,Auto"
+        RowDefinitions="Auto,*">
 
-        <Entry
-            IsVisible="{Binding ControlsVisibility}"
-            Placeholder="Paste your url here"
-            Text="{Binding Text}">
-            <Entry.Behaviors>
-                <mct:EventToCommandBehavior
-                    Command="{Binding EntryCompletedCommand}"
-                    EventName="Completed" />
-            </Entry.Behaviors>
-        </Entry>
+        <controls:MeetingToolbar
+            RoomName="{Binding RoomName}"
+            Time="{Binding ElapsedTimeString}"
+            ToolbarVisibility="{Binding ToolbarVisibility}" />
 
-        <Button
-            Grid.Column="1"
-            Margin="10,0,0,0"
-            Command="{Binding SearchCommand}"
-            IsVisible="{Binding ControlsVisibility}"
-            Text="Search" />
+        <inputLayout:SfTextInputLayout
+            Hint="Room url"
+            IsVisible="{Binding MeetingSearchVibiility}">
+            <Entry
+                Margin="0,10,0,0"
+                Text="{Binding Text}">
+                <Entry.Behaviors>
+                    <mct:EventToCommandBehavior
+                        Command="{Binding EntryCompletedCommand}"
+                        EventName="Completed" />
+                </Entry.Behaviors>
+            </Entry>
+
+        </inputLayout:SfTextInputLayout>
 
         <WebView
             x:Name="JoinWebView"
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="2"
+            Grid.Row="1"
             IsVisible="{Binding IsWebViewVisible}"
             Source="{Binding Text}" />
+
+        <CollectionView
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="5,0,0,0"
+            ItemsSource="{Binding names}">
+            <CollectionView.FooterTemplate>
+                <DataTemplate>
+                    <Button Text="Stop meeting" BackgroundColor="DarkBlue"/>
+                </DataTemplate>
+            </CollectionView.FooterTemplate>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout>
+                        <Border Margin="0,5,0,0">
+                            <Label
+                                Text="{Binding .}" />
+                        </Border>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
     </Grid>
 </ContentPage>

@@ -38,6 +38,7 @@
             <controls:SharingPopUp
                 CopyRoomURLCommand="{Binding CopyRoomURLCommand}"
                 IsOpen="{Binding IsMeetingLinkPopUpOpen}"
+                ToolTipProperties.Text="Copy link"
                 RoomLink="{Binding RoomURL}" />
 
         </Grid>

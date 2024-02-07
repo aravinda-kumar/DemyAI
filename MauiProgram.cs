@@ -34,7 +34,6 @@ global using System.Text.Json.Serialization;
 
 using Microsoft.Maui.LifecycleEvents;
 
-
 namespace DemyAI {
     public static class MauiProgram {
         public static MauiApp CreateMauiApp() {
@@ -55,20 +54,20 @@ namespace DemyAI {
                 .ConfigureSyncfusionCore()
                 .ConfigureLifecycleEvents(events => {
 #if WINDOWS
-                    //events.AddWindows(windows => windows
-                    //        .OnLaunched((window, args) => {
+                    events.AddWindows(windows => windows
+                            .OnLaunched((window, args) => {
 
-                    //            var activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+                                var activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
 
-                    //            Windows.ApplicationModel.Activation.ProtocolActivatedEventArgs? appActivationArguments =
-                    //            activatedEventArgs.Data as Windows.ApplicationModel.Activation.ProtocolActivatedEventArgs;
+                                Windows.ApplicationModel.Activation.ProtocolActivatedEventArgs? appActivationArguments =
+                                activatedEventArgs.Data as Windows.ApplicationModel.Activation.ProtocolActivatedEventArgs;
 
-                    //            var MeettingURL = appActivationArguments?.Uri;
+                                var MeettingURL = appActivationArguments?.Uri;
 
-                    //            if(MeettingURL != null) {
-                    //                HandleUri(MeettingURL);
-                    //            }
-                    //        }));
+                                if(MeettingURL != null) {
+                                    HandleUri(MeettingURL);
+                                }
+                            }));
 #endif
                 })
                 .ConfigureFonts(fonts => {

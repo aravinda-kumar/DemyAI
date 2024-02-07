@@ -22,7 +22,7 @@
             Margin="10"
             ColumnDefinitions="*,*"
             RowDefinitions="Auto,50,60,*">
-            
+
             <controls:UserDetailsExpander
                 Grid.ColumnSpan="2"
                 HandleCheckBoxCommand="{Binding HandleCheckBoxCommand}"
@@ -30,9 +30,6 @@
                 PageTitle="Schedule a lecture"
                 RoomName="{Binding RoomName}"
                 Users="{Binding Users}" />
-
-            <controls:TimeZoneDateTimePicker />
-
 
         </Grid>
     </ScrollView>

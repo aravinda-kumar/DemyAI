@@ -9,7 +9,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
     public ObservableCollection<User> Invited { get; set; } = [];
 
-    public Dictionary<int, object> TimeZones { get; set; } = [];
+    public ObservableCollection<string> TimeZones { get; set; } = [];
 
 
     [ObservableProperty]
@@ -65,7 +65,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
         var zones = await httpService.GetAsync<List<string>>("https://www.timeapi.io/api/TimeZone/AvailableTimeZones");
 
         for(int i = 0; i <= zones!.Count - 1; ++i) {
-            TimeZones.Add(i, zones[i]);
+            TimeZones.Add(zones[i]);
         }
     }
 
@@ -102,6 +102,8 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
             return;
         }
 
+        RoomName = RoomName.Replace(" ", string.Empty);
+
         var currUserUID = await SecureStorage.GetAsync("CurrentUser");
 
         var databaseUser = await dataService.GetByUidAsync<User>("Users", currUserUID!);
@@ -121,7 +123,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
         };
 
 
-        RoomURL = await meetingService.CreateMeetingAsync(RoomName.Replace(" ", string.Empty), meetingOptions, Constants.DAILY);
+        RoomURL = await meetingService.CreateMeetingAsync(RoomName, meetingOptions, Constants.DAILY);
 
         if(!string.IsNullOrEmpty(RoomURL)) {
             List<string> studentNames = [];
@@ -135,6 +137,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
             var uid = await dataService.AddAsync("Meetings", meeting);
 
             await dataService.UpdateAsync<Meeting>("Meetings", uid, uid, UID);
+
             IsMeetingLinkPopUpOpen = true;
         }
 

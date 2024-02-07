@@ -18,7 +18,6 @@ public class DataService<T> : IDataService<T> {
         return obj.Key;
     }
 
-
     public Task DeleteAsync(string NodeName, string uid) {
         throw new NotImplementedException();
     }
@@ -41,7 +40,7 @@ public class DataService<T> : IDataService<T> {
             // Get the Role property of the current item's object type
             var roleProperty = items.Object?.GetType().GetProperty(ROLE);
 
-            if(roleProperty != null) {
+            if(roleProperty is not null) {
 
                 // Retrieve the value of the role property for the current object
                 var roleValue = roleProperty.GetValue(items.Object);
@@ -57,6 +56,7 @@ public class DataService<T> : IDataService<T> {
     }
 
     public async Task<T?> GetByUidAsync<T>(string nodeName, string uid) {
+    
         var objects = await _client.Child(nodeName).OnceAsync<T>();
 
         // Iterate through each item in the Objects collection
@@ -66,7 +66,7 @@ public class DataService<T> : IDataService<T> {
             var uidProp = item.Object?.GetType().GetProperty(UID);
 
             // Check if the Uid property exists for the current object type
-            if(uidProp != null) {
+            if(uidProp is not null) {
 
                 // Retrieve the value of the Uid property for the current object
                 var value = uidProp.GetValue(item.Object);
@@ -83,13 +83,32 @@ public class DataService<T> : IDataService<T> {
         return default;
     }
 
+    public async Task<T?> GetByNameAsync<T>(string nodeName) {
+
+        var objectList = await _client.Child(nodeName).OnceAsync<T>();
+
+        foreach(var item in objectList) {
+
+            var nameProperty = item.Object?.GetType().GetProperty("Name");
+
+            if(nameProperty is not null) {
+
+                var val = nameProperty.GetValue(item.Object);
+
+                if(val is not null && val.ToString() == "Name") {
+
+                    return item.Object;
+                }
+            }
+        }
+
+        return default;
+    }
 
     public async Task UpdateAsync<T>(string nodeName, string Key, string propertyValue, string propertyName) {
 
         await _client.Child(nodeName).Child(Key).PatchAsync($"{{ \"{propertyName}\" : \"{propertyValue}\" }}");
     }
-
-
 
     public async Task<bool> UpdateRegistrationCourseVisibility() {
 

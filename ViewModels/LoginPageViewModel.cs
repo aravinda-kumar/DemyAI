@@ -39,9 +39,8 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
         if(IsFilled) {
             IsBusy = true;
-
-            var user = await authenticationService.RegisterWithEmailAndPassword(User.Email, User.Password,
-                User.Name);
+            var user = await authenticationService.RegisterWithEmailAndPassword(User.Email!, User.Password!,
+                User.Name!);
 
             if(user != null) {
 
