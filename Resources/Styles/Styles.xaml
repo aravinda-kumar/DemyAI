@@ -433,10 +433,18 @@
     </Style>
 
     <Style TargetType="inputLayout:SfTextInputLayout">
-        <Setter Property="IsHintAlwaysFloated" Value="True"/>
-        <Setter Property="OutlineCornerRadius" Value="8"/>
-        <Setter Property="ContainerType" Value="Outlined"/>
-        <Setter Property="ContainerBackground" Value="White"/>
+        <Setter Property="IsHintAlwaysFloated" Value="True" />
+        <Setter Property="OutlineCornerRadius" Value="8" />
+        <Setter Property="ContainerType" Value="Outlined" />
+        <Setter Property="ContainerBackground" Value="White" />
+    </Style>
+
+    <Style
+        x:Key="TitleText"
+        TargetType="Label">
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="White" />
     </Style>
 
 </ResourceDictionary>

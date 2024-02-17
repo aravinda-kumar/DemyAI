@@ -10,6 +10,7 @@ global using DemyAI.Models;
 global using DemyAI.Services;
 global using DemyAI.ViewModels;
 global using DemyAI.Views;
+global using DemyAI.Views.PopUps;
 
 global using Firebase.Auth;
 global using Firebase.Auth.Providers;
@@ -17,6 +18,10 @@ global using Firebase.Database;
 
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Maui.Controls;
+
+global using Mopups.Hosting;
+global using Mopups.Pages;
+global using Mopups.Services;
 
 global using SkiaSharp.Views.Maui.Controls.Hosting;
 
@@ -26,6 +31,7 @@ global using Syncfusion.Maui.Picker;
 
 global using System.Collections;
 global using System.Collections.ObjectModel;
+global using System.Diagnostics;
 global using System.Net.Http.Json;
 global using System.Net.Mail;
 global using System.Text;
@@ -52,6 +58,7 @@ namespace DemyAI {
                 .UseSkiaSharp()
                 .UseMauiCommunityToolkit()
                 .ConfigureSyncfusionCore()
+                .ConfigureMopups()
                 .ConfigureLifecycleEvents(events => {
 #if WINDOWS
                     events.AddWindows(windows => windows
@@ -87,37 +94,22 @@ namespace DemyAI {
             builder.Services.AddSingleton<HttpClient>();
 
             builder.Services.AddSingleton<AppShell, AppShellViewModel>();
-
             builder.Services.AddSingleton<LoginPage, LoginPageViewModel>();
-
             builder.Services.AddSingleton<WelcomePage, WelcomePageViewModel>();
-
             builder.Services.AddSingleton<CoursesPage, CoursesPageViewModel>();
-
             builder.Services.AddSingleton<NewLecturePage, NewLecturePageViewModel>();
-
             builder.Services.AddSingleton<NewTestPage, NewTestPageViewMode>();
-
             builder.Services.AddSingleton<ScheduleLecturePage, ScheduleLecturePageViewModel>();
-
             builder.Services.AddSingleton<ScheduleTestPage, ScheduleTestPageViewModel>();
-
             builder.Services.AddSingleton<NotificationsPage, NotificationsPageViewModel>();
-
             builder.Services.AddSingleton<JoinMeetingPage, JoinMeetingPageViewModel>();
-
             builder.Services.AddSingleton<NoInternetPage>();
-
             builder.Services.AddSingleton<ManageCoursePage, ManageCoursePageViewModel>();
-
             builder.Services.AddSingleton<IAppService, AppService>();
             builder.Services.AddTransient(typeof(IDataService<>), typeof(DataService<>));
             builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
-
             builder.Services.AddSingleton<IHttpService, HttpService>();
-
             builder.Services.AddSingleton(Connectivity.Current);
-
             builder.Services.AddSingleton(firebaseAuthClient);
 
             builder.Services.AddSingleton<IAuthenticationService>(serviceProvider => {
@@ -127,6 +119,9 @@ namespace DemyAI {
             });
 
             builder.Services.AddSingleton<IMeetingService, MeetingService>();
+
+
+
 
             return builder.Build();
         }

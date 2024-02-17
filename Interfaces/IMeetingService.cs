@@ -8,4 +8,9 @@ public interface IMeetingService {
     /// <returns> Returns the url of the meeting </returns>
 
     Task<string> CreateMeetingAsync(string title, MeetingOptions meetingOptions, string authToken);
+
+
+    Task<object> GetMeetingData(string roomName, string authToken);
+
+
 }

@@ -32,4 +32,13 @@ public class MeetingService(IHttpService httpService) : IMeetingService {
 
         }
     }
+
+    public async Task<object> GetMeetingData(string roomName, string authToken) {
+
+        string apiUrl = $"https://api.daily.co/v1/meetings?room={roomName}";
+
+        var data = await httpService.GetAsync<MeetingData>(apiUrl, authToken);
+
+        return data!;
+    }
 }

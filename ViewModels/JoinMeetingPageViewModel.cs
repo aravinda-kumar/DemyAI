@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
+﻿namespace DemyAI.ViewModels;
 
-namespace DemyAI.ViewModels;
-
-public partial class JoinMeetingPageViewModel(AppShell appShell, IAppService appService) : BaseViewModel {
+public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService httpService, IMeetingService meetingService, IAppService appService)
+    : BaseViewModel {
 
     double currentFlyoutWith = appShell.FlyoutWidth;
 
@@ -24,91 +23,105 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IAppService app
     string? roomName;
 
     [ObservableProperty]
-    string elapsedTimeString;
+    bool isTakeBreakTime;
 
-    private Stopwatch stopwatch = new();
+    [ObservableProperty]
+    string? elapsedTimeString;
 
-    private Timer chronometerTimer;
-    private Timer alertTimer;
+    private readonly Stopwatch? stopwatch = new();
 
+    private Timer? meetingTimer;
+    private Timer? breakTimeTimer;
 
-    //[RelayCommand]
-    //void ShowPeople() {
+    private MeetingData? data;
 
-
-    //}
+    private Timer? apiRequestDataTimer;
 
     [RelayCommand]
     async Task EntryCompleted() {
         await VerifyAddressAsync(appService);
-        StartChronometer();
-
     }
 
-    private void StartAlertTimer() {
-        alertTimer = new Timer(state => ShowAlert(), null, TimeSpan.FromMinutes(1), Timeout.InfiniteTimeSpan);
+    public async Task InitializeApiPolling() {
+        StartMeetingApiPolling();
+        await UpdateMeetingData();
     }
 
-    private void ShowAlert() {
-        MainThread.BeginInvokeOnMainThread(async () => {
-            await appService.DisplayAlert("Warning", "No one is paying attention", "OK");
-        });
+    private void StartMeetingApiPolling() {
+        apiRequestDataTimer = new Timer(
+            async state => await GetMeeetingData(),
+            null,
+            TimeSpan.Zero,
+            TimeSpan.FromSeconds(30)
+        );
     }
 
-    private void StartChronometer() {
-        stopwatch.Start();
-        chronometerTimer = new Timer(state => UpdateElapsedTime(), null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+    private void StartBreakTimeTimer() {
+        breakTimeTimer = new Timer(
+            state => ShowAlert(new BreakTimePopUp()),
+            null,
+            TimeSpan.FromSeconds(30),
+            Timeout.InfiniteTimeSpan);
+    }
+
+
+    private void StartMeetingTimer() {
+        stopwatch!.Start();
+        meetingTimer = new Timer(state => UpdateElapsedTime(),
+            null,
+            TimeSpan.Zero,
+            TimeSpan.FromSeconds(1));
     }
 
     private void UpdateElapsedTime() {
-        TimeSpan elapsed = stopwatch.Elapsed;
+        TimeSpan elapsed = stopwatch!.Elapsed;
         ElapsedTimeString = $"{elapsed.Hours:D2}:{elapsed.Minutes:D2}:{elapsed.Seconds:D2}";
+    }
 
+
+    private async Task UpdateMeetingData() {
+        if(data == null) {
+            data = (MeetingData?)await meetingService.GetMeetingData(RoomName, Constants.DAILY_AUTH_TOKEN);
+            await GetMeeetingData();
+        }
+; // Trigger data processing
     }
 
     private async Task VerifyAddressAsync(IAppService appService) {
-        if(Text!.Contains("demy-ia")) {
-
-            /* Unmerged change from project 'DemyAI (net8.0-android)'
-            Before:
-                        await GotoSiteAsync();
-            After:
-                        await GotoSite();
-            */
-
-            /* Unmerged change from project 'DemyAI (net8.0-ios)'
-            Before:
-                        await GotoSiteAsync();
-            After:
-                        await GotoSite();
-            */
-
-            /* Unmerged change from project 'DemyAI (net8.0-maccatalyst)'
-            Before:
-                        await GotoSiteAsync();
-            After:
-                        await GotoSite();
-            */
+        if(Text is not null && Text!.Contains("demy-ia")) {
             GotoSite();
-            // appShell.FlyoutWidth = 0;
         } else {
             await appService.DisplayAlert("Error", "Please paste a valid meeting link", "OK");
         }
     }
 
-    private void GotoSite() {
+    private async void GotoSite() {
         if(!string.IsNullOrEmpty(Text)) {
             IsWebViewVisible = true;
             if(IsWebViewVisible) {
-                RoomName = Text.Split("/")[3];
                 ToolbarVisibility = !ToolbarVisibility;
                 MeetingSearchVibiility = !MeetingSearchVibiility;
                 appShell.FlyoutWidth = 0;
-                names.Add("Eduardo Gomez");
-                StartAlertTimer();
-                names.Add("Eduard Castillo");
+                StartBreakTimeTimer();
+                await InitializeApiPolling();
+                StartMeetingTimer();
 
             }
         }
+    }
+
+    private async Task GetMeeetingData() {
+
+        if(data != null) {
+            var meetingData = data;
+            bool isOngoing = meetingData!.data[0].ongoing;
+
+            if(isOngoing is false) {
+                await appService.DisplayAlert(Title, "you are in the lobby", "OK");
+            } else if(isOngoing is true) {
+                await appService.DisplayAlert(Title, "you are in the meeting", "OK");
+            }
+        }
+
     }
 }

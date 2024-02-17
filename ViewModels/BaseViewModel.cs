@@ -13,4 +13,7 @@ public partial class BaseViewModel : ObservableObject {
     [JsonIgnore]
     public bool isNotBusy => !IsBusy;
 
+    public void ShowAlert(PopupPage page) => MainThread.BeginInvokeOnMainThread(async () => {
+        await MopupService.Instance.PushAsync(page);
+    });
 }

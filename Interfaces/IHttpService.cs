@@ -11,5 +11,8 @@ public interface IHttpService {
     /// <returns>Task returning nullable data of type T retrieved from the specified URL.</returns>
     Task<T?> GetAsync<T>(string url);
 
+    Task<T?> GetAsync<T>(string url, string authToken);
+
     Task<HttpResponseMessage?> PostAsync(string url, HttpContent content, string key);
+
 }

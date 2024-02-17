@@ -17,6 +17,7 @@
     </ContentPage.Behaviors>
 
     <Grid Margin="20">
+        
         <core:SfBusyIndicator
             x:Name="busyIndicator"
             Title="We are getting you courses ready"
@@ -24,6 +25,7 @@
             HeightRequest="200"
             IsRunning="{Binding IsBusy}"
             WidthRequest="200" />
+        
         <CollectionView
             IsVisible="{Binding isNotBusy}"
             ItemsSource="{Binding Courses}">

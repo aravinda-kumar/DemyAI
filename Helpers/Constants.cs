@@ -21,7 +21,7 @@ public class Constants {
 
     //dialy.com api
 
-    public const string DAILY = "6eb2d560c351dea79d419afd8c0eaaf6d00107dc852d01ce2537f622cd7ed59c";
+    public const string DAILY_AUTH_TOKEN = "6eb2d560c351dea79d419afd8c0eaaf6d00107dc852d01ce2537f622cd7ed59c";
 
     public const string BASETTING_URL = "https://demy-ia.daily.co/";
 

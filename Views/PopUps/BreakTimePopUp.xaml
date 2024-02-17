@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Mopups:PopupPage
+    x:Class="DemyAI.Views.PopUps.BreakTimePopUp"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="Transparent"
+    xmlns:Mopups="clr-namespace:Mopups.Pages;assembly=Mopups">
+
+    <Image
+        HeightRequest="250"
+        Source="breaktime.png"
+        WidthRequest="250"
+        Margin="0,0,20,0"
+        VerticalOptions="EndAndExpand"
+        HorizontalOptions="EndAndExpand"/>
+
+
+</Mopups:PopupPage>
