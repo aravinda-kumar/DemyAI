@@ -32,39 +32,14 @@ public partial class ManageCoursePageViewModel(IDataService<User> dataService, I
     }
 
     [RelayCommand]
-    async Task CreateCourse(CalendarDateRange dateRange) {
-
-        if(string.IsNullOrEmpty(Course.Name)) {
-            await appService.DisplayAlert("Error", "You cannot create a course without a name", "OK");
-            return;
-        }
-
-        if(User is null) {
-            await appService.DisplayAlert("Error", "You cannot create a course without assigning a teacher", "OK");
-            return;
-        }
-
-        if(dateRange is null) {
-            await appService.DisplayAlert("Error", "You cannot create a course without registration dates", "OK");
-            return;
-        }
-
-
-
-        var todayDate = DateTime.Today.ToString("d");
+    async Task CreateCourse() {
 
         Course.Uid = string.Empty;
         Course.DemyId = NumberGenerator.GenerateRandomNumberString(4);
         Course.Name = Course.Name;
-        Course.InitialRegistrationDate = dateRange.StartDate!.Value.ToString("d");
-        Course.EndRegistrationDate = dateRange.EndDate!.Value.ToString("d");
         Course.ProfessorName = User.Name;
         Course.ProfessorEmail = User.Email;
-        Course.ProfessorsAssigned.Add(User.Uid!);
-
-        if(todayDate == Course.InitialRegistrationDate) {
-            Course.IsCourseOpen = true;
-        }
+        Course.ProfessorsAssigned.Add(User.Email!);
 
         var cousesList = await dataService.GetAllAsync<Course>("Courses");
         bool CourseExsist = false;

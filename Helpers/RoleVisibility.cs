@@ -7,7 +7,9 @@ public class RoleVisibility {
     public static async Task ManageFlyoutItemsVisibility(AppShellViewModel appShellViewModel,
         IDataService<User> dataService, string userUID, IAppService appService) {
 
-        var currentUser = await dataService.GetByUidAsync<User>("Users", userUID);
+        var UsersList = await dataService.GetAllAsync<User>("Users");
+
+        var currentUser = UsersList.FirstOrDefault(user => user.Object.Email == userUID)?.Object;
 
         if(currentUser != null) {
             switch(currentUser.Role) {

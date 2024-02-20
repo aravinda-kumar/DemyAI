@@ -24,7 +24,7 @@
         <Grid
             Margin="10"
             ColumnDefinitions="*,*"
-            RowDefinitions="100,Auto,Auto,*"
+            RowDefinitions="100,Auto,*"
             RowSpacing="10">
             <inputLayout:SfTextInputLayout
                 Grid.ColumnSpan="2"
@@ -85,43 +85,8 @@
                 </expander:SfExpander.Content>
             </expander:SfExpander>
 
-            <expander:SfExpander
-                Grid.Row="2"
-                Grid.ColumnSpan="2">
-                <expander:SfExpander.Header>
-                    <Grid
-                        ColumnDefinitions="Auto,*"
-                        ColumnSpacing="10">
-                        <Label
-                            FontFamily="Mat"
-                            FontSize="Header"
-                            Text="{Static helpers:IconFont.Calendar_month}" />
-                        <Label
-                            Grid.Column="1"
-                            Text="Registration period" />
-                    </Grid>
-                </expander:SfExpander.Header>
-                <expander:SfExpander.Content>
-                    <Border
-                        HorizontalOptions="Start"
-                        WidthRequest="400">
-                        <calendar:SfCalendar
-                            x:Name="calendar"
-                            EnableSwipeSelection="True"
-                            HeightRequest="300"
-                            HorizontalOptions="Start"
-                            MinimumDate="{Binding Source={Static sys:DateTime.Today}}"
-                            SelectionMode="Range"
-                            VerticalOptions="Center"
-                            WidthRequest="300" />
-                    </Border>
-
-
-                </expander:SfExpander.Content>
-            </expander:SfExpander>
-
             <Button
-                Grid.Row="4"
+                Grid.Row="2"
                 Grid.ColumnSpan="2"
                 Margin="10"
                 Command="{Binding CreateCourseCommand}"

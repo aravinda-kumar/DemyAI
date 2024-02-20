@@ -1,7 +1,4 @@
-﻿// Ignore Spelling: namespace DemyAI.Services; uid
-
-using Firebase.Database.Query;
-namespace DemyAI.Services;
+﻿namespace DemyAI.Services;
 
 public class DataService<T> : IDataService<T> {
     private const string UID = "Uid";
@@ -56,7 +53,7 @@ public class DataService<T> : IDataService<T> {
     }
 
     public async Task<T?> GetByUidAsync<T>(string nodeName, string uid) {
-    
+
         var objects = await _client.Child(nodeName).OnceAsync<T>();
 
         // Iterate through each item in the Objects collection
@@ -112,18 +109,18 @@ public class DataService<T> : IDataService<T> {
 
     public async Task<bool> UpdateRegistrationCourseVisibility() {
 
-        var todaysdate = DateTime.Now;
+        //var todaysdate = DateTime.Now;
 
-        var corseslist = await _client.Child(Courses).OnceAsync<Course>();
+        //var corseslist = await _client.Child(Courses).OnceAsync<Course>();
 
-        foreach(var item in corseslist) {
+        //foreach(var item in corseslist) {
 
-            var endRegitrationDate = DateTime.Parse(item.Object.EndRegistrationDate).Date;
+        //    var endRegitrationDate = DateTime.Parse(item.Object.EndRegistrationDate).Date;
 
-            if(todaysdate < endRegitrationDate) {
-                return true;
-            }
-        }
+        //    if(todaysdate < endRegitrationDate) {
+        //        return true;
+        //    }
+        //}
 
         return false;
     }

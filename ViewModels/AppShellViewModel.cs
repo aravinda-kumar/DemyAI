@@ -21,9 +21,8 @@ public partial class AppShellViewModel(IAuthenticationService authenticationServ
     [RelayCommand]
     async Task SignOut() {
 
-        authenticationService.SignOut();
+        SecureStorage.Default.RemoveAll();
 
         await appService.NavigateTo($"//{nameof(LoginPage)}", true);
-
     }
 }

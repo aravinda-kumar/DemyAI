@@ -104,9 +104,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
         RoomName = RoomName.Replace(" ", string.Empty);
 
-        var currUserUID = await SecureStorage.GetAsync("CurrentUser");
-
-        var databaseUser = await dataService.GetByUidAsync<User>("Users", currUserUID!);
+        var currentUserEmail = await SecureStorage.GetAsync("CurrentUser");
 
         var meetingOptions = new MeetingOptions {
             EnableAdvancedChat = true,

@@ -24,12 +24,12 @@ public partial class App : Application {
 
     private async void GetUserUID(AppShellViewModel shell, IDataService<User> dataService, IAppService appService) {
 
-        var CurrentUserUid = await SecureStorage.GetAsync("CurrentUser");
+        var CurrentUserEmail = await SecureStorage.GetAsync("CurrentUser");
 
-        if(string.IsNullOrEmpty(CurrentUserUid)) {
+        if(string.IsNullOrEmpty(CurrentUserEmail)) {
             await _appService.NavigateTo($"//{nameof(LoginPage)}", true);
         } else {
-            await RoleVisibility.ManageFlyoutItemsVisibility(shell, dataService, CurrentUserUid, appService);
+            await RoleVisibility.ManageFlyoutItemsVisibility(shell, dataService, CurrentUserEmail, appService);
         }
     }
 }

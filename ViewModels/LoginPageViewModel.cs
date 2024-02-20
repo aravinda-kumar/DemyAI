@@ -20,12 +20,16 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
         IsBusy = true;
 
-        //var user = await authenticationService.LoginWithEmailAndPassword(User.Email, User.Password);
-        var user = await authenticationService.LoginWithEmailAndPassword("egomezr@outlook.com", "111111");
+        //var user = await authenticationService.LoginWithEmailAndPassword(User.Email!, User.Password!);
+        var user = await authenticationService.LoginWithEmailAndPassword("admin@admin.com", "123456");
 
         if(user != null) {
-            await SecureStorage.SetAsync("CurrentUser", user.Uid);
-            await RoleVisibility.ManageFlyoutItemsVisibility(appShellViewModel, dataService, user.Uid, appService);
+
+            await SecureStorage.SetAsync("CurrentUser", user.Info.Email);
+
+            await RoleVisibility.ManageFlyoutItemsVisibility(appShellViewModel, dataService, "admin@admin.com", appService);
+
+            //await RoleVisibility.ManageFlyoutItemsVisibility(appShellViewModel, dataService, User.Email!, appService);
         }
 
         IsBusy = false;
@@ -44,11 +48,9 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
             if(user != null) {
 
-                IsPopOpen = false;
-
                 User.DemyId = NumberGenerator.GenerateRandomNumberString(8);
 
-                await dataService.AddAsync("Users", User);
+                User.Uid = await dataService.AddAsync("Users", User);
 
                 await appService.DisplayAlert("Congratulations", "Registration successful", "OK");
 

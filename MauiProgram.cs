@@ -15,6 +15,7 @@ global using DemyAI.Views.PopUps;
 global using Firebase.Auth;
 global using Firebase.Auth.Providers;
 global using Firebase.Database;
+global using Firebase.Database.Query;
 
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Maui.Controls;
@@ -25,7 +26,6 @@ global using Mopups.Services;
 
 global using SkiaSharp.Views.Maui.Controls.Hosting;
 
-global using Syncfusion.Maui.Calendar;
 global using Syncfusion.Maui.Core.Hosting;
 global using Syncfusion.Maui.Picker;
 

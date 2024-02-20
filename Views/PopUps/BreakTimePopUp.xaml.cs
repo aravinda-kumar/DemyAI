@@ -7,7 +7,7 @@ public partial class BreakTimePopUp : PopupPage {
         Speak();
     }
 
-    public async void Speak() {
+    public static async void Speak() {
         await TextToSpeech.Default.SpeakAsync("Hi, we are loosing the students, consider taking a break ");
     }
 

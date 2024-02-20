@@ -26,18 +26,15 @@ public partial class NotificationsPageViewModel(IDataService<User> dataService) 
 
         Courses.Clear();
 
-        var savedUserUID = await SecureStorage.GetAsync("CurrentUser");
-        if(savedUserUID is not null) {
-            currentUser = await dataService.GetByUidAsync<User>("Users", savedUserUID);
-        }
+        var savedUserEmail = await SecureStorage.GetAsync("CurrentUser");
 
-        var objects = await dataService.GetAllAsync<Course>("Courses");
+        var courses = await dataService.GetAllAsync<Course>("Courses");
 
-        var coursesAssigned = objects
-                                              .Where(c => c.Object.ProfessorsAssigned.Contains(currentUser!.Uid!))
-                                              .Select(c => c.Object);
+        var cousesAssigned = courses.Where(
+            c => c.Object.ProfessorsAssigned.Contains(savedUserEmail!)).Select(
+            c => c.Object);
 
-        foreach(var item in coursesAssigned) {
+        foreach(var item in cousesAssigned) {
 
             Courses.Add(item);
         }
