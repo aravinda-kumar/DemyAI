@@ -8,10 +8,10 @@
     x:DataType="vm:CoursesPageViewModel">
 
     <VerticalStackLayout>
-        <Label 
-         Text="Welcome to .NET MAUI!"
-         VerticalOptions="Center" 
-         HorizontalOptions="Center" />
+        <Label
+            HorizontalOptions="Center"
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" />
     </VerticalStackLayout>
 
 </ContentPage>

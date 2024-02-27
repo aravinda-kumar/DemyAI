@@ -14,8 +14,8 @@ public class EmailHelper {
                     .button {{
                         background-color: #5C3E88; /* Button background color */
                         color: white; /* Text color */
-                        text-decoration: none;
-                        padding: 10px 20px; /* Padding around text */
+                        RoomUrl-decoration: none;
+                        padding: 10px 20px; /* Padding around RoomUrl */
                         border-radius: 5px; /* Rounded corners */
                         display: inline-block;
                     }}

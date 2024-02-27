@@ -9,9 +9,7 @@ public interface IHttpService {
     /// <typeparam name="T">Type of data to retrieve.</typeparam>
     /// <param name="url">URL from which to fetch the data.</param>
     /// <returns>Task returning nullable data of type T retrieved from the specified URL.</returns>
-    Task<T?> GetAsync<T>(string url);
-
-    Task<T?> GetAsync<T>(string url, string authToken);
+    Task<T?> GetAsync<T>(string url, string authToken = " ");
 
     Task<HttpResponseMessage?> PostAsync(string url, HttpContent content, string key);
 

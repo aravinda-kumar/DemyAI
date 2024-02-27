@@ -97,12 +97,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     [RelayCommand]
     async Task StartMeeting() {
 
-        if(string.IsNullOrEmpty(RoomName)) {
-            await appService.DisplayAlert("Error", "The room name cannot be empty", "OK");
-            return;
-        }
-
-        RoomName = RoomName.Replace(" ", string.Empty);
+        RoomName = RoomName?.Replace(" ", string.Empty);
 
         var currentUserEmail = await SecureStorage.GetAsync("CurrentUser");
 
@@ -121,43 +116,42 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
         };
 
 
-        RoomURL = await meetingService.CreateMeetingAsync(RoomName, meetingOptions, Constants.DAILY_AUTH_TOKEN);
+        RoomURL = await meetingService.CreateMeetingAsync(RoomName!, meetingOptions, Constants.DAILY_AUTH_TOKEN);
 
-        if(!string.IsNullOrEmpty(RoomURL)) {
-            List<string> studentNames = [];
+        // We are creating dummy meeting, so we can update it later 
 
-            foreach(var item in Invited) {
-                studentNames.Add(item.Name!);
-            }
+        MeetingData dummyData = new() { roomName = RoomName! };
 
-            var meeting = new Meeting() { Name = RoomName, StudentList = studentNames, Uid = string.Empty };
+        await dataService.AddAsync("Meetings", dummyData, RoomName);
 
-            var uid = await dataService.AddAsync("Meetings", meeting);
-
-            await dataService.UpdateAsync<Meeting>("Meetings", uid, uid, UID);
-
-            IsMeetingLinkPopUpOpen = true;
-        }
-
-        //if(!string.IsNullOrEmpty(RoomURL)) {
-        //    IsMeetingLinkPopUpOpen = true;
-        //    if(IsMeetingLinkPopUpOpen) {
-        //        if(DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS) {
-        //            await EmailHelper.SendEmail(Invited, RoomName.Trim(), databaseUser, null);
-        //        }
-        //    }
-        //}
-
-
+        IsMeetingLinkPopUpOpen = true;
     }
 
+    //if(!string.IsNullOrEmpty(RoomURL)) {
+    //    IsMeetingLinkPopUpOpen = true;
+    //    if(IsMeetingLinkPopUpOpen) {
+    //        if(DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS) {
+    //            await EmailHelper.SendEmail(Invited, RoomName.Trim(), databaseUser, null);
+    //        }
+    //    }
+    //}
+
+
     [RelayCommand]
-    async Task CopyRoomURLAsync() {
+    async Task ShareURLLink() {
 
         if(!string.IsNullOrEmpty(RoomURL)) {
             await Share.Default.RequestAsync(new ShareTextRequest {
                 Text = $"This is the meeting URL \n\n{RoomURL}",
             });
+        }
+    }
+
+    [RelayCommand]
+    async Task CopyLink() {
+
+        if(!string.IsNullOrEmpty(RoomURL)) {
+            await Clipboard.Default.SetTextAsync(RoomURL);
         }
     }
 }

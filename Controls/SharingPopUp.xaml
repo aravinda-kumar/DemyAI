@@ -18,19 +18,35 @@
             <DataTemplate>
                 <Grid
                     Margin="10"
-                    ColumnDefinitions="600,*">
+                    ColumnDefinitions="600,60,60">
                     <inputLayout:SfTextInputLayout>
                         <Entry
                             IsEnabled="False"
                             Text="{Binding RoomLink, Source={x:Reference popUpMeeting}}" />
                     </inputLayout:SfTextInputLayout>
-                    
+
                     <Button
                         Grid.Column="1"
                         Margin="10,0,0,20"
-                        Command="{Binding CopyRoomURLCommand, Source={x:Reference popUpMeeting}}"
+                        Command="{Binding ShareUrl, Source={x:Reference popUpMeeting}}"
                         CornerRadius="8"
-                        HeightRequest="64"
+                        HeightRequest="60"
+                        ToolTipProperties.Text="Share url"
+                        VerticalOptions="Center">
+                        <Button.ImageSource>
+                            <FontImageSource
+                                FontFamily="Mat"
+                                Glyph="{Static helprs:IconFont.Share}" />
+                        </Button.ImageSource>
+                    </Button>
+
+                    <Button
+                        Grid.Column="2"
+                        Margin="10,0,0,20"
+                        Command="{Binding CopyURL, Source={x:Reference popUpMeeting}}"
+                        CornerRadius="8"
+                        ToolTipProperties.Text="Copy"
+                        HeightRequest="60"
                         VerticalOptions="Center">
                         <Button.ImageSource>
                             <FontImageSource

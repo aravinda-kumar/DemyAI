@@ -27,6 +27,8 @@ public interface IDataService<T> {
 
     Task<IReadOnlyCollection<FirebaseObject<T>>> GetAllAsync<T>(string nodeName);
 
+    Task<T?> GetByID<T>(string nodeName, string iD);
+
     /// <summary>
     /// Adds a new item of type T to the specified node asynchronously.
     /// </summary>
@@ -34,7 +36,7 @@ public interface IDataService<T> {
     /// <param name="newItem">Item of type T to be added.</param>
     /// <returns>Task returning the UID (Unique Identifier) of the newly added item as a string.</returns>
 
-    Task<string> AddAsync<T>(string nodeName, T newItem);
+    Task<string> AddAsync<T>(string nodeName, T newItem, string? customID = null);
 
     /// <summary>
     /// Updates an existing item of type T identified by its UID asynchronously.
@@ -45,6 +47,9 @@ public interface IDataService<T> {
 
     Task UpdateAsync<T>(string nodeName, string Key, string propertyValue, string propertyName);
 
+    Task UpdateAsync<T>(string nodeName, string uid, T newData);
+
+
     /// <summary>
     /// Deletes an item identified by its UID asynchronously.
     /// </summary>
@@ -53,4 +58,5 @@ public interface IDataService<T> {
     Task DeleteAsync(string NodeName, string uid);
 
     Task<bool> UpdateRegistrationCourseVisibility();
+
 }

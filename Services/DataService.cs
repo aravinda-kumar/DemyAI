@@ -10,8 +10,14 @@ public class DataService<T> : IDataService<T> {
         _client = new FirebaseClient(Constants.DATABASE_URL);
     }
 
-    public async Task<string> AddAsync<T>(string nodeName, T newItem) {
-        var obj = await _client.Child(nodeName).PostAsync(JsonSerializer.Serialize(newItem));
+    public async Task<string> AddAsync<T>(string nodeName, T newItem, string? customUID = null) {
+        if(!string.IsNullOrEmpty(customUID)) {
+            await _client.Child(nodeName).Child(customUID).PostAsync(newItem);
+            return customUID;
+        }
+
+        var obj = await _client.Child(nodeName).PostAsync(newItem);
+
         return obj.Key;
     }
 
@@ -20,7 +26,8 @@ public class DataService<T> : IDataService<T> {
     }
 
     public async Task<IReadOnlyCollection<FirebaseObject<T>>> GetAllAsync<T>(string nodeName) {
-        var Objects = await _client.Child(nodeName).OnceAsync<T>();
+        var Objects = await _client.Child(nodeName)
+            .OnceAsync<T>();
 
         return Objects;
     }
@@ -102,9 +109,40 @@ public class DataService<T> : IDataService<T> {
         return default;
     }
 
+    public async Task<T?> GetByID<T>(string nodeName, string iD) {
+
+        var objectList = await _client.Child(nodeName).OnceAsync<T>();
+
+        foreach(var item in objectList) {
+
+            var nameProperty = item.Object?.GetType().GetProperty("id");
+
+            if(nameProperty is not null) {
+
+                var val = nameProperty.GetValue(item.Object);
+
+                if(val is not null && val.ToString() == iD) {
+
+                    return item.Object;
+                }
+            }
+        }
+
+        return default;
+    }
+
     public async Task UpdateAsync<T>(string nodeName, string Key, string propertyValue, string propertyName) {
 
-        await _client.Child(nodeName).Child(Key).PatchAsync($"{{ \"{propertyName}\" : \"{propertyValue}\" }}");
+        await _client.Child(nodeName)
+            .Child(Key).PatchAsync($"{{ \"{propertyName}\" : \"{propertyValue}\" }}");
+    }
+
+    public async Task UpdateAsync<T>(string nodeName, string uid, T newData) {
+        // Assuming "nodeName" represents the parent node where rooms are stored
+        await _client
+            .Child(nodeName)
+            .Child(uid)
+            .PutAsync(newData);
     }
 
     public async Task<bool> UpdateRegistrationCourseVisibility() {

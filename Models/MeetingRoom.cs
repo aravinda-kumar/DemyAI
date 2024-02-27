@@ -1,6 +1,6 @@
 ﻿namespace DemyAI.Models;
 
-public class Room {
+public class MeetingRoom {
 
     [JsonPropertyName("name")]
     public string Name { get; set; }

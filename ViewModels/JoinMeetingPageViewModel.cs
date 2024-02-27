@@ -1,7 +1,7 @@
 ﻿namespace DemyAI.ViewModels;
 
-public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService httpService, IMeetingService meetingService, IAppService appService)
-    : BaseViewModel {
+public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService httpService,
+    IMeetingService meetingService, IAppService appService, IDataService<Models.User> dataService) : BaseViewModel {
 
     double currentFlyoutWith = appShell.FlyoutWidth;
 
@@ -17,7 +17,7 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService ht
     bool isWebViewVisible;
 
     [ObservableProperty]
-    string? text;
+    string? roomUrl;
 
     [ObservableProperty]
     string? roomName;
@@ -33,51 +33,24 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService ht
     private Timer? meetingTimer;
     private Timer? breakTimeTimer;
 
-    private MeetingData? data;
-
-    private Timer? apiRequestDataTimer;
 
     [RelayCommand]
     async Task EntryCompleted() {
         await VerifyAddressAsync(appService);
     }
-
-    public async Task InitializeApiPollingAsync() {
-        StartMeetingApiPolling();
-        await UpdateMeetingData();
-    }
-    private void StartMeetingApiPolling() {
-        apiRequestDataTimer = new Timer(async state => GetMeetingData(),
-            null, TimeSpan.Zero,
-            TimeSpan.FromSeconds(15));
-    }
-
-    private void GetMeetingData() {
-        if(data != null) {
-            var meetingData = data;
-            bool isOngoing = meetingData!.data[0].ongoing;
-            if(isOngoing) {
-                Debug.WriteLine("I am in the meeting");
-            } else {
-                Debug.WriteLine("I am not in the meeting");
-            }
-        }
-    }
-
-
     private void StartBreakTimeTimer() {
         breakTimeTimer = new Timer(
             state => ShowAlert(new BreakTimePopUp()),
             null,
             TimeSpan.FromSeconds(30),
-            Timeout.InfiniteTimeSpan);
+            TimeSpan.FromSeconds(30));
     }
     private void StartMeetingTimer() {
         stopwatch!.Start();
         meetingTimer = new Timer(state => UpdateElapsedTime(),
             null,
             TimeSpan.Zero,
-            TimeSpan.FromSeconds(1));
+            TimeSpan.FromMicroseconds(1005.0));
     }
     private void UpdateElapsedTime() {
         TimeSpan elapsed = stopwatch!.Elapsed;
@@ -85,31 +58,32 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService ht
 
     }
     private async Task VerifyAddressAsync(IAppService appService) {
-        if(Text is not null && Text!.Contains("demy-ia")) {
+        if(RoomUrl is not null && RoomUrl!.Contains("demy-ia")) {
             GotoSite();
         } else {
             await appService.DisplayAlert("Error", "Please paste a valid meeting link", "OK");
         }
     }
-    private async void GotoSite() {
-        if(!string.IsNullOrEmpty(Text)) {
+    private void GotoSite() {
+        if(!string.IsNullOrEmpty(RoomUrl)) {
+            RoomName = RoomUrl.Split('/').LastOrDefault();
             IsWebViewVisible = true;
             if(IsWebViewVisible) {
                 ToolbarVisibility = !ToolbarVisibility;
                 MeetingSearchVibiility = !MeetingSearchVibiility;
                 appShell.FlyoutWidth = 0;
                 StartBreakTimeTimer();
-                await InitializeApiPollingAsync();
                 StartMeetingTimer();
             }
         }
     }
-    private async Task UpdateMeetingData() {
-        if(data is null) {
-            data = (MeetingData?)await meetingService.GetMeetingData(RoomName!, Constants.DAILY_AUTH_TOKEN);
-        }
+    public async Task UpdateMeetingData() {
 
-        GetMeetingData(); // Trigger data processing
+        var meetingFromService = await meetingService.GetMeetingData(
+            RoomName!, Constants.DAILY_AUTH_TOKEN);
+
+        await dataService.UpdateAsync("Meetings", RoomName!, meetingFromService.data.FirstOrDefault()!);
+
     }
 }
 

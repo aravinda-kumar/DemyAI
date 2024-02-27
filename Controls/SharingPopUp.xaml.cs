@@ -22,11 +22,21 @@ public partial class SharingPopUp : ContentView {
         set => SetValue(RoomLinkProperty, value);
     }
 
-    public static readonly BindableProperty CopyRoomURLCommandProperty = BindableProperty.Create(
-        nameof(CopyRoomURLCommand), typeof(IRelayCommand), typeof(SharingPopUp));
+    public static readonly BindableProperty ShareUrlProperty = BindableProperty.Create(
+        nameof(ShareUrl), typeof(IRelayCommand), typeof(SharingPopUp));
 
-    public IRelayCommand CopyRoomURLCommand {
-        get => (IRelayCommand)GetValue(CopyRoomURLCommandProperty);
-        set => SetValue(CopyRoomURLCommandProperty, value);
+    public IRelayCommand ShareUrl {
+        get => (IRelayCommand)GetValue(ShareUrlProperty);
+        set => SetValue(ShareUrlProperty, value);
     }
+
+
+    public static readonly BindableProperty CopyURLProperty = BindableProperty.Create(
+        nameof(CopyURL), typeof(IRelayCommand), typeof(SharingPopUp));
+
+    public IRelayCommand CopyURL {
+        get => (IRelayCommand)GetValue(CopyURLProperty);
+        set => SetValue(CopyURLProperty, value);
+    }
+
 }

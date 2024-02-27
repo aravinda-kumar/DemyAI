@@ -1,7 +1,7 @@
 ﻿using User = DemyAI.Models.User;
 namespace DemyAI.ViewModels;
 
-public partial class AppShellViewModel(IAuthenticationService authenticationService, IAppService appService) : BaseViewModel {
+public partial class AppShellViewModel(IAppService appService) : BaseViewModel {
 
     [ObservableProperty]
     User? user;

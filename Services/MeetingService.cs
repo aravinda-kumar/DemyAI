@@ -1,4 +1,6 @@
-﻿namespace DemyAI.Services;
+﻿using static System.Net.WebRequestMethods;
+
+namespace DemyAI.Services;
 
 public class MeetingService(IHttpService httpService) : IMeetingService {
 
@@ -8,7 +10,7 @@ public class MeetingService(IHttpService httpService) : IMeetingService {
 
         try {
 
-            var room = new Room { Name = roomName, Privacy = "public", meetingOptions = meetingOptions };
+            var room = new MeetingRoom { Name = roomName, Privacy = "public", meetingOptions = meetingOptions };
 
             var json = JsonSerializer.Serialize(room);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -33,12 +35,13 @@ public class MeetingService(IHttpService httpService) : IMeetingService {
         }
     }
 
-    public async Task<object> GetMeetingData(string roomName, string authToken) {
+    public async Task<MeetingData> GetMeetingData(string roomName, string authToken) {
 
-        string apiUrl = $"https://api.daily.co/v1/meetings?room={roomName}";
+        string apiUrl = $"https://api.daily.co/v1/meetings/?room={roomName}&limit=1";
 
         var data = await httpService.GetAsync<MeetingData>(apiUrl, authToken);
 
-        return data!;
+        return data;
+
     }
 }

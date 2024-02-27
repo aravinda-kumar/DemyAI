@@ -1,13 +1,19 @@
-﻿using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 
 namespace DemyAI.Services;
 
 public class HttpService(IAppService appService, HttpClient httpClient) : IHttpService {
 
-    public async Task<T?> GetAsync<T>(string url) {
+    public async Task<T?> GetAsync<T>(string url, string authToken = " ") {
 
         try {
+
+            if(!string.IsNullOrEmpty(authToken)) {
+
+                httpClient.DefaultRequestHeaders.Clear();
+
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {authToken}");
+            }
 
             var respose = await httpClient.GetAsync(url);
             if(respose != null && respose.IsSuccessStatusCode) {
@@ -24,18 +30,6 @@ public class HttpService(IAppService appService, HttpClient httpClient) : IHttpS
         return default;
     }
 
-    public async Task<T?> GetAsync<T>(string url, string authToken) {
-
-        httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {authToken}");
-
-        HttpResponseMessage response = await httpClient.GetAsync(url);
-        if(response.IsSuccessStatusCode) {
-            var data = await response.Content.ReadFromJsonAsync<T>();
-            return data!;
-        }
-
-        return default;
-    }
 
     public async Task<HttpResponseMessage?> PostAsync(string url, HttpContent content, string key) {
         try {
