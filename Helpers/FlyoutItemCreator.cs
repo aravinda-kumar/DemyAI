@@ -37,10 +37,7 @@ public static class FlyoutItemCreator {
             }
         };
 
-
-
-        Shell.Current.Items.Add(studentItems);
-
+        Shell.Current.Items.Contains(studentItems);
 
     }
 
@@ -112,6 +109,5 @@ public static class FlyoutItemCreator {
         };
 
         Shell.Current.Items.Add(CoordinatorItems);
-
     }
 }
