@@ -55,7 +55,7 @@
                         ItemsSource="{Binding Teachers}"
                         SelectionMode="None">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:User">
+                            <DataTemplate x:DataType="models:DemyUser">
                                 <Border Margin="0,10,0,0">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="8" />

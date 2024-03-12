@@ -1,11 +1,12 @@
 ﻿namespace DemyAI.ViewModels;
 
-public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService httpService,
-    IMeetingService meetingService, IAppService appService, IDataService<Models.User> dataService) : BaseViewModel {
+public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService httpService, IAudioManager audioManager,
+    IMeetingService meetingService, IAppService appService, IDataService<DemyUser> dataService) : BaseViewModel {
 
     double currentFlyoutWith = appShell.FlyoutWidth;
 
     public ObservableCollection<string> names { get; set; } = [];
+
 
     [ObservableProperty]
     bool meetingSearchVibiility = true;
@@ -33,6 +34,7 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService ht
     private Timer? meetingTimer;
     private Timer? breakTimeTimer;
 
+    Datum? meetingData;
 
     [RelayCommand]
     async Task EntryCompleted() {
@@ -40,12 +42,12 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService ht
     }
     private void StartBreakTimeTimer() {
         breakTimeTimer = new Timer(
-            state => ShowAlert(new BreakTimePopUp()),
+            state => ShowAlert(new BreakTimePopUp(audioManager)),
             null,
             TimeSpan.FromSeconds(30),
             TimeSpan.FromSeconds(30));
     }
-    private void StartMeetingTimer() {
+    private void StartMeetingChronometer() {
         stopwatch!.Start();
         meetingTimer = new Timer(state => UpdateElapsedTime(),
             null,
@@ -73,7 +75,7 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService ht
                 MeetingSearchVibiility = !MeetingSearchVibiility;
                 appShell.FlyoutWidth = 0;
                 StartBreakTimeTimer();
-                StartMeetingTimer();
+                StartMeetingChronometer();
             }
         }
     }
@@ -82,8 +84,9 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService ht
         var meetingFromService = await meetingService.GetMeetingData(
             RoomName!, Constants.DAILY_AUTH_TOKEN);
 
-        await dataService.UpdateAsync("Meetings", RoomName!, meetingFromService.data.FirstOrDefault()!);
+        meetingData = meetingFromService.data.FirstOrDefault()!;
 
+        await dataService.UpdateAsync("Meetings", RoomName!, meetingData);
     }
 }
 

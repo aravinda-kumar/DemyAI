@@ -2,7 +2,8 @@
 <ContentPage
     x:Class="DemyAI.Views.WelcomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="WelcomePage">
 
     <VerticalStackLayout
         Background="IndianRed"
@@ -15,9 +16,7 @@
             Source="demy.png"
             VerticalOptions="Center"
             WidthRequest="300" />
-        <Label
-            Style="{StaticResource TitleText}"
-            Text="DemyIA" />
+        <Label Style="{StaticResource TitleText}" />
         <Label
             Style="{StaticResource TitleText}"
             Text="Empowering educators" />
@@ -27,7 +26,5 @@
         <Label
             Style="{StaticResource TitleText}"
             Text="Demy AI your teaching assistant ally" />
-
     </VerticalStackLayout>
-
 </ContentPage>

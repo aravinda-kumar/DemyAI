@@ -1,35 +1,18 @@
-﻿using User = DemyAI.Models.User;
+﻿using Syncfusion.Licensing;
 
 namespace DemyAI;
 public partial class App : Application {
 
-    private readonly IAppService _appService;
-    private readonly IAuthenticationService _authenticationService;
-    private readonly IDataService<User> dataService;
-    private readonly AppShellViewModel _shellViewModel;
+    public App(IConnectivity connectivity, AppShell shell, NoInternetPage noInternetPage) {
 
-    public App(AppShell shell, IAppService appService, IAuthenticationService authenticationService,
-        IDataService<User> dataService, AppShellViewModel shellViewModel) {
+        SyncfusionLicenseProvider.RegisterLicense(Constants.LICENSE);
+
         InitializeComponent();
 
-        Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(Constants.LICENSE);
-        _appService = appService;
-        _authenticationService = authenticationService;
-        _shellViewModel = shellViewModel;
-        MainPage = shell;
-        GetUserUID(shellViewModel, dataService, appService);
-
-    }
-
-
-    private async void GetUserUID(AppShellViewModel shell, IDataService<User> dataService, IAppService appService) {
-
-        var CurrentUserEmail = await SecureStorage.GetAsync("CurrentUser");
-
-        if(string.IsNullOrEmpty(CurrentUserEmail)) {
-            await _appService.NavigateTo($"//{nameof(LoginPage)}", true);
+        if(connectivity.NetworkAccess is not NetworkAccess.Internet) {
+            MainPage = noInternetPage;
         } else {
-            await RoleVisibility.ManageFlyoutItemsVisibility(shell, dataService, CurrentUserEmail, appService);
+            MainPage = shell;
         }
     }
 }

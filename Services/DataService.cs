@@ -4,6 +4,7 @@ public class DataService<T> : IDataService<T> {
     private const string UID = "Uid";
     private const string ROLE = "Role";
     private const string Courses = "Courses";
+    private const string EMAIL = "Email";
     readonly FirebaseClient _client;
 
     public DataService() {
@@ -21,45 +22,7 @@ public class DataService<T> : IDataService<T> {
         return obj.Key;
     }
 
-    public Task DeleteAsync(string NodeName, string uid) {
-        throw new NotImplementedException();
-    }
-
-    public async Task<IReadOnlyCollection<FirebaseObject<T>>> GetAllAsync<T>(string nodeName) {
-        var Objects = await _client.Child(nodeName)
-            .OnceAsync<T>();
-
-        return Objects;
-    }
-
-    public async Task<ObservableCollection<T>> GetByRole<T>(string nodeName, string role) {
-
-        var teachers = new ObservableCollection<T>();
-
-        var objects = await GetAllAsync<T>(nodeName);
-
-        // Iterate through each item in the Objects collection
-        foreach(var items in objects) {
-
-            // Get the Role property of the current item's object type
-            var roleProperty = items.Object?.GetType().GetProperty(ROLE);
-
-            if(roleProperty is not null) {
-
-                // Retrieve the value of the role property for the current object
-                var roleValue = roleProperty.GetValue(items.Object);
-
-                if(roleValue != null && roleValue.ToString() == role) {
-
-                    teachers.Add(items.Object);
-                }
-            }
-        }
-
-        return teachers;
-    }
-
-    public async Task<T?> GetByUidAsync<T>(string nodeName, string uid) {
+    public async Task<T?> GetByEmailAsync<T>(string nodeName, string email) {
 
         var objects = await _client.Child(nodeName).OnceAsync<T>();
 
@@ -67,7 +30,7 @@ public class DataService<T> : IDataService<T> {
         foreach(var item in objects) {
 
             // Get the Uid property of the current item's object type
-            var uidProp = item.Object?.GetType().GetProperty(UID);
+            var uidProp = item.Object?.GetType().GetProperty(EMAIL);
 
             // Check if the Uid property exists for the current object type
             if(uidProp is not null) {
@@ -76,7 +39,7 @@ public class DataService<T> : IDataService<T> {
                 var value = uidProp.GetValue(item.Object);
 
                 // Check if the Uid property value matches the provided uid
-                if(value != null && value.ToString() == uid) {
+                if(value != null && value.ToString() == email) {
 
                     // If there's a match, return the object
                     return item.Object;
@@ -87,54 +50,28 @@ public class DataService<T> : IDataService<T> {
         return default;
     }
 
-    public async Task<T?> GetByNameAsync<T>(string nodeName) {
-
-        var objectList = await _client.Child(nodeName).OnceAsync<T>();
-
-        foreach(var item in objectList) {
-
-            var nameProperty = item.Object?.GetType().GetProperty("Name");
-
-            if(nameProperty is not null) {
-
-                var val = nameProperty.GetValue(item.Object);
-
-                if(val is not null && val.ToString() == "Name") {
-
-                    return item.Object;
-                }
-            }
-        }
-
-        return default;
+    public Task DeleteAsync(string NodeName, string uid) {
+        throw new NotImplementedException();
     }
 
-    public async Task<T?> GetByID<T>(string nodeName, string iD) {
+    public async Task<ObservableCollection<T>> GetAllAsync<T>(string nodeName) {
 
-        var objectList = await _client.Child(nodeName).OnceAsync<T>();
+        var colletion = new ObservableCollection<T>();
 
-        foreach(var item in objectList) {
+        var firebaseObjects = await _client.Child(nodeName)
+            .OnceAsync<T>();
 
-            var nameProperty = item.Object?.GetType().GetProperty("id");
-
-            if(nameProperty is not null) {
-
-                var val = nameProperty.GetValue(item.Object);
-
-                if(val is not null && val.ToString() == iD) {
-
-                    return item.Object;
-                }
-            }
+        foreach(var item in firebaseObjects) {
+            colletion.Add(item.Object);
         }
 
-        return default;
+        return colletion;
     }
 
-    public async Task UpdateAsync<T>(string nodeName, string Key, string propertyValue, string propertyName) {
+    public async Task UpdateAsync<T>(string nodeName, string uid, string propertyValue, string propertyName) {
 
         await _client.Child(nodeName)
-            .Child(Key).PatchAsync($"{{ \"{propertyName}\" : \"{propertyValue}\" }}");
+            .Child(uid).PatchAsync($"{{ \"{propertyName}\" : \"{propertyValue}\" }}");
     }
 
     public async Task UpdateAsync<T>(string nodeName, string uid, T newData) {
@@ -145,21 +82,13 @@ public class DataService<T> : IDataService<T> {
             .PutAsync(newData);
     }
 
-    public async Task<bool> UpdateRegistrationCourseVisibility() {
+    public void ListenForChanges<T>(string nodeName, string uid, Action<T> onDataChanged) {
+        var observable = _client.Child(nodeName).Child(uid).AsObservable<T>()
+            .Subscribe(updatedData => {
+                // Invoke the provided action with the updated data
+                onDataChanged?.Invoke(updatedData.Object);
 
-        //var todaysdate = DateTime.Now;
-
-        //var corseslist = await _client.Child(Courses).OnceAsync<Course>();
-
-        //foreach(var item in corseslist) {
-
-        //    var endRegitrationDate = DateTime.Parse(item.Object.EndRegistrationDate).Date;
-
-        //    if(todaysdate < endRegitrationDate) {
-        //        return true;
-        //    }
-        //}
-
-        return false;
+                Debug.WriteLine("Is time to uipdate");
+            });
     }
 }

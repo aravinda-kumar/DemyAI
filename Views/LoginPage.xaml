@@ -68,19 +68,20 @@
         </Label>
 
         <sfPopup:SfPopup
-            x:Name="sfPopup"
             AnimationMode="Zoom"
+            AutoSizeMode="Height"
             HeaderTitle="Register"
-            HeightRequest="520"
             IsOpen="{Binding IsPopOpen}"
             ShowCloseButton="True"
-            StaysOpen="True">
+            StaysOpen="True"
+            WidthRequest="300">
+
             <sfPopup:SfPopup.ContentTemplate>
                 <DataTemplate>
-                    <Grid
-                        Margin="20"
-                        RowDefinitions="80,80,80,80,70">
 
+                    <Grid
+                        Margin="10"
+                        RowDefinitions="80,80,80,80">
                         <inputLayout:SfTextInputLayout
                             Hint="Name"
                             IsVisible="{Binding isNotBusy}">
@@ -102,32 +103,23 @@
                             <Entry Text="{Binding User.Password}" />
                         </inputLayout:SfTextInputLayout>
 
-                        <ActivityIndicator
-                            Grid.RowSpan="3"
-                            HeightRequest="100"
-                            HorizontalOptions="Center"
-                            IsRunning="{Binding IsBusy}"
-                            VerticalOptions="Center"
-                            WidthRequest="100"
-                            Color="#422777" />
-
-                        <inputLayout:SfTextInputLayout
-                            Grid.Row="3"
-                            Hint="Role"
-                            IsVisible="{Binding isNotBusy}">
-                            <combobox:SfComboBox
-                                IsEditable="False"
-                                ItemsSource="{Binding User.Roles}"
-                                SelectedItem="{Binding User.Role}" />
-                        </inputLayout:SfTextInputLayout>
-
                         <Button
-                            Grid.Row="4"
+                            Grid.Row="3"
                             Command="{Binding RegisterCommand}"
                             CornerRadius="8"
                             HeightRequest="40"
                             IsVisible="{Binding isNotBusy}"
                             Text="Register" />
+
+                        <ActivityIndicator
+                            Grid.RowSpan="3"
+                            HeightRequest="80"
+                            HorizontalOptions="Center"
+                            IsRunning="{Binding IsBusy}"
+                            IsVisible="{Binding IsBusy}"
+                            VerticalOptions="Center"
+                            WidthRequest="80"
+                            Color="Purple" />
                     </Grid>
                 </DataTemplate>
             </sfPopup:SfPopup.ContentTemplate>

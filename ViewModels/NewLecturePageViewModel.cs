@@ -1,13 +1,11 @@
-﻿using User = DemyAI.Models.User;
-
-namespace DemyAI.ViewModels;
+﻿namespace DemyAI.ViewModels;
 
 public partial class NewLecturePageViewModel(IAppService appService, IHttpService httpService,
-    IDataService<User> dataService, IMeetingService meetingService) : BaseViewModel {
+    IDataService<DemyUser> dataService, IMeetingService meetingService) : BaseViewModel {
 
-    public ObservableCollection<User> Users { get; set; } = [];
+    public ObservableCollection<DemyUser> Users { get; set; } = [];
 
-    public ObservableCollection<User> Invited { get; set; } = [];
+    public ObservableCollection<DemyUser> Invited { get; set; } = [];
 
     public Dictionary<int, string> TimeZones { get; set; } = [];
 
@@ -33,7 +31,6 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     async Task Appearing() {
 
         await GetStudents();
-        await GetTimeZones();
     }
 
     [RelayCommand]
@@ -73,16 +70,16 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
         Users.Clear();
 
-        var data = await dataService.GetByRole<User>("Users", Roles.Student.ToString());
+        //var data = await dataService.GetByRole<User>("Users", Role.Student.ToString());
 
-        foreach(var filterUser in data) {
+        //foreach(var filterUser in data) {
 
-            Users.Add(filterUser);
-        }
+        //    Users.Add(filterUser);
+        //}
     }
 
     [RelayCommand]
-    void HandleCheckBox(User user) {
+    void HandleCheckBox(DemyUser user) {
 
         if(user.IsParticipant) {
             if(!Invited.Contains(user)) {

@@ -1,4 +1,4 @@
-﻿using User = DemyAI.Models.User;
+﻿using DemyUser = DemyAI.Models.DemyUser;
 
 namespace DemyAI.Helpers;
 
@@ -24,15 +24,15 @@ public class EmailHelper {
             <body>
                 <p>Here are the meeting details:</p>
                 <br> <!-- Add a line break -->
-                <p><strong>Meeting Name:</strong> {roomName}</p>
-                <p><strong>Teacher Name:</strong> {userName}</p>
+                <p><strong>Meeting EMAIL:</strong> {roomName}</p>
+                <p><strong>Teacher EMAIL:</strong> {userName}</p>
                 <p>Click the button below to join the meeting:</p>
                 <p><a class='button' href='{meetingLink}'>Join</a></p>
             </body>
             </html>";
     }
 
-    public static async Task SendEmail(ObservableCollection<User> users, string roomName, User? user, DateTime? dateTimeMeeting) {
+    public static async Task SendEmail(ObservableCollection<DemyUser> users, string roomName, DemyUser? user, DateTime? dateTimeMeeting) {
 
         try {
             var meetingLink = string.Empty;

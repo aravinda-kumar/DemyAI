@@ -1,14 +1,21 @@
 namespace DemyAI.Views.PopUps;
 
 public partial class BreakTimePopUp : PopupPage {
-    public BreakTimePopUp() {
-        InitializeComponent();
 
+    private readonly IAudioManager audioManager;
+
+    public BreakTimePopUp(IAudioManager audioManager) {
+        InitializeComponent();
+        this.audioManager = audioManager;
         Speak();
     }
 
-    public static async void Speak() {
-        await TextToSpeech.Default.SpeakAsync("Hi, we are loosing the students, consider taking a break ");
+    public async void Speak() {
+
+        CancellationToken token = CancellationToken.None;
+        var player = audioManager.CreateAsyncPlayer(await FileSystem.OpenAppPackageFileAsync("message.wav"));
+
+        await player.PlayAsync(token);
     }
 
 }

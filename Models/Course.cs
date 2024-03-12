@@ -2,8 +2,6 @@
 
 public class Course {
 
-    public string? Uid { get; set; }
-
     public string? DemyId { get; set; }
 
     public string? Name { get; set; }

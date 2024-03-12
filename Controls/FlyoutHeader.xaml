@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid
+    x:Class="DemyAI.Controls.FlyoutHeader"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    x:DataType="vm:FlyoutHeaderViewModel"
+    BackgroundColor="Brown"
+    ColumnDefinitions="*,*"
+    RowDefinitions="*,*">
+
+    <Image
+        Aspect="Center"
+        HorizontalOptions="Center"
+        Source="user.png"
+        VerticalOptions="Center" />
+
+    <VerticalStackLayout
+        Grid.Column="1"
+        VerticalOptions="Center">
+        <Label
+            FontAttributes="Bold"
+            Text="{Binding DemyId, StringFormat='Demy ID: {0}'}" />
+        <Label Text="{Binding Email, StringFormat='Eamil: {0}'}" />
+        <Label Text="{Binding Name, StringFormat='Name: {0}'}" />
+        <Label Text="{Binding CurrentRole, StringFormat='Role: {0}'}" />
+    </VerticalStackLayout>
+
+    <Label
+        Grid.Row="1"
+        HorizontalTextAlignment="Center"
+        Text="rfrferfre" />
+
+</Grid>

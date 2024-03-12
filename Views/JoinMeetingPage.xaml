@@ -40,7 +40,6 @@
             x:Name="JoinWebView"
             Grid.Row="1"
             IsVisible="{Binding IsWebViewVisible}"
-            Navigated="JoinWebView_Navigated"
             Source="{Binding RoomUrl}" />
 
         <CollectionView

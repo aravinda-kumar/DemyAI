@@ -6,40 +6,39 @@
     xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:helpers="clr-namespace:DemyAI.Helpers"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:pages="clr-namespace:DemyAI.Views"
     xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-    xmlns:view="clr-namespace:DemyAI.Views"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    Shell.NavBarIsVisible="False"
     Title="DemyAI"
     x:DataType="vm:AppShellViewModel"
-    FlyoutBehavior="{OnIdiom Desktop=Locked,
-                             Phone=Flyout}">
+    FlyoutIsPresented="{Binding Status}"
+    Shell.TabBarIsVisible="False">
 
-    <Shell.FlyoutHeader>
-        <Grid>
-            <BoxView
-                BackgroundColor="#522cd4"
-                HeightRequest="142" />
-            <VerticalStackLayout>
-                <Image
-                    HeightRequest="80"
-                    Source="user.png"
-                    WidthRequest="80" />
-                <Label
-                    HorizontalTextAlignment="Center"
-                    Text="{Binding User.DemyId}"
-                    TextColor="White" />
-                <Label
-                    HorizontalTextAlignment="Center"
-                    Text="{Binding User.Email}"
-                    TextColor="White" />
-                <Label
-                    HorizontalTextAlignment="Center"
-                    Text="{Binding User.Role}"
-                    TextColor="White" />
-            </VerticalStackLayout>
-        </Grid>
-    </Shell.FlyoutHeader>
+    <ShellContent
+        ContentTemplate="{DataTemplate pages:StartupPage}"
+        Route="StartupPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False" />
 
+    <ShellContent
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        Route="LoginPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate pages:NoInternetPage}"
+        Route="NoInternetPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate pages:RoleSelectionPage}"
+        Route="RoleSelectionPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False" />
+   
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <Button
@@ -49,82 +48,5 @@
                 Text="Log out" />
         </DataTemplate>
     </Shell.FlyoutFooterTemplate>
-
-
-    <FlyoutItem
-        Title="Notifications"
-        IsVisible="{Binding IsTeacher}">
-        <ShellContent
-            ContentTemplate="{DataTemplate view:NotificationsPage}"
-            Route="NotificationsPage" />
-    </FlyoutItem>
-
-    <ShellContent
-        ContentTemplate="{DataTemplate view:LoginPage}"
-        Route="LoginPage"
-        Shell.FlyoutBehavior="Disabled"
-        Shell.FlyoutItemIsVisible="False" />
-
-
-    <ShellContent
-        ContentTemplate="{DataTemplate view:WelcomePage}"
-        Route="WelcomePage"
-        Shell.FlyoutItemIsVisible="False" />
-
-    <FlyoutItem
-        Title="My courses"
-        IsVisible="{Binding IsStudent}">
-        <ShellContent
-            ContentTemplate="{DataTemplate view:CoursesPage}"
-            Route="CoursesPage" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Join Meeting">
-        <ShellContent
-            ContentTemplate="{DataTemplate view:JoinMeetingPage}"
-            Route="JoinMeetingPage" />
-    </FlyoutItem>
-
-
-    <FlyoutItem
-        Title="New lecture"
-        IsVisible="{Binding IsTeacher}">
-        <ShellContent
-            ContentTemplate="{DataTemplate view:NewLecturePage}"
-            Route="NewLecturePage" />
-    </FlyoutItem>
-
-    <FlyoutItem
-        Title="New test"
-        IsVisible="{Binding IsTeacher}">
-        <ShellContent
-            ContentTemplate="{DataTemplate view:NewTestPage}"
-            Route="NewTestPage" />
-    </FlyoutItem>
-
-
-    <FlyoutItem
-        Title="Schedule lecture"
-        IsVisible="{Binding IsTeacher}">
-        <ShellContent
-            ContentTemplate="{DataTemplate view:ScheduleLecturePage}"
-            Route="ScheduleLecturePage" />
-    </FlyoutItem>
-
-    <FlyoutItem
-        Title="Schedule test"
-        IsVisible="{Binding IsTeacher}">
-        <ShellContent
-            ContentTemplate="{DataTemplate view:ScheduleTestPage}"
-            Route="ScheduleLecturePage" />
-    </FlyoutItem>
-
-    <FlyoutItem
-        Title="Manage courses"
-        IsVisible="{Binding IsCoordinator}">
-        <ShellContent
-            ContentTemplate="{DataTemplate view:ManageCoursePage}"
-            Route="ManageCoursePage" />
-    </FlyoutItem>
 
 </Shell>

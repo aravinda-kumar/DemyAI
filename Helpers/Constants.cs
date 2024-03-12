@@ -9,12 +9,6 @@ public class Constants {
 
     public const string DATABASE_URL = "https://demyai-default-rtdb.firebaseio.com/";
 
-    //miscellaneous
-
-    public const string VIEWS = "Views";
-
-    public const string PAGE = "Page";
-
     //bing maps api
 
     public const string MAPKEY = "2MJcwb3sDhOi7KnZYZFz~kBuOXKu5oDgZhJzhgiR6Tg~Akm14AZMJcKfXhu0JgJPCOuYTWsnRF3VWJ91UX0_nHRYa4zl082ffWsy7DV-id6a";
@@ -25,11 +19,20 @@ public class Constants {
 
     public const string BASETTING_URL = "https://demy-ia.daily.co/";
 
-    //MailJet 
+    //firebase nodes 
 
-    public const string MAILJETAPIKEY = "60d8bbe616e622a4d20ff8ee02f02286";
+    public const string USERS = "Users";
 
-    public const string MAILJETSECRETKEY = "ca0a843e8862f94f1a6301da706d6fb0";
+
+    //secure storage key
+
+    public const string LOGGED_USER = "loggedUser";
+
+    //preference key
+
+    public const string FLYOUT_STATUS = "FlyoutStatus";
+
+
 
     //Gmail
 

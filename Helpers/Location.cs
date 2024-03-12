@@ -1,6 +1,6 @@
 ﻿namespace DemyAI.Helpers;
 
-public class LocationHelper {
+public class Location {
 
     public static async Task<string> GetMyLocationAsync() {
 

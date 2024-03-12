@@ -9,9 +9,9 @@ public interface IAuthenticationService {
     /// <summary>
     /// Registers a new user with email and password.
     /// </summary>
-    /// <param name="email">User's email address.</param>
-    /// <param name="password">User's password.</param>
-    /// <returns>Task returning a nullable User object upon successful registration.</returns>
+    /// <param name="email">DeemyUser's email address.</param>
+    /// <param name="password">DeemyUser's password.</param>
+    /// <returns>Task returning a nullable DeemyUser object upon successful registration.</returns>
 
     Task<User?> RegisterWithEmailAndPassword(string email, string password, string DisplayName);
 
@@ -26,16 +26,16 @@ public interface IAuthenticationService {
     /// <summary>
     /// Logs in a user with email and password.
     /// </summary>
-    /// <param name="email">User's email address.</param>
-    /// <param name="password">User's password.</param>
-    /// <returns>Task returning a nullable User object upon successful login.</returns>
+    /// <param name="email">DeemyUser's email address.</param>
+    /// <param name="password">DeemyUser's password.</param>
+    /// <returns>Task returning a nullable DeemyUser object upon successful login.</returns>
 
     Task<User?> LoginWithEmailAndPassword(string email, string password);
 
     /// <summary>
     /// Retrieves the currently logged-in user.
     /// </summary>
-    /// <returns>Task returning a nullable User object representing the currently logged-in user.</returns>
+    /// <returns>Task returning a nullable DeemyUser object representing the currently logged-in user.</returns>
 
     Task<User?> GetLoggedInUser();
 

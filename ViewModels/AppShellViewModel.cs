@@ -1,22 +1,18 @@
-﻿using User = DemyAI.Models.User;
+﻿
 namespace DemyAI.ViewModels;
 
 public partial class AppShellViewModel(IAppService appService) : BaseViewModel {
 
     [ObservableProperty]
-    User? user;
+    bool status;
 
-    [ObservableProperty]
-    bool isCoordinator;
+    partial void OnStatusChanged(bool value) {
 
-    [ObservableProperty]
-    bool isStudent;
+        if(DeviceInfo.Current.Idiom == DeviceIdiom.Desktop) {
 
-    [ObservableProperty]
-    bool isTeacher;
-
-    [ObservableProperty]
-    bool isRegisterOpen;
+            Preferences.Default.Set(Constants.FLYOUT_STATUS, value);
+        }
+    }
 
     [RelayCommand]
     async Task SignOut() {

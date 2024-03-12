@@ -48,7 +48,7 @@
                     ItemsSource="{Binding Users, Source={x:Reference UserExpander}}"
                     SelectionMode="None">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:User">
+                        <DataTemplate x:DataType="model:DemyUser">
                             <Border Margin="2">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="8" />

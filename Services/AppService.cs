@@ -17,4 +17,8 @@ public class AppService : IAppService {
     public async Task NavigateTo(string pageName, bool isAnimated) {
         await Shell.Current.GoToAsync(pageName, isAnimated);
     }
+
+    public async Task NavigateBack() {
+        await Shell.Current.GoToAsync("..");
+    }
 }

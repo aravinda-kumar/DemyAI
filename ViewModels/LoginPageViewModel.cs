@@ -1,14 +1,13 @@
-﻿using User = DemyAI.Models.User;
+﻿namespace DemyAI.ViewModels;
 
-namespace DemyAI.ViewModels;
-public partial class LoginPageViewModel(IDataService<User> dataService, IAppService appService,
-    IAuthenticationService authenticationService, AppShellViewModel appShellViewModel) : BaseViewModel {
+public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IAppService appService,
+    IAuthenticationService authenticationService) : BaseViewModel {
 
     [ObservableProperty]
     bool isPopOpen;
 
     [ObservableProperty]
-    User user = new();
+    DemyUser user = new();
 
     [RelayCommand]
     void OpenPopUp() {
@@ -20,16 +19,10 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
 
         IsBusy = true;
 
-        //var user = await authenticationService.LoginWithEmailAndPassword(User.Email!, User.Password!);
-        var user = await authenticationService.LoginWithEmailAndPassword("admin@admin.com", "123456");
+        var user = await authenticationService.LoginWithEmailAndPassword("a@a.com", "123456");
+        if(user is not null) {
 
-        if(user != null) {
-
-            await SecureStorage.SetAsync("CurrentUser", user.Info.Email);
-
-            await RoleVisibility.ManageFlyoutItemsVisibility(appShellViewModel, dataService, "admin@admin.com", appService);
-
-            //await RoleVisibility.ManageFlyoutItemsVisibility(appShellViewModel, dataService, User.Email!, appService);
+            await appService.NavigateTo($"//{nameof(RoleSelectionPage)}", true);
         }
 
         IsBusy = false;
@@ -39,38 +32,26 @@ public partial class LoginPageViewModel(IDataService<User> dataService, IAppServ
     [RelayCommand]
     async Task Register() {
 
-        var IsFilled = await VerifyUserAsync(User);
+        IsBusy = true;
 
-        if(IsFilled) {
-            IsBusy = true;
-            var user = await authenticationService.RegisterWithEmailAndPassword(User.Email!, User.Password!,
-                User.Name!);
+        var user = await authenticationService.RegisterWithEmailAndPassword(User.Email!, User.Password!,
+            User.Name!);
 
-            if(user != null) {
+        if(user != null) {
 
-                User.DemyId = NumberGenerator.GenerateRandomNumberString(8);
+            User.DemyId = NumberGenerator.GenerateRandomNumberString(8);
 
-                User.Uid = await dataService.AddAsync("Users", User);
+            var uid = await dataService.AddAsync("Users", User);
 
-                await appService.DisplayAlert("Congratulations", "Registration successful", "OK");
+            await dataService.UpdateAsync<DemyUser>("Users", uid, uid, "Uid");
 
-                IsPopOpen = false;
+            await appService.DisplayAlert("Congratulations", "Registration successful", "OK");
 
-                IsBusy = false;
-            }
-        }
-    }
+            IsPopOpen = false;
 
-    private async Task<bool> VerifyUserAsync(User user) {
-
-        if(string.IsNullOrEmpty(user.Name)
-            && string.IsNullOrEmpty(user.Email)
-            && string.IsNullOrEmpty(user.Role)) {
-
-            await appService.DisplayAlert("Error", "Please make sure everything is filed", "OK");
-            return false;
+            IsBusy = false;
         }
 
-        return true;
+        IsBusy = false;
     }
 }

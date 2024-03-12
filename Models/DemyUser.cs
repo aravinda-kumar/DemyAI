@@ -1,9 +1,8 @@
 ﻿namespace DemyAI.Models;
 
-public partial class User : BaseViewModel {
+public class DemyUser {
 
     //private string _password;
-
     public string? Uid { get; set; }
 
     public string? DemyId { get; set; }
@@ -19,24 +18,16 @@ public partial class User : BaseViewModel {
     //    private init => _password = BCrypt.Net.BCrypt.HashPassword(value);
     //}
 
-    public string? Role { get; set; }
+    public List<string>? Roles { get; set; }
+
+    public string? CurrentRole { get; set; }
 
     //public double latitude { get; set; }
 
     //public double longitude { get; set; }
 
-    public List<string>? Rooms { get; set; }
-
     public bool IsAssignedToCourse { get; set; }
 
     public bool IsParticipant { get; set; }
-
-    [JsonIgnore]
-    public List<Roles> Roles => GetUserRoles();
-
-    public List<Roles> GetUserRoles() {
-
-        return [Helpers.Roles.Teacher, Helpers.Roles.Student, Helpers.Roles.Coordinator];
-    }
 
 }

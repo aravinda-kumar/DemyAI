@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DemyAI.Views.RoleSelectionPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:DemyAI.Models"
+    xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    x:DataType="vm:RoleSelectionPageViewModel">
+
+
+    <Border
+        BackgroundColor="#eeefea"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        WidthRequest="800">
+
+        <VerticalStackLayout
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand">
+
+            <Label
+                Padding="10"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalOptions="Center"
+                Text="{Binding WelcomeText}" />
+
+            <Border
+                Margin="0,10,0,0"
+                Padding="10"
+                VerticalOptions="Center">
+                <VerticalStackLayout
+                    BackgroundColor="#fafaf5"
+                    BindableLayout.ItemsSource="{Binding Roles}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="model:UserRoles">
+                            <Border
+                                Margin="10"
+                                BackgroundColor="{Binding SelectedColor}">
+                                <Label
+                                    Margin="10"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Name}" />
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Path=RoleSelectedCommand, Source={x:RelativeSource AncestorType={x:Type vm:RoleSelectionPageViewModel}}}"
+                                        CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </Border>
+
+            <Button
+                Margin="0,20,0,20"
+                BackgroundColor="#007BFF"
+                Command="{Binding UpdateUserCurrentRoleCommand}"
+                CornerRadius="5"
+                Text="Select role"
+                TextColor="White" />
+
+        </VerticalStackLayout>
+    </Border>
+</ContentPage>

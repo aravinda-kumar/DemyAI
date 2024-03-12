@@ -45,8 +45,8 @@
                         Margin="10,0,0,20"
                         Command="{Binding CopyURL, Source={x:Reference popUpMeeting}}"
                         CornerRadius="8"
-                        ToolTipProperties.Text="Copy"
                         HeightRequest="60"
+                        ToolTipProperties.Text="Copy"
                         VerticalOptions="Center">
                         <Button.ImageSource>
                             <FontImageSource
