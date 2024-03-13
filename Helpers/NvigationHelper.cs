@@ -6,7 +6,12 @@ public static class NvigationHelper {
 
         var pageNage = $"{role}DashboardPage";
 
+        if(Shell.Current.Items.) {
+
+        }
+
         await Shell.Current.GoToAsync($"//{pageNage}", true);
+
 
     }
 }

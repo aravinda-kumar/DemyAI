@@ -7,8 +7,6 @@ public partial class AppShell : Shell {
 
         InitializeComponent();
         BindingContext = appShellViewModel;
-
-        Routing.RegisterRoute(nameof(RoleSelectionPage), typeof(RoleSelectionPage));
     }
 
     protected override void OnNavigating(ShellNavigatingEventArgs args) {

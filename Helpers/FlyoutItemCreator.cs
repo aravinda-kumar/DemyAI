@@ -37,7 +37,10 @@ public static class FlyoutItemCreator {
             }
         };
 
-        Shell.Current.Items.Contains(studentItems);
+        if(!Shell.Current.Items.Contains(studentItems)) {
+
+            Shell.Current.Items.Add(studentItems);
+        }
 
     }
 
@@ -80,8 +83,11 @@ public static class FlyoutItemCreator {
             }
         };
 
-        Shell.Current.Items.Add(TeacherItems);
+        if(!Shell.Current.Items.Contains(TeacherItems)) {
 
+            Shell.Current.Items.Add(TeacherItems);
+
+        }
     }
 
     private static void CreateCoordintorItems() {
@@ -108,6 +114,9 @@ public static class FlyoutItemCreator {
             }
         };
 
-        Shell.Current.Items.Add(CoordinatorItems);
+        if(!Shell.Current.Items.Contains(CoordinatorItems)) {
+
+            Shell.Current.Items.Add(CoordinatorItems);
+        }
     }
 }
