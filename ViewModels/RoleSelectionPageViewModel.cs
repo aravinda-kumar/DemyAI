@@ -70,7 +70,7 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
 
         FlyoutHelper.CreateFlyoutHeader(updatedUser);
 
-        FlyoutItemCreator.CreateFlyoutMenu(updatedUser?.CurrentRole!);
+        FlyoutHelper.CreateFlyoutMenu(updatedUser?.CurrentRole!);
 
         var cuurentUserAsJson = JsonSerializer.Serialize(updatedUser);
 

@@ -19,10 +19,12 @@ public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IApp
 
         IsBusy = true;
 
-        var user = await authenticationService.LoginWithEmailAndPassword("a@a.com", "123456");
+        //var user = await authenticationService.LoginWithEmailAndPassword("s@s.com", "123456");
+        var user = await authenticationService.LoginWithEmailAndPassword(User.Email!, User.Password!);
         if(user is not null) {
 
             await appService.NavigateTo($"//{nameof(RoleSelectionPage)}", true);
+
         }
 
         IsBusy = false;

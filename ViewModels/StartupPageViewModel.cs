@@ -28,7 +28,7 @@ public class StartupPageViewModel : BaseViewModel {
 
             FlyoutHelper.CreateFlyoutHeader(loggedUser);
 
-            FlyoutItemCreator.CreateFlyoutMenu(loggedUser?.CurrentRole!);
+            FlyoutHelper.CreateFlyoutMenu(loggedUser?.CurrentRole!);
 
             await NvigationHelper.NavigatoToDashboardRoleAsync(loggedUser?.CurrentRole!);
 

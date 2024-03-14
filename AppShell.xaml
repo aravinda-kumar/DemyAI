@@ -9,13 +9,12 @@
     xmlns:pages="clr-namespace:DemyAI.Views"
     xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
-    Shell.NavBarIsVisible="False"
     Title="DemyAI"
     x:DataType="vm:AppShellViewModel"
-    FlyoutIsPresented="{Binding Status}"
+    Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
 
-    <ShellContent
+    <ShellContent 
         ContentTemplate="{DataTemplate pages:StartupPage}"
         Route="StartupPage"
         Shell.FlyoutBehavior="Disabled"
@@ -38,7 +37,7 @@
         Route="RoleSelectionPage"
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False" />
-   
+
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <Button

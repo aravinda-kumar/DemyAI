@@ -78,7 +78,6 @@
 
             <sfPopup:SfPopup.ContentTemplate>
                 <DataTemplate>
-
                     <Grid
                         Margin="10"
                         RowDefinitions="80,80,80,80">
