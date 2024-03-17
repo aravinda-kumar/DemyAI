@@ -2,7 +2,7 @@
 
 public partial class RoleSelectionPageViewModel : BaseViewModel {
 
-    private readonly IAppService _appService;
+    private readonly ISecureStorage _secureStorage;
     private readonly IAuthenticationService _authService;
     private readonly IDataService<DemyUser> _dataService;
 
@@ -16,11 +16,11 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
     User? fireUser;
 
     public RoleSelectionPageViewModel(IAuthenticationService authService,
-        IDataService<DemyUser> dataService, IAppService appService) {
+        IDataService<DemyUser> dataService, ISecureStorage secureStorage) {
 
         _authService = authService;
         _dataService = dataService;
-        _appService = appService;
+        _secureStorage = secureStorage;
         InitPopUp();
     }
 
@@ -39,9 +39,9 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
             role.IsSelected = role == SelectedRole; // Set IsSelected to true only for the selected rol
 
             if(role.IsSelected) {
-                role.SelectedColor = UserRoles.RoleSelectedColor;
+                role.SelectedColor = Constants.SelectedColor;
             } else {
-                role.SelectedColor = UserRoles.DefaultUnselectedColor;
+                role.SelectedColor = Constants.DefaultUnselectedColor;
             }
         }
 
@@ -51,7 +51,8 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
     [RelayCommand]
     public async Task UpdateUserCurrentRole() {
 
-        var currentUser = await _dataService.GetByEmailAsync<DemyUser>("Users", fireUser!.Info.Email);
+        var currentUser = await _dataService.GetByEmailAsync<DemyUser>(Constants.USERS,
+            fireUser!.Info.Email);
 
         if(currentUser is not null) {
 
@@ -63,18 +64,19 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
                 currentUser.Roles.Add(selectedRole!);
             }
 
-            await _dataService.UpdateAsync("Users", currentUser.Uid!, currentUser);
+            await _dataService.UpdateAsync(Constants.USERS, currentUser.Uid!, currentUser);
         }
 
-        var updatedUser = await _dataService.GetByEmailAsync<DemyUser>("Users", fireUser!.Info.Email);
+        var updatedUser = await _dataService.GetByEmailAsync<DemyUser>(Constants.USERS,
+            fireUser!.Info.Email);
+
+        var cuurentUserAsJson = JsonSerializer.Serialize(updatedUser);
+
+        await _secureStorage.SetAsync(Constants.LOGGED_USER, cuurentUserAsJson);
 
         FlyoutHelper.CreateFlyoutHeader(updatedUser);
 
         FlyoutHelper.CreateFlyoutMenu(updatedUser?.CurrentRole!);
-
-        var cuurentUserAsJson = JsonSerializer.Serialize(updatedUser);
-
-        await SecureStorage.SetAsync(Constants.LOGGED_USER, cuurentUserAsJson);
 
         await NvigationHelper.NavigatoToDashboardRoleAsync(updatedUser?.CurrentRole!);
     }

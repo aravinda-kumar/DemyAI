@@ -21,12 +21,6 @@
             Margin="10"
             RowDefinitions="Auto,50,*">
 
-            <controls:UserDetailsExpander
-                HandleCheckBoxCommand="{Binding HandleCheckBoxCommand}"
-                Hint="Test name"
-                PageTitle="Schedule a test"
-                RoomName="{Binding RoomName}"
-                Users="{Binding Users}" />
 
             <controls:TimeZoneDateTimePicker Items="{Binding TimeZones}"/>
         </Grid>

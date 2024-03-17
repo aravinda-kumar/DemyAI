@@ -3,12 +3,8 @@ namespace DemyAI.ViewModels;
 
 public partial class MyCoursesPageViewModel(IDataService<DemyUser> dataService) : BaseViewModel {
 
-    public ObservableCollection<Course> Courses { get; set; } = [];
+    public ObservableCollection<Course> CoursesAssigned { get; set; } = [];
     bool areCousesLoaded;
-    DemyUser? currentUser;
-
-    [ObservableProperty]
-    string inviteText = string.Empty;
 
     [RelayCommand]
     async Task Appearing() {
@@ -22,23 +18,21 @@ public partial class MyCoursesPageViewModel(IDataService<DemyUser> dataService) 
         areCousesLoaded = false;
         IsBusy = true;
 
-        Courses.Clear();
+        CoursesAssigned.Clear();
 
-        //var savedUserEmail = await SecureStorage.GetAsync("CurrentUser");
+        var currentUser = await StorageHelper<DemyUser>.GetObjFromStorageAsync();
 
-        //var courses = await dataService.GetAllAsync<Course>("Courses");
+        var courses = await dataService.GetAllAsync<Course>(Constants.COURSES);
 
-        //var cousesAssigned = courses.Where(
-        //    c => c.Object.ProfessorsAssigned.Contains(savedUserEmail!)).Select(
-        //    c => c.Object);
+        var coursesAssigned = courses.Where(
+            c => c.ProfessorsAssigned.Any(p => p.Uid == currentUser!.Uid));
 
-        //foreach(var item in cousesAssigned) {
+        foreach(var course in coursesAssigned) {
+            CoursesAssigned.Add(course);
+        }
 
-        //    Courses.Add(item);
-        //}
-
-        //IsBusy = false;
-        //areCousesLoaded = true;
+        IsBusy = false;
+        areCousesLoaded = true;
 
     }
 }

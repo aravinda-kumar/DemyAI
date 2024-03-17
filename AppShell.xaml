@@ -11,10 +11,11 @@
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     Title="DemyAI"
     x:DataType="vm:AppShellViewModel"
-    Shell.NavBarIsVisible="False"
+    Shell.NavBarIsVisible="{OnIdiom Phone=true,
+                                    Desktop=false}"
     Shell.TabBarIsVisible="False">
 
-    <ShellContent 
+    <ShellContent
         ContentTemplate="{DataTemplate pages:StartupPage}"
         Route="StartupPage"
         Shell.FlyoutBehavior="Disabled"

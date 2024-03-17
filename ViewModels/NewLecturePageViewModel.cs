@@ -3,12 +3,9 @@
 public partial class NewLecturePageViewModel(IAppService appService, IHttpService httpService,
     IDataService<DemyUser> dataService, IMeetingService meetingService) : BaseViewModel {
 
-    public ObservableCollection<DemyUser> Users { get; set; } = [];
-
-    public ObservableCollection<DemyUser> Invited { get; set; } = [];
+    public ObservableCollection<DemyUser> Student { get; set; } = [];
 
     public Dictionary<int, string> TimeZones { get; set; } = [];
-
 
     [ObservableProperty]
     DateTime selectedDateTime;
@@ -25,11 +22,11 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     [ObservableProperty]
     string? roomURL;
 
-    private const string UID = "Uid";
-
     [RelayCommand]
     async Task Appearing() {
 
+
+        await Task.Delay(1000);
         await GetStudents();
     }
 
@@ -59,7 +56,9 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
     private async Task GetTimeZones() {
 
-        var zones = await httpService.GetAsync<List<string>>("https://www.timeapi.io/api/TimeZone/AvailableTimeZones");
+        var zones =
+            await httpService.GetAsync<List<string>>(
+                "https://www.timeapi.io/api/TimeZone/AvailableTimeZones");
 
         for(int i = 0; i <= zones!.Count - 1; ++i) {
             TimeZones.Add(i, zones[i]);
@@ -68,25 +67,13 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
     private async Task GetStudents() {
 
-        Users.Clear();
+        Student.Clear();
 
-        //var data = await dataService.GetByRole<User>("Users", Role.Student.ToString());
+        var students = await dataService.GetByRole(nameof(Role.Student));
 
-        //foreach(var filterUser in data) {
+        foreach(var student in students) {
 
-        //    Users.Add(filterUser);
-        //}
-    }
-
-    [RelayCommand]
-    void HandleCheckBox(DemyUser user) {
-
-        if(user.IsParticipant) {
-            if(!Invited.Contains(user)) {
-                Invited.Add(user);
-            }
-        } else {
-            Invited.Remove(user);
+            Student.Add(student);
         }
 
     }

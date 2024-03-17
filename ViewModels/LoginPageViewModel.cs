@@ -1,7 +1,8 @@
-﻿namespace DemyAI.ViewModels;
+﻿
+namespace DemyAI.ViewModels;
 
 public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IAppService appService,
-    IAuthenticationService authenticationService) : BaseViewModel {
+    IAuthenticationService authenticationService, ISecureStorage storage) : BaseViewModel {
 
     [ObservableProperty]
     bool isPopOpen;
@@ -23,11 +24,29 @@ public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IApp
         var user = await authenticationService.LoginWithEmailAndPassword(User.Email!, User.Password!);
         if(user is not null) {
 
-            await appService.NavigateTo($"//{nameof(RoleSelectionPage)}", true);
+            var currentUser = await dataService.GetByEmailAsync<DemyUser>(Constants.USERS,
+            user!.Info.Email);
 
+            if(currentUser?.CurrentRole is not null) {
+
+                FlyoutHelper.CreateFlyoutMenu(currentUser.CurrentRole!);
+                FlyoutHelper.CreateFlyoutHeader(currentUser);
+
+                StorageHelper<DemyUser>.StoreObjectToStorage(currentUser, storage);
+
+                await appService.NavigateTo($"//{currentUser.CurrentRole}DashboardPage", true);
+            } else {
+                await appService.NavigateTo($"//{nameof(RoleSelectionPage)}", true);
+            }
         }
 
         IsBusy = false;
+    }
+
+    [RelayCommand]
+    public void Appearing() {
+
+        //ClearUserFields();
     }
 
 
@@ -36,8 +55,10 @@ public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IApp
 
         IsBusy = true;
 
-        var user = await authenticationService.RegisterWithEmailAndPassword(User.Email!, User.Password!,
-            User.Name!);
+        var completeName = $"{User.Firstname} {User.Lastname}";
+
+        var user = await authenticationService.RegisterWithEmailAndPassword(
+            User.Email!, User.Password!, completeName!);
 
         if(user != null) {
 
@@ -45,7 +66,7 @@ public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IApp
 
             var uid = await dataService.AddAsync("Users", User);
 
-            await dataService.UpdateAsync<DemyUser>("Users", uid, uid, "Uid");
+            await dataService.UpdateAsync<DemyUser>("Users", uid, uid, Constants.UID);
 
             await appService.DisplayAlert("Congratulations", "Registration successful", "OK");
 
@@ -56,4 +77,5 @@ public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IApp
 
         IsBusy = false;
     }
+
 }

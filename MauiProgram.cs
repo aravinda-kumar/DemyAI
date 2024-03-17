@@ -11,7 +11,10 @@ global using DemyAI.Models;
 global using DemyAI.Services;
 global using DemyAI.ViewModels;
 global using DemyAI.Views;
+global using DemyAI.Views.Coordinator;
 global using DemyAI.Views.PopUps;
+global using DemyAI.Views.Student;
+global using DemyAI.Views.Teacher;
 
 global using Firebase.Auth;
 global using Firebase.Auth.Providers;
@@ -20,15 +23,6 @@ global using Firebase.Database.Query;
 
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Maui.Controls;
-
-
-global using DemyAI.Views.Teacher;
-
-
-global using DemyAI.Views.Student;
-
-
-global using DemyAI.Views.Coordinator;
 
 global using Mopups.Hosting;
 global using Mopups.Pages;
@@ -45,7 +39,6 @@ global using System.Collections;
 global using System.Collections.ObjectModel;
 global using System.Diagnostics;
 global using System.Net.Http.Json;
-global using System.Net.Mail;
 global using System.Text;
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
@@ -62,9 +55,9 @@ namespace DemyAI {
             var firebaseAuthConfig = new FirebaseAuthConfig() {
                 ApiKey = "AIzaSyAdkLQ31yRPXRvFjNR8FMzjk0EzfEn3wIw",
                 AuthDomain = "demyai.firebaseapp.com",
-                Providers = new FirebaseAuthProvider[] {
+                Providers = [
                     new EmailProvider()
-                }
+                ]
             };
 
             builder
@@ -112,38 +105,22 @@ namespace DemyAI {
             builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
             builder.Services.AddSingleton<IHttpService, HttpService>();
             builder.Services.AddSingleton(Connectivity.Current);
+            builder.Services.AddSingleton(SecureStorage.Default);
             builder.Services.AddSingleton(firebaseAuthClient);
 
-            builder.Services.AddSingleton<AppShell>();
+            builder.Services.AddSingleton<AppShell, AppShellViewModel>();
+            builder.Services.AddSingleton<RegisterStudentPage, RegisterStudentPageViewModel>();
             builder.Services.AddSingleton<NoInternetPage>();
-            builder.Services.AddSingleton<LoginPage>();
-            builder.Services.AddSingleton<NewLecturePage>();
-            builder.Services.AddSingleton<NewTestPage>();
-            builder.Services.AddSingleton<ScheduleLecturePage>();
-            builder.Services.AddSingleton<ScheduleTestPage>();
-            builder.Services.AddSingleton<MyCoursesPage>();
-            builder.Services.AddSingleton<JoinMeetingPage>();
-            builder.Services.AddSingleton<ManageCoursePage>();
-            builder.Services.AddSingleton<StartupPage>();
-            builder.Services.AddSingleton<RoleSelectionPage>();
-
-            builder.Services.AddSingleton<AppShellViewModel>();
-            builder.Services.AddSingleton<LoginPageViewModel>();
-            builder.Services.AddSingleton<MyCoursesPageViewModel>();
-            builder.Services.AddSingleton<NewLecturePageViewModel>();
-            builder.Services.AddSingleton<NewTestPageViewMode>();
-            builder.Services.AddSingleton<ScheduleLecturePageViewModel>();
-            builder.Services.AddSingleton<ScheduleTestPageViewModel>();
-            builder.Services.AddSingleton<JoinMeetingPageViewModel>();
-            builder.Services.AddSingleton<ManageCoursePageViewModel>();
-            builder.Services.AddSingleton<MyCoursesPageViewModel>();
-            builder.Services.AddSingleton<StartupPageViewModel>();
-            builder.Services.AddSingleton<FlyoutHeaderViewModel>();
-            builder.Services.AddSingleton<RoleSelectionPageViewModel>();
-
-
-
-
+            builder.Services.AddSingleton<LoginPage, LoginPageViewModel>();
+            builder.Services.AddSingleton<NewLecturePage, NewLecturePageViewModel>();
+            builder.Services.AddSingleton<NewTestPage, NewTestPageViewMode>();
+            builder.Services.AddSingleton<ScheduleLecturePage, ScheduleLecturePageViewModel>();
+            builder.Services.AddSingleton<ScheduleTestPage, ScheduleTestPageViewModel>();
+            builder.Services.AddSingleton<MyCoursesPage, MyCoursesPageViewModel>();
+            builder.Services.AddSingleton<JoinMeetingPage, JoinMeetingPageViewModel>();
+            builder.Services.AddSingleton<ManageCoursePage, ManageCoursePageViewModel>();
+            builder.Services.AddSingleton<StartupPage, StartupPageViewModel>();
+            builder.Services.AddSingleton<RoleSelectionPage, RoleSelectionPageViewModel>();
 
             builder.Services.AddSingleton<IAuthenticationService>(serviceProvider => {
                 var authService = serviceProvider.GetRequiredService<FirebaseAuthClient>();

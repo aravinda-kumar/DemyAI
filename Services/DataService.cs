@@ -1,17 +1,15 @@
 ﻿namespace DemyAI.Services;
 
 public class DataService<T> : IDataService<T> {
-    private const string UID = "Uid";
-    private const string ROLE = "Role";
-    private const string Courses = "Courses";
-    private const string EMAIL = "Email";
+
     readonly FirebaseClient _client;
 
     public DataService() {
         _client = new FirebaseClient(Constants.DATABASE_URL);
     }
 
-    public async Task<string> AddAsync<T>(string nodeName, T newItem, string? customUID = null) {
+    public async Task<string> AddAsync<T>(string nodeName,
+        T newItem, string? customUID = null) {
         if(!string.IsNullOrEmpty(customUID)) {
             await _client.Child(nodeName).Child(customUID).PostAsync(newItem);
             return customUID;
@@ -22,6 +20,16 @@ public class DataService<T> : IDataService<T> {
         return obj.Key;
     }
 
+    public async Task<List<DemyUser>> GetByRole(string role) {
+        var usersCollection = await GetAllAsync<DemyUser>(
+            Constants.USERS);
+
+        var filteredData = usersCollection.Where(
+            u => u.CurrentRole == role).ToList();
+
+        return filteredData;
+    }
+
     public async Task<T?> GetByEmailAsync<T>(string nodeName, string email) {
 
         var objects = await _client.Child(nodeName).OnceAsync<T>();
@@ -30,7 +38,7 @@ public class DataService<T> : IDataService<T> {
         foreach(var item in objects) {
 
             // Get the Uid property of the current item's object type
-            var uidProp = item.Object?.GetType().GetProperty(EMAIL);
+            var uidProp = item.Object?.GetType().GetProperty(Constants.EMAIL);
 
             // Check if the Uid property exists for the current object type
             if(uidProp is not null) {
@@ -68,7 +76,8 @@ public class DataService<T> : IDataService<T> {
         return colletion;
     }
 
-    public async Task UpdateAsync<T>(string nodeName, string uid, string propertyValue, string propertyName) {
+    public async Task UpdateAsync<T>(string nodeName, string uid,
+        string propertyValue, string propertyName) {
 
         await _client.Child(nodeName)
             .Child(uid).PatchAsync($"{{ \"{propertyName}\" : \"{propertyValue}\" }}");

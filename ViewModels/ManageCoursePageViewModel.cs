@@ -1,73 +1,77 @@
-﻿
-namespace DemyAI.ViewModels;
+﻿namespace DemyAI.ViewModels;
 
 public partial class ManageCoursePageViewModel(IDataService<DemyUser> dataService, IAppService appService) : BaseViewModel {
-
-    private const string CourseNode = "Courses";
-    private const string Uid = "Uid";
 
     public ObservableCollection<DemyUser> Teachers { get; set; } = [];
 
     [ObservableProperty]
+    DemyUser? selectedTeacher;
+
+    [ObservableProperty]
     Course course = new();
 
-    private DemyUser User = new();
+    bool IsLoadedFinished = false;
 
     [RelayCommand]
     async Task Appearing() {
-        await GetTeachers();
+
+        if(IsLoadedFinished == false) {
+
+            await Task.Delay(1000);
+
+            await GetTeachers(dataService);
+        }
+
     }
 
-    private async Task GetTeachers() {
+    private async Task GetTeachers(IDataService<DemyUser> dataService) {
+        var teahers = await dataService.GetByRole(nameof(Role.Teacher));
 
-        Teachers.Clear();
+        foreach(var teaher in teahers) {
+            Teachers.Add(teaher);
+        }
 
-        //var data = await dataService.GetByRole<DeemyUser>("Users", Role.Teacher.ToString());
-
-        //foreach(var user in data) {
-
-        //    Teachers.Add(user);
-        //}
+        IsLoadedFinished = true;
     }
+
 
     [RelayCommand]
-    async Task CreateCourse() {
+    public async Task CreateCourse() {
 
-        Course.DemyId = NumberGenerator.GenerateRandomNumberString(4);
-        Course.Name = Course.Name;
-        Course.ProfessorName = User.Name;
-        Course.ProfessorEmail = User.Email;
-        Course.ProfessorsAssigned.Add(User.Email!);
+        if(string.IsNullOrEmpty(Course.Name)) {
+            await appService.DisplayAlert("Error", $"Course name cannot be empty", "OK");
+            return;
+        }
 
-        //    var cousesList = await dataService.GetAllAsync<Course>("Courses");
-        //    bool CourseExsist = false;
+        if(SelectedTeacher is null) {
+            await appService.DisplayAlert("Error", $"Please select a teacher for {Course.Name}", "OK");
+            return;
+        }
 
-        //    foreach(var item in cousesList) {
+        var courses = await dataService.GetAllAsync<Course>(Constants.COURSES);
 
-        //        if(item.Object.Name == Course.Name) {
-        //            CourseExsist = true;
-        //            break;
-        //        }
-        //    }
-
-        //    if(CourseExsist) {
-        //        await appService.DisplayAlert("Error", "This course already exist", "OK");
-        //    } else {
-        //        var uid = await dataService.AddAsync(CourseNode, Course);
-        //        if(uid != null) {
-        //            await dataService.UpdateAsync<Course>(CourseNode, uid, uid, Uid);
-
-        //            await appService.DisplayAlert("Congratulations", "the course has been created successfully", "OK");
-        //        }
-        //    }
-        //}
-
-        [RelayCommand]
-        void HandleCheckBox(DemyUser user) {
-
-            if(user != null && user.IsAssignedToCourse == true) {
-                User = user;
+        foreach(var course in courses) {
+            if(course.Name == Course.Name) {
+                await appService.DisplayAlert("Error", $"The courses: {Course.Name} already exist", "OK");
+                return;
             }
+        }
+
+        Course.Name = Course.Name;
+
+        Course.ProfessorsAssigned.Clear();
+
+        Course.ProfessorsAssigned.Add(SelectedTeacher);
+
+        var CourseUid = await dataService.AddAsync(Constants.COURSES, Course);
+
+        await dataService.UpdateAsync<Course>(
+            Constants.COURSES, CourseUid,
+            CourseUid,
+            Constants.UID);
+
+        if(!string.IsNullOrEmpty(CourseUid)) {
+            await appService.DisplayAlert("Success", $"Your course: {Course.Name} was crested successfully", "OK");
         }
     }
 }

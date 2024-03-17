@@ -7,7 +7,9 @@ public class DemyUser {
 
     public string? DemyId { get; set; }
 
-    public string? Name { get; set; }
+    public string? Firstname { get; set; }
+
+    public string Lastname { get; set; }
 
     public string? Email { get; set; }
 
@@ -22,12 +24,14 @@ public class DemyUser {
 
     public string? CurrentRole { get; set; }
 
+    [JsonIgnore]
+    public string FullName => $"{Firstname} {Lastname}";
+
     //public double latitude { get; set; }
 
     //public double longitude { get; set; }
 
-    public bool IsAssignedToCourse { get; set; }
+    public List<string> CoursesAssigned { get; set; }
 
     public bool IsParticipant { get; set; }
-
 }

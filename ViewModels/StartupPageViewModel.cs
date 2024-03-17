@@ -24,7 +24,7 @@ public class StartupPageViewModel : BaseViewModel {
             }
         } else {
 
-            var loggedUser = await StorageHelper<DemyUser>.GetJsonFromStorageAsync(currentUserAsJson);
+            var loggedUser = await StorageHelper<DemyUser>.GetObjFromStorageAsync();
 
             FlyoutHelper.CreateFlyoutHeader(loggedUser);
 

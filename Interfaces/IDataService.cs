@@ -10,10 +10,11 @@ public interface IDataService<T> {
 
     Task<T?> GetByEmailAsync<T>(string nodeName, string email);
 
+    Task<List<DemyUser>> GetByRole(string role);
+
     Task UpdateAsync<T>(string nodeName, string uid, string propertyValue, string propertyName);
 
     Task UpdateAsync<T>(string nodeName, string uid, T newData);
 
     Task DeleteAsync(string NodeName, string uid);
-
 }

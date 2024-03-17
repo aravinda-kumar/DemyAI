@@ -3,11 +3,38 @@
     x:Class="DemyAI.Views.RegisterStudentPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="RegisterStudentPage">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    xmlns:controls="clr-namespace:DemyAI.Controls"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    x:DataType="vm:RegisterStudentPageViewModel">
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior
+            Command="{Binding AppearingCommand}"
+            EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <Grid
+        Margin="10"
+        ColumnDefinitions="*,*"
+        RowDefinitions="80,*">
+
+        <controls:UserTemplate
+            Data="{Binding Students}"
+            PlaceHolderText="Select a student"
+            SelectedItem="{Binding SelectedStudent}"
+            TexBoxHintText="Students" />
+
+        <controls:CourseTemplate Grid.Column="1"/>
+
+
+        <Button
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Command="{Binding RegisterToCourseCommand}"
+            Text="Register student"
+            VerticalOptions="End" />
+
+    </Grid>
+
 </ContentPage>

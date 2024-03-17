@@ -5,9 +5,6 @@ public partial class AppShell : Shell {
 
         InitializeComponent();
         BindingContext = appShellViewModel;
-
-        // Add default Shell items
-        FlyoutHelper.GeetDefaultMenuItems();
     }
 
     //protected override void OnNavigating(ShellNavigatingEventArgs args) {

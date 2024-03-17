@@ -1,9 +1,8 @@
 namespace DemyAI.Views;
 
-public partial class RegisterStudentPage : ContentPage
-{
-	public RegisterStudentPage()
-	{
-		InitializeComponent();
-	}
+public partial class RegisterStudentPage : ContentPage {
+    public RegisterStudentPage(RegisterStudentPageViewModel registerStudentPageViewModel) {
+        InitializeComponent();
+        BindingContext = registerStudentPageViewModel;
+    }
 }

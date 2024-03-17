@@ -23,14 +23,6 @@
             ColumnDefinitions="*,*"
             RowDefinitions="Auto,50,60,*">
 
-            <controls:UserDetailsExpander
-                Grid.ColumnSpan="2"
-                HandleCheckBoxCommand="{Binding HandleCheckBoxCommand}"
-                Hint="Name of leture"
-                PageTitle="Schedule a lecture"
-                RoomName="{Binding RoomName}"
-                Users="{Binding Users}" />
-
         </Grid>
     </ScrollView>
 

@@ -18,13 +18,6 @@
 
         <Grid Margin="10">
 
-            <controls:UserDetailsExpander
-                HandleCheckBoxCommand="{Binding HandleCheckBoxCommand}"
-                Hint="Name of the test"
-                PageTitle="Create a test"
-                RoomName="{Binding RoomName}"
-                Users="{Binding Users}" />
-
             <Button
                 Command="{Binding StartMeetingCommand}"
                 Text="Start test"

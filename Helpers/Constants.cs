@@ -3,7 +3,7 @@ public class Constants {
 
     //syncfusion Key
 
-    public const string LICENSE = "Mjk5MDM1OUAzMjM0MmUzMDJlMzBjdnl3ckxUOGdBUmtGckcrRzBuVXpRNWpYNkREZWhMUDBpUFNRaFQ3YkNZPQ==";
+    public const string LICENSE = "Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCfUx0QXxbf1x0ZFRMY15bQXVPIiBoS35RckVgWHhfc3dXQ2NZUUN2";
 
     //firebase RealTime-Database
 
@@ -22,6 +22,13 @@ public class Constants {
     //firebase nodes 
 
     public const string USERS = "Users";
+    public const string COURSES = "Courses";
+    public const string MEETINGS = "Meetings";
+
+    //firebase property names
+
+    public const string UID = "Uid";
+    public const string EMAIL = "Email";
 
 
     //secure storage key
@@ -32,11 +39,15 @@ public class Constants {
 
     public const string FLYOUT_STATUS = "FlyoutStatus";
 
-
-
     //Gmail
 
-    public const string EMAIL = "eduardogr88@gmail.com";
+    //public const string EMAIL = "eduardogr88@gmail.com";
 
     public const string APP_PASSWORD = "dirhiyojixsinyxz";
+
+    //colors
+
+    public static readonly Color DefaultUnselectedColor = Color.FromRgb(255, 255, 255);
+
+    public static readonly Color SelectedColor = Color.FromRgb(100, 149, 237);
 }

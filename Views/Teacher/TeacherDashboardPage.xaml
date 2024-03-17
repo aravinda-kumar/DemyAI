@@ -2,12 +2,4 @@
 <ContentPage
     x:Class="DemyAI.Views.Teacher.TeacherDashboardPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="TeacherDashboard">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
-</ContentPage>
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" />

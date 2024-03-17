@@ -28,13 +28,20 @@
 
         <CollectionView
             IsVisible="{Binding isNotBusy}"
-            ItemsSource="{Binding Courses}">
+            ItemsSource="{Binding CoursesAssigned}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Course">
-                    <Border>
-                        <HorizontalStackLayout>
-                            <Label Text="{Binding Name, StringFormat='Course name: {0}'}" />
-                        </HorizontalStackLayout>
+                    <Border
+                        Margin="50"
+                        Stroke="Purple"
+                        StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8,8,8,8" />
+                        </Border.StrokeShape>
+                        <Label
+                            Margin="5"
+                            FontAttributes="Bold"
+                            Text="{Binding Name, StringFormat='Course name: {0}'}" />
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
