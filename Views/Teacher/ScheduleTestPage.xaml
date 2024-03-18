@@ -21,7 +21,6 @@
             Margin="10"
             RowDefinitions="Auto,50,*">
 
-
             <controls:TimeZoneDateTimePicker Items="{Binding TimeZones}"/>
         </Grid>
     </ScrollView>

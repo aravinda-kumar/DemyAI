@@ -1,7 +1,7 @@
 ﻿
 namespace DemyAI.ViewModels;
 
-public partial class MyCoursesPageViewModel(IDataService<DemyUser> dataService) : BaseViewModel {
+public partial class MyCoursesPageViewModel(IDataService<DemyUser> dataService, ISecureStorage secure) : BaseViewModel {
 
     public ObservableCollection<Course> CoursesAssigned { get; set; } = [];
     bool areCousesLoaded;
@@ -20,7 +20,7 @@ public partial class MyCoursesPageViewModel(IDataService<DemyUser> dataService) 
 
         CoursesAssigned.Clear();
 
-        var currentUser = await StorageHelper<DemyUser>.GetObjFromStorageAsync();
+        var currentUser = await StorageHelper<DemyUser>.GetObjFromStorageAsync(secure);
 
         var courses = await dataService.GetAllAsync<Course>(Constants.COURSES);
 

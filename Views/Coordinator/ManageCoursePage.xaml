@@ -18,6 +18,7 @@
     <Grid
         Margin="10"
         RowDefinitions="80,Auto,*">
+
         <inputLayout:SfTextInputLayout Hint="Course Name">
             <Entry Text="{Binding Course.Name}" />
         </inputLayout:SfTextInputLayout>
@@ -25,8 +26,8 @@
         <controls:UserTemplate
             Grid.Row="1"
             Data="{Binding Teachers}"
-            PlaceHolderText="Select Teacher"
             ImageSource="teacher.png"
+            PlaceHolderText="Select Teacher"
             SelectedItem="{Binding SelectedTeacher}"
             TexBoxHintText="Teachers" />
 

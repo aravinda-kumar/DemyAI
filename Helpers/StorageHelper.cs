@@ -2,9 +2,9 @@
 namespace DemyAI.Helpers;
 public static class StorageHelper<T> {
 
-    public static async Task<T?> GetObjFromStorageAsync() {
+    public static async Task<T?> GetObjFromStorageAsync(ISecureStorage secure) {
 
-        var data = await SecureStorage.GetAsync(Constants.LOGGED_USER)!;
+        var data = await secure.GetAsync(Constants.LOGGED_USER)!;
         if(data is not null) {
             var obj = JsonSerializer.Deserialize<T>(data!);
             return obj;

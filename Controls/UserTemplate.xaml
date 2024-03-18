@@ -29,7 +29,7 @@
                                 Aspect="AspectFit"
                                 HeightRequest="40"
                                 HorizontalOptions="Center"
-                                Source="user.png"
+                                Source="{Binding ImageSource,Source={x:Reference UserCustomTemplate}}"
                                 VerticalOptions="Center"
                                 WidthRequest="40" />
                             <Label

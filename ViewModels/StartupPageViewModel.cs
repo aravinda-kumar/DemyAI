@@ -3,10 +3,12 @@
 public class StartupPageViewModel : BaseViewModel {
 
     private readonly IAppService _appService;
+    private readonly ISecureStorage _secureStorage;
 
-    public StartupPageViewModel(IAppService appService) {
+    public StartupPageViewModel(IAppService appService, ISecureStorage secure) {
 
         _appService = appService;
+        _secureStorage = secure;
         CheckAuth();
     }
 
@@ -24,7 +26,7 @@ public class StartupPageViewModel : BaseViewModel {
             }
         } else {
 
-            var loggedUser = await StorageHelper<DemyUser>.GetObjFromStorageAsync();
+            var loggedUser = await StorageHelper<DemyUser>.GetObjFromStorageAsync(_secureStorage);
 
             FlyoutHelper.CreateFlyoutHeader(loggedUser);
 

@@ -15,11 +15,11 @@ public partial class CourseTemplate : ContentView {
 
 
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
-        nameof(SelectedItem), typeof(DemyUser),
+        nameof(SelectedItem), typeof(Course),
         typeof(CourseTemplate), null, BindingMode.TwoWay);
 
-    public DemyUser SelectedItem {
-        get => (DemyUser)GetValue(SelectedItemProperty);
+    public Course SelectedItem {
+        get => (Course)GetValue(SelectedItemProperty);
         set => SetValue(SelectedItemProperty, value);
     }
 }

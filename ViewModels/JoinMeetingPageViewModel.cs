@@ -81,8 +81,8 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService ht
     }
     public async Task UpdateMeetingData() {
 
-        var meetingFromService = await meetingService.GetMeetingData(
-            RoomName!, Constants.DAILY_AUTH_TOKEN);
+        var meetingFromService = await meetingService.GetMeetingPresence(
+            Constants.DAILY_AUTH_TOKEN);
 
         meetingData = meetingFromService.data.FirstOrDefault()!;
 

@@ -46,10 +46,10 @@ public partial class RegisterStudentPageViewModel(IDataService<DemyUser> dataSer
     }
 
     [RelayCommand]
-    public async void RegisterToCourse() {
+    public async Task RegisterToCourse() {
 
         var answer = await Shell.Current.DisplayAlert("Warning",
-            $"You are about to register {SelectedStudent} in {SelectedCourse}", "Confirm", "Cancel");
+            $"You are about to register\nStudent: {SelectedStudent!.FullName}\nin Course: {SelectedCourse!.Name}", "Confirm", "Cancel");
 
         if(answer == false) {
             return;

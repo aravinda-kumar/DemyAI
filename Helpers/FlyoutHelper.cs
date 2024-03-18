@@ -3,12 +3,15 @@
 public static class FlyoutHelper {
 
     public static void CreateFlyoutHeader(DemyUser? updatedUser) {
+        IAppService appService = new AppService();
+
         Shell.Current.FlyoutHeader = new FlyoutHeader(
             new FlyoutHeaderViewModel(
                               $"{updatedUser!.Firstname} {updatedUser.Lastname}"!,
                               updatedUser.DemyId!,
                               updatedUser.Email!,
-                              updatedUser.CurrentRole!
+                              updatedUser.CurrentRole!,
+                              appService
             ));
     }
 

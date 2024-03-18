@@ -23,9 +23,14 @@
             Data="{Binding Students}"
             PlaceHolderText="Select a student"
             SelectedItem="{Binding SelectedStudent}"
-            TexBoxHintText="Students" />
+            TexBoxHintText="Students"
+            ImageSource="student.png"/>
 
-        <controls:CourseTemplate Grid.Column="1"/>
+        <controls:CourseTemplate
+            Grid.Column="1"
+            Data="{Binding Courses}"
+            SelectedItem="{Binding SelectedCourse}" />
+
 
 
         <Button

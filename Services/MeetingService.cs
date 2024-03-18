@@ -35,9 +35,9 @@ public class MeetingService(IHttpService httpService) : IMeetingService {
         }
     }
 
-    public async Task<MeetingData> GetMeetingData(string roomName, string authToken) {
+    public async Task<MeetingData> GetMeetingPresence(string authToken) {
 
-        string apiUrl = $"https://api.daily.co/v1/meetings/?room={roomName}&limit=1";
+        string apiUrl = $"https://api.daily.co/v1/presence";
 
         var data = await httpService.GetAsync<MeetingData>(apiUrl, authToken);
 

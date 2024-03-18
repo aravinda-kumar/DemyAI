@@ -16,7 +16,9 @@
             EventName="Appearing" />
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="80,Auto,*">
+    <Grid
+        Margin="10"
+        RowDefinitions="80,Auto,*">
 
         <inputLayout:SfTextInputLayout Hint="Leture name">
             <Entry Text="{Binding RoomName}" />
@@ -24,10 +26,8 @@
 
         <Button
             Grid.Row="2"
+            Text="New Lecture"
             VerticalOptions="End" />
     </Grid>
-
-
-
 
 </ContentPage>
