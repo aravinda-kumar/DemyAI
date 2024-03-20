@@ -4,15 +4,17 @@ public partial class AppShell : Shell {
     public AppShell(AppShellViewModel appShellViewModel) {
 
         InitializeComponent();
+
         BindingContext = appShellViewModel;
     }
 
-    //protected override void OnNavigating(ShellNavigatingEventArgs args) {
 
-    //    if(DeviceInfo.Current.Idiom == DeviceIdiom.Desktop) {
+    //    private void SetupNavigationView() {
+    //#if WINDOWS
+    //        Loaded += delegate {
+    //            NavigationView navigationView = (NavigationView)flyout.Handler!.PlatformView!;
+    //            navigationView.PaneDisplayMode = NavigationViewPaneDisplayMode.Left;
 
-    //        Preferences.Default.Get(Constants.FLYOUT_STATUS, false);
-    //    }
-    //    base.OnNavigating(args);
-    //}
+    //        };
+    //#endif
 }

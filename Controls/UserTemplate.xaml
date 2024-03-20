@@ -5,12 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:models="clr-namespace:DemyAI.Models"
     x:Name="UserCustomTemplate">
 
-    <inputLayout:SfTextInputLayout Hint="{Binding TexBoxHintText, Source={x:Reference UserCustomTemplate}}">
+    <Border
+        Stroke="Black"
+        StrokeShape="RoundRectangle 8"
+        StrokeThickness="2">
         <editors:SfComboBox
             DisplayMemberPath="FullName"
+            DropDownBackground="Transparent"
             DropDownItemHeight="300"
             IsDropdownButtonVisible="False"
             IsEditable="True"
@@ -19,8 +24,17 @@
             Placeholder="{Binding PlaceHolderText, Source={x:Reference UserCustomTemplate}}"
             SelectedDropDownItemBackground="Purple"
             SelectedItem="{Binding SelectedItem, Source={x:Reference UserCustomTemplate}}"
-            SelectionMode="Single"
-            TextMemberPath="FullName">
+            SelectedItems="{Binding SelectedItems, Source={x:Reference UserCustomTemplate}}"
+            SelectionMode="{Binding SelectionMode, Source={x:Reference UserCustomTemplate}}"
+            ShowBorder="False"
+            TextMemberPath="FullName"
+            TokensWrapMode="Wrap">
+            <editors:SfComboBox.Behaviors>
+                <mct:EventToCommandBehavior
+                    Command="{Binding SelectionChangeItem, Source={x:Reference UserCustomTemplate}}"
+                    EventName="SelectionChanged"
+                    CommandParameter="{Binding .}"/>
+            </editors:SfComboBox.Behaviors>
             <editors:SfComboBox.ItemTemplate>
                 <DataTemplate x:DataType="models:DemyUser">
                     <ViewCell>
@@ -29,7 +43,7 @@
                                 Aspect="AspectFit"
                                 HeightRequest="40"
                                 HorizontalOptions="Center"
-                                Source="{Binding ImageSource,Source={x:Reference UserCustomTemplate}}"
+                                Source="{Binding ImageSource, Source={x:Reference UserCustomTemplate}}"
                                 VerticalOptions="Center"
                                 WidthRequest="40" />
                             <Label
@@ -40,5 +54,5 @@
                 </DataTemplate>
             </editors:SfComboBox.ItemTemplate>
         </editors:SfComboBox>
-    </inputLayout:SfTextInputLayout>
+    </Border>
 </ContentView>

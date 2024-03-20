@@ -13,7 +13,8 @@ public partial class BreakTimePopUp : PopupPage {
     public async void Speak() {
 
         CancellationToken token = CancellationToken.None;
-        var player = audioManager.CreateAsyncPlayer(await FileSystem.OpenAppPackageFileAsync("demy_message.wav"));
+        var player = audioManager.CreateAsyncPlayer(
+            await FileSystem.OpenAppPackageFileAsync("demy_message.wav"));
 
         await player.PlayAsync(token);
     }

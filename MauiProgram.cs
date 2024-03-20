@@ -106,6 +106,7 @@ namespace DemyAI {
             builder.Services.AddSingleton<IHttpService, HttpService>();
             builder.Services.AddSingleton(Connectivity.Current);
             builder.Services.AddSingleton(SecureStorage.Default);
+            builder.Services.AddSingleton(Preferences.Default);
             builder.Services.AddSingleton(firebaseAuthClient);
 
             builder.Services.AddSingleton<AppShell, AppShellViewModel>();

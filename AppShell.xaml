@@ -3,42 +3,21 @@
     x:Class="DemyAI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:badge="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-    xmlns:helpers="clr-namespace:DemyAI.Helpers"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    xmlns:pages="clr-namespace:DemyAI.Views"
-    xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     Title="DemyAI"
     x:DataType="vm:AppShellViewModel"
+    x:Name="flyout"
     Shell.NavBarIsVisible="{OnIdiom Phone=true,
                                     Desktop=false}"
     Shell.TabBarIsVisible="False">
-
-    <ShellContent
-        ContentTemplate="{DataTemplate pages:StartupPage}"
-        Route="StartupPage"
-        Shell.FlyoutBehavior="Disabled"
-        Shell.FlyoutItemIsVisible="False" />
-
-    <ShellContent
-        ContentTemplate="{DataTemplate pages:LoginPage}"
-        Route="LoginPage"
-        Shell.FlyoutBehavior="Disabled"
-        Shell.FlyoutItemIsVisible="False" />
-
-    <ShellContent
-        ContentTemplate="{DataTemplate pages:NoInternetPage}"
-        Route="NoInternetPage"
-        Shell.FlyoutBehavior="Disabled"
-        Shell.FlyoutItemIsVisible="False" />
-
-    <ShellContent
-        ContentTemplate="{DataTemplate pages:RoleSelectionPage}"
-        Route="RoleSelectionPage"
-        Shell.FlyoutBehavior="Disabled"
-        Shell.FlyoutItemIsVisible="False" />
-
+    
+    <Shell.Behaviors>
+        <mct:EventToCommandBehavior
+            Command="{Binding AppearingCommand}"
+            EventName="Appearing" />
+    </Shell.Behaviors>
+    
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <Button

@@ -17,14 +17,16 @@
     <Grid
         Margin="10"
         ColumnDefinitions="*,*"
-        RowDefinitions="80,*">
+        ColumnSpacing="10"
+        RowDefinitions="60,*">
 
-        <controls:UserTemplate
-            Data="{Binding Students}"
-            PlaceHolderText="Select a student"
-            SelectedItem="{Binding SelectedStudent}"
-            TexBoxHintText="Students"
-            ImageSource="student.png"/>
+        <controls:UserTemplate Data="{Binding Students}"
+                               ImageSource="student.png"
+                               PlaceHolderText="Select a student"
+                               SelectedItems="{Binding SelectedStudents}"
+                               SelectionMode="Multiple"
+                               SelectionChangeItem="{Binding AddCommand}"
+                               TexBoxHintText="Students" />
 
         <controls:CourseTemplate
             Grid.Column="1"

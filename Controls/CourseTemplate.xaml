@@ -8,18 +8,23 @@
     xmlns:models="clr-namespace:DemyAI.Models"
     x:Name="CourseCustomTemplate">
 
-    <inputLayout:SfTextInputLayout Hint="Courses">
+    <Border
+        Stroke="Black"
+        StrokeShape="RoundRectangle 8"
+        StrokeThickness="2">
         <editors:SfComboBox
             DisplayMemberPath="Name"
+            DropDownBackground="Transparent"
             DropDownItemHeight="300"
             IsDropdownButtonVisible="False"
             IsEditable="True"
-            MaxDropDownHeight="600"
             ItemsSource="{Binding Data, Source={x:Reference CourseCustomTemplate}}"
+            MaxDropDownHeight="600"
             Placeholder="Select a course"
-            SelectedItem="{Binding SelectedItem, Source={x:Reference CourseCustomTemplate}}"
             SelectedDropDownItemBackground="Purple"
+            SelectedItem="{Binding SelectedItem, Source={x:Reference CourseCustomTemplate}}"
             SelectionMode="Single"
+            ShowBorder="False"
             TextMemberPath="Name">
             <editors:SfComboBox.ItemTemplate>
                 <DataTemplate x:DataType="models:Course">
@@ -40,5 +45,5 @@
                 </DataTemplate>
             </editors:SfComboBox.ItemTemplate>
         </editors:SfComboBox>
-    </inputLayout:SfTextInputLayout>
+    </Border>
 </ContentView>

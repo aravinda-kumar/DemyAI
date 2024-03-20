@@ -17,7 +17,7 @@
 
     <Grid
         Margin="10"
-        RowDefinitions="80,Auto,*">
+        RowDefinitions="80,55,*">
 
         <inputLayout:SfTextInputLayout Hint="Course Name">
             <Entry Text="{Binding Course.Name}" />

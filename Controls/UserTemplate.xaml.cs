@@ -1,3 +1,5 @@
+using Syncfusion.Maui.Inputs;
+
 namespace DemyAI.Controls;
 
 public partial class UserTemplate : ContentView {
@@ -49,4 +51,38 @@ public partial class UserTemplate : ContentView {
         get => (ImageSource)GetValue(ImageSourceProperty);
         set => SetValue(ImageSourceProperty, value);
     }
+
+
+    public static readonly BindableProperty SelectionModeProperty = BindableProperty.Create(
+        nameof(SelectionMode), typeof(ComboBoxSelectionMode), typeof(UserTemplate));
+
+    public ComboBoxSelectionMode SelectionMode {
+        get => (ComboBoxSelectionMode)GetValue(SelectionModeProperty);
+        set => SetValue(SelectionModeProperty, value);
+    }
+
+
+    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(
+     nameof(SelectedItems),
+     typeof(IEnumerable),
+     typeof(UserTemplate),
+     null, BindingMode.TwoWay,
+     null);
+
+
+
+    public IEnumerable SelectedItems {
+        get => (IEnumerable)GetValue(SelectedItemsProperty);
+        set => SetValue(SelectedItemsProperty, value);
+    }
+
+
+    public static readonly BindableProperty SelectionChangeItemProperty = BindableProperty.Create(
+        nameof(SelectionChangeItem), typeof(IRelayCommand), typeof(UserTemplate));
+
+    public IRelayCommand SelectionChangeItem {
+        get => (IRelayCommand)GetValue(SelectionChangeItemProperty);
+        set => SetValue(SelectionChangeItemProperty, value);
+    }
+
 }
