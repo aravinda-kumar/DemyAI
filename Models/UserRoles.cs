@@ -3,7 +3,7 @@
 public partial class UserRoles : ObservableObject {
 
     [ObservableProperty]
-    Role name;
+    Roles name;
 
     [ObservableProperty]
     bool isSelected;

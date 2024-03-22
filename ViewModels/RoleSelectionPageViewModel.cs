@@ -84,9 +84,9 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
     private ObservableCollection<UserRoles> GetRoles() {
 
         return Roles = [
-            new() { Name = Role.Teacher },
-            new() { Name = Role.Student },
-            new() { Name = Role.Coordinator },
+            new() { Name = Helpers.Roles.Teacher },
+            new() { Name = Helpers.Roles.Student },
+            new() { Name = Helpers.Roles.Coordinator },
         ];
     }
 

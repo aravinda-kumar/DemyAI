@@ -69,7 +69,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
         Student.Clear();
 
-        var students = await dataService.GetByRole(nameof(Role.Student));
+        var students = await dataService.GetByRole(nameof(Roles.Student));
 
         foreach(var student in students) {
 

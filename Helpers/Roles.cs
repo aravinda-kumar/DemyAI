@@ -1,6 +1,6 @@
 ﻿namespace DemyAI.Helpers;
 
-public enum Role {
+public enum Roles {
 
     Teacher,
     Student,

@@ -19,13 +19,13 @@ public static class FlyoutHelper {
 
         switch(role) {
 
-            case nameof(Role.Student):
+            case nameof(Roles.Student):
                 CreateStudentItems();
                 break;
-            case nameof(Role.Teacher):
+            case nameof(Roles.Teacher):
                 CreateTeacherItems();
                 break;
-            case nameof(Role.Coordinator):
+            case nameof(Roles.Coordinator):
                 CreateCoordintorItems();
                 break;
         }

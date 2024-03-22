@@ -25,7 +25,7 @@ public partial class ManageCoursePageViewModel(IDataService<DemyUser> dataServic
     }
 
     private async Task GetTeachers(IDataService<DemyUser> dataService) {
-        var teahers = await dataService.GetByRole(nameof(Role.Teacher));
+        var teahers = await dataService.GetByRole(nameof(Roles.Teacher));
 
         foreach(var teaher in teahers) {
             Teachers.Add(teaher);

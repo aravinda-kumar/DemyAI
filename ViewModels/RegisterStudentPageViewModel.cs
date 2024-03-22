@@ -33,7 +33,7 @@ public partial class RegisterStudentPageViewModel : BaseViewModel {
 
     private async Task GetStudents() {
         Students.Clear();
-        var users = await _userService.GetByRole(nameof(Role.Student));
+        var users = await _userService.GetByRole(nameof(Roles.Student));
         foreach (var item in users) {
             Students.Add(item);
         }
