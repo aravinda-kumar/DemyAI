@@ -29,12 +29,6 @@
             ShowBorder="False"
             TextMemberPath="FullName"
             TokensWrapMode="Wrap">
-            <editors:SfComboBox.Behaviors>
-                <mct:EventToCommandBehavior
-                    Command="{Binding SelectionChangeItem, Source={x:Reference UserCustomTemplate}}"
-                    EventName="SelectionChanged"
-                    CommandParameter="{Binding .}"/>
-            </editors:SfComboBox.Behaviors>
             <editors:SfComboBox.ItemTemplate>
                 <DataTemplate x:DataType="models:DemyUser">
                     <ViewCell>

@@ -17,15 +17,15 @@ public static class FlyoutHelper {
 
     public static void CreateFlyoutMenu(string role) {
 
-        switch(role) {
+        switch (role) {
 
-            case nameof(Role.Student):
+            case nameof(Roles.Student):
                 CreateStudentItems();
                 break;
-            case nameof(Role.Teacher):
+            case nameof(Roles.Teacher):
                 CreateTeacherItems();
                 break;
-            case nameof(Role.Coordinator):
+            case nameof(Roles.Coordinator):
                 CreateCoordintorItems();
                 break;
         }
@@ -50,7 +50,7 @@ public static class FlyoutHelper {
         }
         };
 
-        if(!Shell.Current.Items.Contains(studentItems)) {
+        if (!Shell.Current.Items.Contains(studentItems)) {
 
             Shell.Current.Items.Add(studentItems);
         }
@@ -96,7 +96,7 @@ public static class FlyoutHelper {
         }
         };
 
-        if(!Shell.Current.Items.Contains(TeacherItems)) {
+        if (!Shell.Current.Items.Contains(TeacherItems)) {
 
             Shell.Current.Items.Add(TeacherItems);
 
@@ -127,14 +127,14 @@ public static class FlyoutHelper {
         }
         };
 
-        if(!Shell.Current.Items.Contains(CoordinatorItems)) {
+        if (!Shell.Current.Items.Contains(CoordinatorItems)) {
 
             Shell.Current.Items.Add(CoordinatorItems);
         }
     }
 
 
-    public static void GeetDefaultMenuItems() {
+    public static void GetDefaultMenuItems() {
         var defaultItems = new List<ShellContent> {
 
              new() { ContentTemplate = new DataTemplate(typeof(StartupPage)),
@@ -149,7 +149,7 @@ public static class FlyoutHelper {
 
         Shell.Current.Items.Clear();
 
-        foreach(var item in defaultItems) {
+        foreach (var item in defaultItems) {
             Shell.Current.Items.Add(item);
         }
 

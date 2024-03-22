@@ -1,23 +1,16 @@
 ﻿namespace DemyAI.ViewModels;
 
-public partial class RegisterStudentPageViewModel : BaseViewModel {
-
-    private readonly IDataService<DemyUser> _userService;
-
+public partial class RegisterStudentPageViewModel(IDataService<DemyUser> dataService, IAppService appService) : BaseViewModel {
     public ObservableCollection<DemyUser> Students { get; set; } = [];
 
     public ObservableCollection<Course> Courses { get; set; } = [];
 
-    public ObservableCollection<DemyUser>? SelectedStudents { get; set; }
+    public ObservableCollection<DemyUser>? SelectedStudents { get; set; } = [];
 
     [ObservableProperty]
     Course? selectedCourse;
 
     bool IsLoadedFinished = false;
-
-    public RegisterStudentPageViewModel(IDataService<DemyUser> dataService) {
-        _userService = dataService;
-    }
 
     [RelayCommand]
     async Task Appearing() {
@@ -33,7 +26,7 @@ public partial class RegisterStudentPageViewModel : BaseViewModel {
 
     private async Task GetStudents() {
         Students.Clear();
-        var users = await _userService.GetByRole(nameof(Role.Student));
+        var users = await dataService.GetByRole(nameof(Roles.Student));
         foreach (var item in users) {
             Students.Add(item);
         }
@@ -46,31 +39,41 @@ public partial class RegisterStudentPageViewModel : BaseViewModel {
     private async Task GetCourses() {
         Courses.Clear();
 
-        var courses = await _userService.GetAllAsync<Course>(Helpers.Constants.COURSES);
+        var courses = await dataService.GetAllAsync<Course>(Helpers.Constants.COURSES);
         foreach (var course in courses) {
             Courses.Add(course);
         }
-    }
-    [RelayCommand]
-    public void Add(Syncfusion.Maui.Inputs.SelectionChangedEventArgs eventArgs) {
-
     }
 
     [RelayCommand]
     public async Task RegisterToCourse() {
 
-        //var answer = await Shell.Current.DisplayAlert("Warning",
-        //    $"You are about to register\nStudent: {SelectedStudent!.FullName}\nin Course: {SelectedCourse!.Name}", "Confirm", "Cancel");
+        var originalStudentUids = new HashSet<string>(SelectedCourse!.Students);
 
-        //if(answer == false) {
-        //    return;
-        //} else {
-        //    UpdateUser(SelectedStudent);
-        //}
+        var studentNames = SelectedStudents?.Select(s => s.FullName).ToList();
 
-    }
+        var Names = studentNames?.Select(name => $" - {name}").ToList();
 
-    private void UpdateUser(DemyUser? selectedStudent) {
+        var answer = await Shell.Current.DisplayAlert("Warning",
+             $"You are about to register: \n\n{string.Join("\n", Names!)}\n\ninto: {SelectedCourse!.Name}",
+             "OK", "Cancel");
+
+        if (answer) {
+
+            SelectedCourse.Students.Clear();
+
+            foreach (var item in SelectedStudents!) {
+                var studentUid = item?.Uid;
+
+                if (!string.IsNullOrEmpty(studentUid)) {
+                    SelectedCourse.Students.Add(studentUid);
+                }
+            }
+
+            if (!originalStudentUids.SetEquals(SelectedCourse.Students)) {
+                await dataService.UpdateAsync(Constants.COURSES, SelectedCourse.Uid, SelectedCourse);
+            }
+        }
 
     }
 }

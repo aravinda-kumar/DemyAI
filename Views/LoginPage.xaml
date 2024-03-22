@@ -13,7 +13,7 @@
 
     <Grid
         Margin="20"
-        RowDefinitions="100,80,80,50,20"
+        RowDefinitions="120,80,80,50,20"
         RowSpacing="40"
         WidthRequest="{OnIdiom Desktop=500,
                                Phone=300}">
@@ -28,15 +28,16 @@
 
         <Label
             FontFamily="Mat"
-            FontSize="94"
+            FontSize="120"
             HorizontalTextAlignment="Center"
             IsVisible="{Binding isNotBusy}"
-            Text="{Static helpers:IconFont.Cloud_queue}"
+            Text="{Static helpers:IconFont.Cloud}"
+            TextColor="#4646C6"
             VerticalTextAlignment="Center" />
 
         <inputLayout:SfTextInputLayout
             Grid.Row="1"
-            Hint="Email or Student Id"
+            Hint="Email"
             IsVisible="{Binding isNotBusy}">
             <Entry Text="{Binding User.Email}" />
         </inputLayout:SfTextInputLayout>

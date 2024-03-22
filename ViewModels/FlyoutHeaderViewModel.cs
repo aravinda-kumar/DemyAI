@@ -1,4 +1,6 @@
-﻿namespace DemyAI.ViewModels;
+﻿
+
+namespace DemyAI.ViewModels;
 
 public partial class FlyoutHeaderViewModel(
     string displyName,
@@ -20,11 +22,13 @@ public partial class FlyoutHeaderViewModel(
     string currentRole = currentRole;
 
     [RelayCommand]
-    void ChangeRoles() {
+    async Task ChangeRolesAsync() {
 
-        appService.NavigateTo($"//{nameof(RoleSelectionPage)}", true);
+        // appService.DisplayAlert("ddd", email!, "ok");
 
-        FlyoutHelper.GeetDefaultMenuItems();
+        FlyoutHelper.GetDefaultMenuItems();
+
+        await appService.NavigateTo($"//{nameof(RoleSelectionPage)}", true);
 
     }
 }

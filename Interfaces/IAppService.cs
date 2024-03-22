@@ -12,5 +12,7 @@ public interface IAppService {
 
     Task DisplayAlert(string title, string message, string cancelMessage);
 
+    Task DisplayAlert(string message);
+
     Task NavigateBack();
 }

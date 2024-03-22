@@ -5,6 +5,10 @@ public class AppService : IAppService {
         await Shell.Current.DisplayAlert(title, message, cancelMessage);
     }
 
+    public async Task DisplayAlert(string message) {
+        await Shell.Current.DisplayAlert("Error", message, "OK");
+    }
+
     public async Task DisplayToast(string message, ToastDuration toastDuration, double fontSize) {
         var toast = Toast.Make(message, toastDuration, fontSize);
         await toast.Show();

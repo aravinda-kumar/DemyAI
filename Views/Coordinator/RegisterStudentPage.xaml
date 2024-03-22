@@ -20,13 +20,13 @@
         ColumnSpacing="10"
         RowDefinitions="60,*">
 
-        <controls:UserTemplate Data="{Binding Students}"
-                               ImageSource="student.png"
-                               PlaceHolderText="Select a student"
-                               SelectedItems="{Binding SelectedStudents}"
-                               SelectionMode="Multiple"
-                               SelectionChangeItem="{Binding AddCommand}"
-                               TexBoxHintText="Students" />
+        <controls:UserTemplate
+            Data="{Binding Students}"
+            ImageSource="student.png"
+            PlaceHolderText="Select a student"
+            SelectedItems="{Binding SelectedStudents}"
+            SelectionMode="Multiple"
+            TexBoxHintText="Students" />
 
         <controls:CourseTemplate
             Grid.Column="1"

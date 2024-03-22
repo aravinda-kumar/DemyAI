@@ -67,9 +67,13 @@ public partial class UserTemplate : ContentView {
      typeof(IEnumerable),
      typeof(UserTemplate),
      null, BindingMode.TwoWay,
-     null);
+     null, OnSelectedItemsChanged);
 
-
+    private static void OnSelectedItemsChanged(BindableObject bindable, object oldValue, object newValue) {
+        if (bindable is UserTemplate userTemplate) {
+            userTemplate.SelectedItems = newValue as IEnumerable;
+        }
+    }
 
     public IEnumerable SelectedItems {
         get => (IEnumerable)GetValue(SelectedItemsProperty);

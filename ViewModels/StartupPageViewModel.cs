@@ -4,20 +4,22 @@ public class StartupPageViewModel : BaseViewModel {
 
     private readonly IAppService _appService;
     private readonly ISecureStorage _secureStorage;
+    IDataService<DemyUser> dataService;
 
-    public StartupPageViewModel(IAppService appService, ISecureStorage secure) {
+    public StartupPageViewModel(IAppService appService, ISecureStorage secure, IDataService<DemyUser> dataService) {
 
         _appService = appService;
         _secureStorage = secure;
+        this.dataService = dataService;
         CheckAuth();
     }
 
     private async void CheckAuth() {
 
-        var currentUserAsJson = await SecureStorage.GetAsync(Constants.LOGGED_USER);
+        var currentUserEmail = await _secureStorage.GetAsync(Constants.LOGGED_USER);
 
-        if(string.IsNullOrEmpty(currentUserAsJson)) {
-            if(DeviceInfo.Platform == DevicePlatform.WinUI) {
+        if (string.IsNullOrEmpty(currentUserEmail)) {
+            if (DeviceInfo.Platform == DevicePlatform.WinUI) {
                 Shell.Current.Dispatcher.Dispatch(async () => {
                     await Shell.Current.GoToAsync($"//{nameof(LoginPage)}", true);
                 });
@@ -26,7 +28,8 @@ public class StartupPageViewModel : BaseViewModel {
             }
         } else {
 
-            var loggedUser = await StorageHelper<DemyUser>.GetObjFromStorageAsync(_secureStorage);
+            var loggedUser = await dataService.GetByEmailAsync(Constants.USERS,
+                currentUserEmail);
 
             FlyoutHelper.CreateFlyoutHeader(loggedUser);
 

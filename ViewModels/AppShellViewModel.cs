@@ -4,9 +4,9 @@ namespace DemyAI.ViewModels;
 public partial class AppShellViewModel(IAppService appService, ISecureStorage secureStorage) : BaseViewModel {
 
     [RelayCommand]
-    public void Appearing() {
+    public static void Appearing() {
 
-        FlyoutHelper.GeetDefaultMenuItems();
+        FlyoutHelper.GetDefaultMenuItems();
     }
 
     [RelayCommand]
@@ -14,10 +14,9 @@ public partial class AppShellViewModel(IAppService appService, ISecureStorage se
 
         secureStorage.RemoveAll();
 
-        FlyoutHelper.GeetDefaultMenuItems();
+        FlyoutHelper.GetDefaultMenuItems();
 
         await appService.NavigateTo($"//{nameof(LoginPage)}", true);
-
     }
 }
 

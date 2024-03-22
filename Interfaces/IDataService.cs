@@ -8,7 +8,7 @@ public interface IDataService<T> {
 
     Task<string> AddAsync<T>(string nodeName, T newItem, string? customID = null);
 
-    Task<T?> GetByEmailAsync<T>(string nodeName, string email);
+    Task<T?> GetByEmailAsync(string nodeName, string email);
 
     Task<List<DemyUser>> GetByRole(string role);
 

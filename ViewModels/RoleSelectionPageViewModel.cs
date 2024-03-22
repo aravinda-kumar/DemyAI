@@ -1,9 +1,9 @@
 ﻿namespace DemyAI.ViewModels;
 
+
 public partial class RoleSelectionPageViewModel : BaseViewModel {
 
-    private readonly ISecureStorage _secureStorage;
-    private readonly IAuthenticationService _authService;
+    ISecureStorage _secureStorage;
     private readonly IDataService<DemyUser> _dataService;
 
     [ObservableProperty]
@@ -13,12 +13,12 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
 
     string? selectedRole;
 
-    User? fireUser;
+    string? CurrentUserEmail;
 
-    public RoleSelectionPageViewModel(IAuthenticationService authService,
-        IDataService<DemyUser> dataService, ISecureStorage secureStorage) {
+    DemyUser? demyUser;
 
-        _authService = authService;
+    public RoleSelectionPageViewModel(IDataService<DemyUser> dataService, ISecureStorage secureStorage) {
+
         _dataService = dataService;
         _secureStorage = secureStorage;
         InitPopUp();
@@ -27,18 +27,19 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
     private async void InitPopUp() {
 
         Roles = GetRoles();
-        fireUser = await _authService.GetLoggedInUser();
-        WelcomeText = $"Welcome {fireUser?.Info.DisplayName}, please chose a role";
+        CurrentUserEmail = await _secureStorage.GetAsync(Constants.LOGGED_USER);
+        demyUser = await _dataService.GetByEmailAsync(Constants.USERS, CurrentUserEmail!);
+        WelcomeText = $"Welcome {demyUser?.FullName}, please chose a role";
     }
 
     [RelayCommand]
     public void RoleSelected(UserRoles SelectedRole) {
 
-        foreach(var role in Roles!) {
+        foreach (var role in Roles!) {
 
             role.IsSelected = role == SelectedRole; // Set IsSelected to true only for the selected rol
 
-            if(role.IsSelected) {
+            if (role.IsSelected) {
                 role.SelectedColor = Constants.SelectedColor;
             } else {
                 role.SelectedColor = Constants.DefaultUnselectedColor;
@@ -51,28 +52,24 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
     [RelayCommand]
     public async Task UpdateUserCurrentRole() {
 
-        var currentUser = await _dataService.GetByEmailAsync<DemyUser>(Constants.USERS,
-            fireUser!.Info.Email);
+        var currentUser = await _dataService.GetByEmailAsync(Constants.USERS,
+            demyUser!.Email!);
 
-        if(currentUser is not null) {
+        if (currentUser is not null) {
 
             currentUser.Roles ??= [];
 
             currentUser.CurrentRole = selectedRole;
 
-            if(!currentUser.Roles.Contains(selectedRole!)) {
+            if (!currentUser.Roles.Contains(selectedRole!)) {
                 currentUser.Roles.Add(selectedRole!);
             }
 
             await _dataService.UpdateAsync(Constants.USERS, currentUser.Uid!, currentUser);
         }
 
-        var updatedUser = await _dataService.GetByEmailAsync<DemyUser>(Constants.USERS,
-            fireUser!.Info.Email);
-
-        var cuurentUserAsJson = JsonSerializer.Serialize(updatedUser);
-
-        await _secureStorage.SetAsync(Constants.LOGGED_USER, cuurentUserAsJson);
+        var updatedUser = await _dataService.GetByEmailAsync(Constants.USERS,
+            demyUser!.Email!);
 
         FlyoutHelper.CreateFlyoutHeader(updatedUser);
 
@@ -80,13 +77,12 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
 
         await NvigationHelper.NavigatoToDashboardRoleAsync(updatedUser?.CurrentRole!);
     }
-
     private ObservableCollection<UserRoles> GetRoles() {
 
         return Roles = [
-            new() { Name = Role.Teacher },
-            new() { Name = Role.Student },
-            new() { Name = Role.Coordinator },
+            new() { Name = Helpers.Roles.Teacher },
+            new() { Name = Helpers.Roles.Student },
+            new() { Name = Helpers.Roles.Coordinator },
         ];
     }
 

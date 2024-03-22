@@ -8,7 +8,7 @@ public partial class MyCoursesPageViewModel(IDataService<DemyUser> dataService, 
 
     [RelayCommand]
     async Task Appearing() {
-        if(areCousesLoaded == false) {
+        if (areCousesLoaded == false) {
             await GetCourses();
         }
     }
@@ -18,16 +18,18 @@ public partial class MyCoursesPageViewModel(IDataService<DemyUser> dataService, 
         areCousesLoaded = false;
         IsBusy = true;
 
+        var currentUserEmail = await secure.GetAsync(Constants.LOGGED_USER);
+
         CoursesAssigned.Clear();
 
-        var currentUser = await StorageHelper<DemyUser>.GetObjFromStorageAsync(secure);
+        var currentUser = await dataService.GetByEmailAsync(Constants.USERS, currentUserEmail!);
 
         var courses = await dataService.GetAllAsync<Course>(Constants.COURSES);
 
         var coursesAssigned = courses.Where(
             c => c.ProfessorsAssigned.Any(p => p.Uid == currentUser!.Uid));
 
-        foreach(var course in coursesAssigned) {
+        foreach (var course in coursesAssigned) {
             CoursesAssigned.Add(course);
         }
 

@@ -22,20 +22,22 @@ public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IApp
 
         //var user = await authenticationService.LoginWithEmailAndPassword("s@s.com", "123456");
         var user = await authenticationService.LoginWithEmailAndPassword(User.Email!, User.Password!);
-        if(user is not null) {
+        if (user is not null) {
 
-            var currentUser = await dataService.GetByEmailAsync<DemyUser>(Constants.USERS,
+            var currentUser = await dataService.GetByEmailAsync(Constants.USERS,
             user!.Info.Email);
 
-            if(currentUser?.CurrentRole is not null) {
+            await storage.SetAsync(Constants.LOGGED_USER, currentUser!.Email!);
+
+            if (currentUser?.CurrentRole is not null) {
 
                 FlyoutHelper.CreateFlyoutMenu(currentUser.CurrentRole!);
                 FlyoutHelper.CreateFlyoutHeader(currentUser);
 
-                StorageHelper<DemyUser>.StoreObjectToStorage(currentUser, storage);
-
                 await appService.NavigateTo($"//{currentUser.CurrentRole}DashboardPage", true);
+
             } else {
+
                 await appService.NavigateTo($"//{nameof(RoleSelectionPage)}", true);
             }
         }
@@ -60,7 +62,7 @@ public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IApp
         var user = await authenticationService.RegisterWithEmailAndPassword(
             User.Email!, User.Password!, completeName!);
 
-        if(user != null) {
+        if (user != null) {
 
             User.DemyId = NumberGenerator.GenerateRandomNumberString(8);
 
