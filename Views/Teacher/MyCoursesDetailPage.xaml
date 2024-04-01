@@ -3,22 +3,61 @@
     x:Class="DemyAI.Views.MyCoursesDetailPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:DemyAI.Helpers"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:model="clr-namespace:DemyAI.Models"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     Title="MyCoursesDetailPage"
     x:DataType="vm:MyCoursesDetailPageViewModel">
 
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior
+            Command="{Binding AppearingCommand}"
+            EventName="Appearing" />
+    </ContentPage.Behaviors>
+
     <CollectionView
         Margin="20"
         HorizontalOptions="Center"
-        ItemsSource="{Binding Course.Students}">
+        ItemsSource="{Binding Students}">
         <CollectionView.ItemTemplate>
-            <DataTemplate>
+
+            <DataTemplate x:DataType="model:DemyUser">
+
                 <Border
                     Padding="10"
                     StrokeShape="RoundRectangle 8"
                     StrokeThickness="2">
-                    <Grid>
-                        <Label Text="ds" />
+
+                    <Grid
+                        ColumnDefinitions="Auto,*"
+                        HorizontalOptions="FillAndExpand"
+                        RowDefinitions="20,20">
+
+                        <Label
+                            FontAttributes="Bold"
+                            Text="{Binding DemyId, StringFormat='Id: {0}'}" />
+
+                        <Label
+                            Grid.Row="1"
+                            FontAttributes="Bold"
+                            Text="{Binding FullName, StringFormat='Name: {0}'}" />
+
+                        <Label
+                            Grid.RowSpan="2"
+                            Grid.Column="1"
+                            FontFamily="Mat"
+                            FontSize="Header"
+                            HorizontalOptions="EndAndExpand"
+                            Text="{x:Static helpers:IconFont.Email}"
+                            TextColor="CornflowerBlue"
+                            VerticalTextAlignment="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Path=ContactCommand, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesDetailPageViewModel}}}"
+                                    CommandParameter="{Binding Email}" />
+                            </Label.GestureRecognizers>
+                        </Label>
                     </Grid>
                 </Border>
             </DataTemplate>

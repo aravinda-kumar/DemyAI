@@ -32,5 +32,4 @@ public class DemyUser {
 
     public List<string> CoursesAssigned { get; set; }
 
-    public bool IsParticipant { get; set; }
 }

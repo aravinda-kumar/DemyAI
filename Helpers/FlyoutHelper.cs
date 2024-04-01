@@ -21,12 +21,15 @@ public static class FlyoutHelper {
 
             case nameof(Roles.Student):
                 CreateStudentItems();
+                Shell.Current.IsVisible = true;
                 break;
             case nameof(Roles.Teacher):
                 CreateTeacherItems();
+                Shell.Current.IsVisible = true;
                 break;
             case nameof(Roles.Coordinator):
                 CreateCoordintorItems();
+                Shell.Current.IsVisible = true;
                 break;
         }
     }

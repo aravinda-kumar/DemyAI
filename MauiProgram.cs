@@ -114,7 +114,7 @@ namespace DemyAI {
             builder.Services.AddTransient<LoginPage, LoginPageViewModel>();
             builder.Services.AddTransient<NewLecturePage, NewLecturePageViewModel>();
             builder.Services.AddTransient<NewTestPage, NewTestPageViewMode>();
-            builder.Services.AddSingleton<ScheduleLecturePage, ScheduleLecturePageViewModel>();
+            builder.Services.AddTransient<ScheduleLecturePage, ScheduleLecturePageViewModel>();
             builder.Services.AddTransient<ScheduleTestPage, ScheduleTestPageViewModel>();
             builder.Services.AddTransient<MyCoursesPage, MyCoursesPageViewModel>();
             builder.Services.AddTransient<JoinMeetingPage, JoinMeetingPageViewModel>();
