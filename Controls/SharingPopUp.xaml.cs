@@ -14,12 +14,12 @@ public partial class SharingPopUp : ContentView {
     }
 
 
-    public static readonly BindableProperty RoomLinkProperty = BindableProperty.Create(
-        nameof(RoomLink), typeof(string), typeof(SharingPopUp));
+    public static readonly BindableProperty RoomNameProperty = BindableProperty.Create(
+        nameof(RoomName), typeof(string), typeof(SharingPopUp));
 
-    public string RoomLink {
-        get => (string)GetValue(RoomLinkProperty);
-        set => SetValue(RoomLinkProperty, value);
+    public string RoomName {
+        get => (string)GetValue(RoomNameProperty);
+        set => SetValue(RoomNameProperty, value);
     }
 
     public static readonly BindableProperty ShareUrlProperty = BindableProperty.Create(

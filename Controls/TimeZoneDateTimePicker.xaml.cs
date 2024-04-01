@@ -10,16 +10,16 @@ public partial class TimeZoneDateTimePicker : ContentView {
     }
 
     public static readonly BindableProperty ItemsProperty = BindableProperty.Create(
-        nameof(Items), typeof(IDictionary<int, string>), typeof(TimeZoneDateTimePicker));
+        nameof(Items), typeof(IEnumerable), typeof(TimeZoneDateTimePicker));
 
-    public IDictionary<int, string> Items {
-        get => (IDictionary<int, string>)GetValue(ItemsProperty);
+    public IEnumerable Items {
+        get => (IEnumerable)GetValue(ItemsProperty);
         set => SetValue(ItemsProperty, value);
     }
 
 
     private void OpenPicker_Clicked(object sender, EventArgs e) {
-        if(TimeZonePicker != null) {
+        if (TimeZonePicker != null) {
             TimeZonePicker.IsOpen = true;
         }
     }

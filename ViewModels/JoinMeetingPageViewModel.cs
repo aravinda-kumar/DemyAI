@@ -1,30 +1,29 @@
 ﻿namespace DemyAI.ViewModels;
 
-public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService httpService, IAudioManager audioManager,
-    IMeetingService meetingService, IAppService appService, IDataService<DemyUser> dataService) : BaseViewModel {
+public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService httpService,
+    IAudioManager audioManager,
+    IMeetingService meetingService, IAppService appService,
+    IDataService<DemyUser> dataService) : BaseViewModel {
 
-    double currentFlyoutWith = appShell.FlyoutWidth;
-
-    public ObservableCollection<string> names { get; set; } = [];
-
-
-    [ObservableProperty]
-    bool meetingSearchVibiility = true;
-
-    [ObservableProperty]
-    bool toolbarVisibility;
+    public ObservableCollection<Datum> meetingData { get; set; } = [];
 
     [ObservableProperty]
     bool isWebViewVisible;
 
     [ObservableProperty]
-    string? roomUrl;
-
-    [ObservableProperty]
     string? roomName;
 
     [ObservableProperty]
+    bool isMeetingToolbarVisible;
+
+    [ObservableProperty]
+    bool isSearhBarVisible = true;
+
+    [ObservableProperty]
     bool isTakeBreakTime;
+
+    [ObservableProperty]
+    string webviewSorce;
 
     [ObservableProperty]
     string? elapsedTimeString;
@@ -33,12 +32,17 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService ht
 
     private Timer? meetingTimer;
     private Timer? breakTimeTimer;
+    private Timer? CheckPresenceTimer;
 
-    Datum? meetingData;
+    private bool meetingInProgress = false;
 
     [RelayCommand]
     async Task EntryCompleted() {
         await VerifyAddressAsync(appService);
+        IsSearhBarVisible = false;
+        IsMeetingToolbarVisible = true;
+        WebviewSorce = $"{Constants.BASETTING_URL}{RoomName}";
+
     }
     private void StartBreakTimeTimer() {
         breakTimeTimer = new Timer(
@@ -60,33 +64,62 @@ public partial class JoinMeetingPageViewModel(AppShell appShell, IHttpService ht
 
     }
     private async Task VerifyAddressAsync(IAppService appService) {
-        if(RoomUrl is not null && RoomUrl!.Contains("demy-ia")) {
+        if (!string.IsNullOrEmpty(RoomName)) {
             GotoSite();
         } else {
-            await appService.DisplayAlert("Error", "Please paste a valid meeting link", "OK");
+            await appService.DisplayAlert("Error", "Please paste the meeting name",
+                "OK");
         }
     }
-    private void GotoSite() {
-        if(!string.IsNullOrEmpty(RoomUrl)) {
-            RoomName = RoomUrl.Split('/').LastOrDefault();
-            IsWebViewVisible = true;
-            if(IsWebViewVisible) {
-                ToolbarVisibility = !ToolbarVisibility;
-                MeetingSearchVibiility = !MeetingSearchVibiility;
-                appShell.FlyoutWidth = 0;
-                StartBreakTimeTimer();
-                StartMeetingChronometer();
-            }
+    private async void GotoSite() {
+        IsWebViewVisible = true;
+        if (IsWebViewVisible) {
+
+            CheckPresenceTimer = new Timer(
+           async (state) => await UpdateMeetingData(),
+           null,
+           TimeSpan.FromSeconds(15),
+           TimeSpan.FromSeconds(15));
         }
     }
+
     public async Task UpdateMeetingData() {
 
         var meetingFromService = await meetingService.GetMeetingPresence(
-            Constants.DAILY_AUTH_TOKEN);
+            Constants.DAILY_AUTH_TOKEN, RoomName!);
 
-        meetingData = meetingFromService.data.FirstOrDefault()!;
+        MainThread.BeginInvokeOnMainThread(() => {
 
-        await dataService.UpdateAsync("Meetings", RoomName!, meetingData);
+            meetingData.Clear();
+
+            foreach (var item in meetingData.ToList()) {
+
+                if (!meetingFromService.data.Contains(item)) {
+
+                    meetingData.Remove(item);
+                }
+            }
+
+            foreach (var item in meetingFromService.data) {
+                if (!meetingData.Contains(item)) {
+                    meetingData.Add(item);
+                }
+            }
+
+            if (meetingData.Count > 0) {
+                meetingInProgress = true;
+            }
+
+            if (meetingInProgress) {
+                StartBreakTimeTimer();
+                StartMeetingChronometer();
+                meetingInProgress = false;
+            }
+        });
+
+
+        await dataService.UpdateAsync(Constants.MEETINGS, RoomName!,
+            meetingFromService);
     }
 }
 

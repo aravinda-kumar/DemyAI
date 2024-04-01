@@ -9,7 +9,9 @@
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
-    x:DataType="vm:LoginPageViewModel">
+    x:DataType="vm:LoginPageViewModel"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
 
     <Grid
         Margin="20"

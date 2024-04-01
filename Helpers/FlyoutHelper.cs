@@ -70,6 +70,11 @@ public static class FlyoutHelper {
              },
 
              new ShellContent {
+                 Title = "Join meeting",
+                 ContentTemplate = new DataTemplate(typeof(JoinMeetingPage)),
+             },
+
+             new ShellContent {
                  Title = "My courses",
                  ContentTemplate = new DataTemplate(typeof(MyCoursesPage)),
              },

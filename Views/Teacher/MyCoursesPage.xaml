@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:helpers="clr-namespace:DemyAI.Helpers"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:model="clr-namespace:DemyAI.Models"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
@@ -33,15 +34,58 @@
                 <DataTemplate x:DataType="model:Course">
                     <Border
                         Margin="50"
-                        Stroke="Purple"
-                        StrokeThickness="1">
+                        StrokeThickness="2">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="8,8,8,8" />
+                            <RoundRectangle CornerRadius="8" />
                         </Border.StrokeShape>
-                        <Label
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Path=GoToDetailsCommand, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesPageViewModel}}}"
+                                CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+                        <Grid
                             Margin="5"
-                            FontAttributes="Bold"
-                            Text="{Binding Name, StringFormat='Course name: {0}'}" />
+                            RowDefinitions="20,20"
+                            VerticalOptions="Center">
+                            <Label
+                                FontAttributes="Bold"
+                                Text="{Binding Name, StringFormat='Course name: {0}'}"
+                                VerticalTextAlignment="Center" />
+
+                            <Label
+                                Grid.Row="1"
+                                Text="{Binding Path=Total, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesPageViewModel}}, StringFormat='Students: {0}'}"
+                                VerticalTextAlignment="Center" />
+
+                            <Label
+                                Grid.RowSpan="2"
+                                FontFamily="Mat"
+                                FontSize="Header"
+                                HorizontalTextAlignment="End"
+                                Text="{x:Static helpers:IconFont.Read_more}"
+                                VerticalTextAlignment="Center" />
+                        </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="Transparent" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="CornflowerBlue" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="CornflowerBlue" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

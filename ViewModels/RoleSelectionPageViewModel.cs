@@ -29,7 +29,11 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
         Roles = GetRoles();
         CurrentUserEmail = await _secureStorage.GetAsync(Constants.LOGGED_USER);
         demyUser = await _dataService.GetByEmailAsync(Constants.USERS, CurrentUserEmail!);
-        WelcomeText = $"Welcome {demyUser?.FullName}, please chose a role";
+        if (string.IsNullOrEmpty(demyUser?.CurrentRole)) {
+            WelcomeText = $"Welcome {demyUser?.FullName}, please chose a role";
+        } else {
+            WelcomeText = $"Do you want to change you current role as {demyUser?.CurrentRole}";
+        }
     }
 
     [RelayCommand]

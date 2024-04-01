@@ -24,7 +24,6 @@ public class DemyUser {
 
     public string? CurrentRole { get; set; }
 
-    [JsonIgnore]
     public string FullName => $"{Firstname} {Lastname}";
 
     //public double latitude { get; set; }

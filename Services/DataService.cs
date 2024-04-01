@@ -37,8 +37,36 @@ public class DataService<T> : IDataService<T> {
         // Iterate through each item in the Objects collection
         foreach (var item in objects) {
 
+            // Get the property of the current item's object type
+            var Prop = item.Object?.GetType().GetProperty(Constants.EMAIL);
+
+            // Check if the property exists for the current object type
+            if (Prop is not null) {
+
+                // Retrieve the value of the Uid property for the current object
+                var value = Prop.GetValue(item.Object);
+
+                // Check if the Uid property value matches the provided uid
+                if (value != null && value.ToString() == email) {
+
+                    // If there's a match, return the object
+                    return item.Object;
+                }
+            }
+        }
+
+        return default;
+    }
+
+    public async Task<T> GetByUidAsync<T>(string nodeName, string Uid) {
+
+        var objects = await _client.Child(nodeName).OnceAsync<T>();
+
+        // Iterate through each item in the Objects collection
+        foreach (var item in objects) {
+
             // Get the Uid property of the current item's object type
-            var uidProp = item.Object?.GetType().GetProperty(Constants.EMAIL);
+            var uidProp = item.Object?.GetType().GetProperty(Constants.UID);
 
             // Check if the Uid property exists for the current object type
             if (uidProp is not null) {
@@ -47,7 +75,7 @@ public class DataService<T> : IDataService<T> {
                 var value = uidProp.GetValue(item.Object);
 
                 // Check if the Uid property value matches the provided uid
-                if (value != null && value.ToString() == email) {
+                if (value != null && value.ToString() == Uid) {
 
                     // If there's a match, return the object
                     return item.Object;

@@ -64,7 +64,7 @@ public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IApp
 
         if (user != null) {
 
-            User.DemyId = NumberGenerator.GenerateRandomNumberString(8);
+            User.DemyId = Generators.GenerateRandomDemyId(8);
 
             var uid = await dataService.AddAsync("Users", User);
 

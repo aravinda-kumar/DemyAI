@@ -78,7 +78,7 @@ namespace DemyAI {
 
                                 var MeettingURL = appActivationArguments?.Uri;
 
-                                if(MeettingURL != null) {
+                                if (MeettingURL != null) {
                                     HandleUri(MeettingURL);
                                 }
                             }));
@@ -109,18 +109,23 @@ namespace DemyAI {
             builder.Services.AddSingleton(firebaseAuthClient);
 
             builder.Services.AddSingleton<AppShell, AppShellViewModel>();
-            builder.Services.AddSingleton<RegisterStudentPage, RegisterStudentPageViewModel>();
+            builder.Services.AddTransient<RegisterStudentPage, RegisterStudentPageViewModel>();
             builder.Services.AddSingleton<NoInternetPage>();
-            builder.Services.AddSingleton<LoginPage, LoginPageViewModel>();
-            builder.Services.AddSingleton<NewLecturePage, NewLecturePageViewModel>();
-            builder.Services.AddSingleton<NewTestPage, NewTestPageViewMode>();
+            builder.Services.AddTransient<LoginPage, LoginPageViewModel>();
+            builder.Services.AddTransient<NewLecturePage, NewLecturePageViewModel>();
+            builder.Services.AddTransient<NewTestPage, NewTestPageViewMode>();
             builder.Services.AddSingleton<ScheduleLecturePage, ScheduleLecturePageViewModel>();
-            builder.Services.AddSingleton<ScheduleTestPage, ScheduleTestPageViewModel>();
-            builder.Services.AddSingleton<MyCoursesPage, MyCoursesPageViewModel>();
-            builder.Services.AddSingleton<JoinMeetingPage, JoinMeetingPageViewModel>();
-            builder.Services.AddSingleton<ManageCoursePage, ManageCoursePageViewModel>();
+            builder.Services.AddTransient<ScheduleTestPage, ScheduleTestPageViewModel>();
+            builder.Services.AddTransient<MyCoursesPage, MyCoursesPageViewModel>();
+            builder.Services.AddTransient<JoinMeetingPage, JoinMeetingPageViewModel>();
+            builder.Services.AddTransient<ManageCoursePage, ManageCoursePageViewModel>();
             builder.Services.AddSingleton<StartupPage, StartupPageViewModel>();
-            builder.Services.AddSingleton<RoleSelectionPage, RoleSelectionPageViewModel>();
+            builder.Services.AddTransient<RoleSelectionPage, RoleSelectionPageViewModel>();
+            builder.Services.AddTransient<RoomPage, RoomPageViewModel>();
+            builder.Services.AddTransient<MyCoursesDetailPage, MyCoursesDetailPageViewModel>();
+
+
+
 
             builder.Services.AddSingleton<IAuthenticationService>(serviceProvider => {
                 var authService = serviceProvider.GetRequiredService<FirebaseAuthClient>();

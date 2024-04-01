@@ -10,6 +10,8 @@ public interface IDataService<T> {
 
     Task<T?> GetByEmailAsync(string nodeName, string email);
 
+    Task<T> GetByUidAsync<T>(string nodeName, string Uid);
+
     Task<List<DemyUser>> GetByRole(string role);
 
     Task UpdateAsync<T>(string nodeName, string uid, string propertyValue, string propertyName);

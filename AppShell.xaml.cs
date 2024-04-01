@@ -4,17 +4,28 @@ public partial class AppShell : Shell {
     public AppShell(AppShellViewModel appShellViewModel) {
 
         InitializeComponent();
-
+        //SetupNavigationView();
         BindingContext = appShellViewModel;
+
+        Routing.RegisterRoute(nameof(MyCoursesDetailPage), typeof(MyCoursesDetailPage));
     }
 
+    protected override void OnAppearing() {
 
-    //    private void SetupNavigationView() {
-    //#if WINDOWS
-    //        Loaded += delegate {
-    //            NavigationView navigationView = (NavigationView)flyout.Handler!.PlatformView!;
-    //            navigationView.PaneDisplayMode = NavigationViewPaneDisplayMode.Left;
+        FlyoutHelper.GetDefaultMenuItems();
 
-    //        };
-    //#endif
+        base.OnAppearing();
+    }
 }
+
+//    private void SetupNavigationView() {
+//#if WINDOWS
+//        Loaded += delegate {
+//            Microsoft.UI.Xaml.Controls.NavigationView navigationView = (Microsoft.UI.Xaml.Controls.NavigationView)flyout.Handler!.PlatformView!;
+//            navigationView.PaneDisplayMode = Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Left;
+
+//        };
+//    }
+//}
+//#endif
+

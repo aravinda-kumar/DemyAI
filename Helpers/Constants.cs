@@ -3,7 +3,7 @@ public class Constants {
 
     //syncfusion Key
 
-    public const string LICENSE = "Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCfUx0QXxbf1x0ZFRMY15bQXVPIiBoS35RckVgWHhfc3dXQ2NZUUN2";
+    public const string LICENSE = "MzE4ODMxOEAzMjM1MmUzMDJlMzBuS1ZZUXNXenJDdU5pWGZ6TjJVSkdRaldIbWU4d0pnaVJJRjJGWENyeFFjPQ==";
 
     //firebase RealTime-Database
 

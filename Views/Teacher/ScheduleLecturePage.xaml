@@ -21,9 +21,7 @@
         <Grid
             Margin="10"
             ColumnDefinitions="*,*"
-            RowDefinitions="Auto,50,60,*">
-
-        </Grid>
+            RowDefinitions="Auto,50,60,*" />
     </ScrollView>
 
 

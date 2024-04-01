@@ -1,9 +1,19 @@
 ﻿
+
 namespace DemyAI.ViewModels;
 
-public partial class MyCoursesPageViewModel(IDataService<DemyUser> dataService, ISecureStorage secure) : BaseViewModel {
+public partial class MyCoursesPageViewModel(
+    IDataService<DemyUser> dataService,
+    IAppService appService,
+    ISecureStorage secure) : BaseViewModel {
 
     public ObservableCollection<Course> CoursesAssigned { get; set; } = [];
+
+    public ObservableCollection<string> CoursesStudents { get; set; } = [];
+
+    [ObservableProperty]
+    int total;
+
     bool areCousesLoaded;
 
     [RelayCommand]
@@ -33,8 +43,23 @@ public partial class MyCoursesPageViewModel(IDataService<DemyUser> dataService, 
             CoursesAssigned.Add(course);
         }
 
+        foreach (var course in courses) {
+            Total = course.Students.Count;
+        }
+
         IsBusy = false;
         areCousesLoaded = true;
 
     }
+
+    [RelayCommand]
+    async Task GoToDetails(Course course) {
+
+        await appService.NavigateTo($"{nameof(MyCoursesDetailPage)}",
+            true, new Dictionary<string, object> {
+            {"Course", course }
+        });
+    }
+
+
 }

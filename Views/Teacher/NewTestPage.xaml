@@ -19,7 +19,7 @@
         <Grid Margin="10">
 
             <Button
-                Command="{Binding StartMeetingCommand}"
+                Command="{Binding StartLectureCommand}"
                 Text="Start test"
                 VerticalOptions="EndAndExpand" />
         </Grid>

@@ -6,17 +6,16 @@
     xmlns:model="clr-namespace:DemyAI.Models"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     x:DataType="vm:RoleSelectionPageViewModel"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
 
     <Border
-        BackgroundColor="#eeefea"
+        BackgroundColor="#E1E4D8"
         HorizontalOptions="Center"
         VerticalOptions="Center"
         WidthRequest="800">
 
-        <VerticalStackLayout
-            HorizontalOptions="CenterAndExpand"
-            VerticalOptions="CenterAndExpand">
+        <VerticalStackLayout>
 
             <Label
                 Padding="10"
@@ -27,16 +26,16 @@
 
             <Border
                 Margin="0,10,0,0"
-                Padding="10"
-                VerticalOptions="Center">
+                Padding="10">
                 <VerticalStackLayout
-                    BackgroundColor="#fafaf5"
+                    BackgroundColor="#6D6D2B"
                     BindableLayout.ItemsSource="{Binding Roles}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="model:UserRoles">
                             <Border
                                 Margin="10"
-                                BackgroundColor="{Binding SelectedColor}">
+                                BackgroundColor="{Binding SelectedColor}"
+                                HorizontalOptions="FillAndExpand">
                                 <Label
                                     Margin="10"
                                     HorizontalTextAlignment="Center"
@@ -46,6 +45,9 @@
                                         Command="{Binding Path=RoleSelectedCommand, Source={x:RelativeSource AncestorType={x:Type vm:RoleSelectionPageViewModel}}}"
                                         CommandParameter="{Binding .}" />
                                 </Border.GestureRecognizers>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
                             </Border>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
@@ -53,10 +55,10 @@
             </Border>
 
             <Button
-                Margin="0,20,0,20"
+                Margin="20"
                 BackgroundColor="#007BFF"
                 Command="{Binding UpdateUserCurrentRoleCommand}"
-                CornerRadius="5"
+                CornerRadius="8"
                 Text="Select role"
                 TextColor="White" />
 

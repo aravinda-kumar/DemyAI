@@ -19,10 +19,10 @@
                 <Grid
                     Margin="10"
                     ColumnDefinitions="600,60,60">
-                    <inputLayout:SfTextInputLayout>
+                    <inputLayout:SfTextInputLayout Hint="Meeting URL">
                         <Entry
                             IsEnabled="False"
-                            Text="{Binding RoomLink, Source={x:Reference popUpMeeting}}" />
+                            Text="{Binding RoomName, Source={x:Reference popUpMeeting}}" />
                     </inputLayout:SfTextInputLayout>
 
                     <Button

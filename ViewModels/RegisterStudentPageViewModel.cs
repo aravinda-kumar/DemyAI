@@ -54,7 +54,7 @@ public partial class RegisterStudentPageViewModel(IDataService<DemyUser> dataSer
 
         var Names = studentNames?.Select(name => $" - {name}").ToList();
 
-        var answer = await Shell.Current.DisplayAlert("Warning",
+        var answer = await appService.DisplayAlert("Warning",
              $"You are about to register: \n\n{string.Join("\n", Names!)}\n\ninto: {SelectedCourse!.Name}",
              "OK", "Cancel");
 

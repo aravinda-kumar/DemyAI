@@ -54,6 +54,11 @@ public class AuthenticationService(FirebaseAuthClient firebaseAuthClient, IAppSe
 
     }
 
+    public async Task ResetEmailPasswordAsync(string email) {
+
+        await firebaseAuthClient.ResetEmailPasswordAsync(email);
+    }
+
     public void SignOut() {
         firebaseAuthClient.SignOut();
     }

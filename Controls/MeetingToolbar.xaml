@@ -9,28 +9,15 @@
     <Grid
         ColumnDefinitions="Auto,*"
         ColumnSpacing="10"
-        IsVisible="{Binding ToolbarVisibility, Source={x:Reference toolbar}}"
+        IsVisible="{Binding Visibility, Source={x:Reference toolbar}}"
         RowDefinitions="20, Auto">
 
-        <Label Text="{Binding RoomName, StringFormat='Name: {0}', Source={x:Reference toolbar}}" />
+        <Label Text="{Binding RoomName, StringFormat='RoomName: {0}', Source={x:Reference toolbar}}" />
 
-        <Label
-            Grid.Row="2"
-            Margin="0,0,0,0"
-            FontAttributes="Bold"
-            Text="{Binding Time, StringFormat='Time: {0}', Source={x:Reference toolbar}}" />
-
-        <!--<Label
-            FontFamily="Mat"
-            Grid.Column="1"
-            Text="{Static helper:IconFont.Stop_circle}"
-            TextColor="OrangeRed"
-            FontSize="Large"
-            VerticalTextAlignment="Center" Grid.RowSpan="2" HorizontalTextAlignment="End">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ShowPeople, Source={x:Reference toolbar}}"/>
-            </Label.GestureRecognizers>
-        </Label>-->
+        <Label Grid.Row="2"
+               Margin="0,0,0,0"
+               FontAttributes="Bold"
+               Text="{Binding Time, StringFormat='Time: {0}', Source={x:Reference toolbar}}" />
     </Grid>
 
 </ContentView>

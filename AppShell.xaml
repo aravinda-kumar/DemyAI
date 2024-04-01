@@ -7,17 +7,13 @@
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     Title="DemyAI"
     x:DataType="vm:AppShellViewModel"
-    x:Name="flyout"
+    FlyoutBehavior="{OnIdiom Desktop=Locked,
+                             Phone=Flyout}"
+    
     Shell.NavBarIsVisible="{OnIdiom Phone=true,
                                     Desktop=false}"
     Shell.TabBarIsVisible="False">
-    
-    <Shell.Behaviors>
-        <mct:EventToCommandBehavior
-            Command="{Binding AppearingCommand}"
-            EventName="Appearing" />
-    </Shell.Behaviors>
-    
+
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <Button

@@ -5,13 +5,13 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
     public ObservableCollection<DemyUser> Student { get; set; } = [];
 
-    public Dictionary<int, string> TimeZones { get; set; } = [];
+    public ObservableCollection<string> TimeZones { get; set; } = [];
 
     [ObservableProperty]
     DateTime selectedDateTime;
 
     [ObservableProperty]
-    bool isMeetingLinkPopUpOpen;
+    bool isMeetingPopUpOpen;
 
     [ObservableProperty]
     bool isDateTimeSelected;
@@ -23,17 +23,9 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     string? roomURL;
 
     [RelayCommand]
-    async Task Appearing() {
-
-
-        await Task.Delay(1000);
-        await GetStudents();
-    }
-
-    [RelayCommand]
     void OpenPicker(SfDateTimePicker picker) {
 
-        if(picker != null) {
+        if (picker != null) {
             picker.IsOpen = true;
         }
     }
@@ -41,7 +33,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     [RelayCommand]
     void DateTimeOkButton(SfDateTimePicker picker) {
 
-        if(picker != null) {
+        if (picker != null) {
             IsDateTimeSelected = true;
             picker.IsOpen = false;
         }
@@ -49,9 +41,15 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
     [RelayCommand]
     void DateTimeCanelButton(SfDateTimePicker picker) {
-        if(picker != null) {
+        if (picker != null) {
             picker.IsOpen = false;
         }
+    }
+
+    [RelayCommand]
+    async Task Appearing() {
+
+        await GetTimeZones();
     }
 
     private async Task GetTimeZones() {
@@ -60,30 +58,43 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
             await httpService.GetAsync<List<string>>(
                 "https://www.timeapi.io/api/TimeZone/AvailableTimeZones");
 
-        for(int i = 0; i <= zones!.Count - 1; ++i) {
-            TimeZones.Add(i, zones[i]);
+        foreach (var item in zones!.Take(250)) {
+
+            TimeZones.Add(item);
+
         }
     }
 
-    private async Task GetStudents() {
+    //private async Task GetStudents() {
 
-        Student.Clear();
+    //    Student.Clear();
 
-        var students = await dataService.GetByRole(nameof(Roles.Student));
+    //    var students = await dataService.GetByRole(nameof(Roles.Student));
 
-        foreach(var student in students) {
+    //    foreach(var student in students) {
 
-            Student.Add(student);
-        }
+    //        Student.Add(student);
+    //    }
 
-    }
+    //}
 
     [RelayCommand]
-    async Task StartMeeting() {
+    async Task StartLecture() {
 
-        RoomName = RoomName?.Replace(" ", string.Empty);
+        if (string.IsNullOrEmpty(RoomName)) {
 
-        var currentUserEmail = await SecureStorage.GetAsync("CurrentUser");
+            var answer = await appService.DisplayAlert("Warning",
+                "It looks like the name for the lecture is empty," +
+                "do you want us to crate a name for you",
+                "Yes", "No");
+
+            if (answer) {
+                RoomName = Generators.GenerateRandomName(6);
+            }
+
+        } else {
+            RoomName = RoomName!.Replace(" ", string.Empty);
+        }
 
         var meetingOptions = new MeetingOptions {
             EnableAdvancedChat = true,
@@ -96,19 +107,25 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
             EnableVideoProcessingUi = true,
             EnablePeopleUi = false,
             EnableChat = true,
+
             // Set other meeting option properties as needed
         };
 
 
-        RoomURL = await meetingService.CreateMeetingAsync(RoomName!, meetingOptions, Constants.DAILY_AUTH_TOKEN);
+        RoomURL = await meetingService.CreateMeetingAsync(
+            RoomName!, meetingOptions, Constants.DAILY_AUTH_TOKEN);
 
-        // We are creating dummy meeting, so we can update it later 
+        if (!string.IsNullOrEmpty(RoomURL)) {
 
-        MeetingData dummyData = new() { roomName = RoomName! };
+            var roomPresence = await meetingService.GetMeetingPresence(
+                Constants.DAILY_AUTH_TOKEN,
+                RoomName!);
 
-        await dataService.AddAsync("Meetings", dummyData, RoomName);
+            await dataService.AddAsync(Constants.MEETINGS, roomPresence, RoomName);
+        }
 
-        IsMeetingLinkPopUpOpen = true;
+
+        IsMeetingPopUpOpen = true;
     }
 
     //if(!string.IsNullOrEmpty(RoomURL)) {
@@ -124,9 +141,9 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     [RelayCommand]
     async Task ShareURLLink() {
 
-        if(!string.IsNullOrEmpty(RoomURL)) {
+        if (!string.IsNullOrEmpty(RoomURL)) {
             await Share.Default.RequestAsync(new ShareTextRequest {
-                Text = $"This is the meeting URL \n\n{RoomURL}",
+                Text = $"This is the meeting name: \n\n{RoomName}",
             });
         }
     }
@@ -134,8 +151,11 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     [RelayCommand]
     async Task CopyLink() {
 
-        if(!string.IsNullOrEmpty(RoomURL)) {
-            await Clipboard.Default.SetTextAsync(RoomURL);
+        if (!string.IsNullOrEmpty(RoomURL)) {
+            await Clipboard.Default.SetTextAsync(RoomName);
+            await appService.DisplayToast("Meeting name has been copied",
+                ToastDuration.Short,
+                16);
         }
     }
 }

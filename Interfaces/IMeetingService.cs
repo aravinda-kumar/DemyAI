@@ -10,7 +10,7 @@ public interface IMeetingService {
     Task<string> CreateMeetingAsync(string title, MeetingOptions meetingOptions, string authToken);
 
 
-    Task<MeetingData> GetMeetingPresence(string authToken);
+    Task<MeetingPresence> GetMeetingPresence(string authToken, string roomName);
 
 
 }

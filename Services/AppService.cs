@@ -25,4 +25,9 @@ public class AppService : IAppService {
     public async Task NavigateBack() {
         await Shell.Current.GoToAsync("..");
     }
+
+    public async Task<bool> DisplayAlert(string title, string message, string positive, string negative) {
+        var answer = await Shell.Current.DisplayAlert(title, message, positive, negative);
+        return answer;
+    }
 }

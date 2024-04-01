@@ -26,8 +26,16 @@
 
         <Button
             Grid.Row="2"
+            Command="{Binding StartLectureCommand}"
             Text="New Lecture"
             VerticalOptions="End" />
+
+        <controls:SharingPopUp
+            CopyURL="{Binding CopyLinkCommand}"
+            IsOpen="{Binding IsMeetingPopUpOpen}"
+            RoomName="{Binding RoomName}"
+            ShareUrl="{Binding ShareURLLinkCommand}" />
+
     </Grid>
 
 </ContentPage>
