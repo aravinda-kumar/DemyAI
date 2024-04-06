@@ -5,13 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    x:Name="flyout"
     Title="DemyAI"
     x:DataType="vm:AppShellViewModel"
     FlyoutBehavior="{OnIdiom Desktop=Locked,
                              Phone=Flyout}"
-    
-    Shell.NavBarIsVisible="{OnIdiom Phone=true,
-                                    Desktop=false}"
+    Shell.NavBarIsVisible="{OnIdiom Phone=True,
+                                    Desktop=False}"
     Shell.TabBarIsVisible="False">
 
     <Shell.FlyoutFooterTemplate>

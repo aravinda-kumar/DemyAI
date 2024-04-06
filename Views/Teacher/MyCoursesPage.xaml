@@ -8,6 +8,7 @@
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:model="clr-namespace:DemyAI.Models"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    x:Name="CoursesPage"
     x:DataType="vm:MyCoursesPageViewModel">
 
 
@@ -33,15 +34,20 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Course">
                     <Border
-                        Margin="50"
+                        Margin="{OnIdiom Desktop=50}"
                         StrokeThickness="2">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="8" />
                         </Border.StrokeShape>
+                        <Border.Behaviors>
+                            <mct:TouchBehavior
+                                DefaultBackgroundColor="Transparent"
+                                HoveredBackgroundColor="CornflowerBlue"
+                                PressedBackgroundColor="CornflowerBlue" />
+                        </Border.Behaviors>
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding Path=GoToDetailsCommand, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesPageViewModel}}}"
-                                CommandParameter="{Binding .}" />
+                            <TapGestureRecognizer Command="{Binding Path=GoToDetailsCommand, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesPageViewModel}}}"
+                                                  CommandParameter="{Binding .}"/>
                         </Border.GestureRecognizers>
                         <Grid
                             Margin="5"
@@ -60,32 +66,11 @@
                             <Label
                                 Grid.RowSpan="2"
                                 FontFamily="Mat"
-                                FontSize="Header"
+                                FontSize="40"
                                 HorizontalTextAlignment="End"
                                 Text="{x:Static helpers:IconFont.Read_more}"
                                 VerticalTextAlignment="Center" />
                         </Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="Transparent" />
-                                    </VisualState.Setters>
-                                </VisualState>
-
-                                <VisualState x:Name="Selected">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="CornflowerBlue" />
-                                    </VisualState.Setters>
-                                </VisualState>
-
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="CornflowerBlue" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

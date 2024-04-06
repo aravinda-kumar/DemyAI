@@ -16,13 +16,12 @@
         <editors:SfComboBox
             DisplayMemberPath="FullName"
             DropDownBackground="Transparent"
-            DropDownItemHeight="300"
             IsDropdownButtonVisible="False"
             IsEditable="True"
             ItemsSource="{Binding Data, Source={x:Reference UserCustomTemplate}}"
             MaxDropDownHeight="600"
             Placeholder="{Binding PlaceHolderText, Source={x:Reference UserCustomTemplate}}"
-            SelectedDropDownItemBackground="Purple"
+            SelectedDropDownItemBackground="#74B39B"
             SelectedItem="{Binding SelectedItem, Source={x:Reference UserCustomTemplate}}"
             SelectedItems="{Binding SelectedItems, Source={x:Reference UserCustomTemplate}}"
             SelectionMode="{Binding SelectionMode, Source={x:Reference UserCustomTemplate}}"
@@ -34,11 +33,8 @@
                     <ViewCell>
                         <HorizontalStackLayout Spacing="10">
                             <Image
-                                Aspect="AspectFit"
                                 HeightRequest="40"
-                                HorizontalOptions="Center"
                                 Source="{Binding ImageSource, Source={x:Reference UserCustomTemplate}}"
-                                VerticalOptions="Center"
                                 WidthRequest="40" />
                             <Label
                                 Text="{Binding FullName}"

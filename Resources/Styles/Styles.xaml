@@ -446,5 +446,4 @@
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="TextColor" Value="White" />
     </Style>
-
 </ResourceDictionary>

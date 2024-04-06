@@ -90,6 +90,8 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
             if (answer) {
                 RoomName = Generators.GenerateRandomName(6);
+            } else {
+                return;
             }
 
         } else {

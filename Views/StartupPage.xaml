@@ -3,15 +3,18 @@
     x:Class="DemyAI.Views.StartupPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
+    Shell.NavBarIsVisible="False"
     x:DataType="vm:StartupPageViewModel">
 
-    <ActivityIndicator
-        HeightRequest="40"
-        HorizontalOptions="Center"
-        IsRunning="True"
-        VerticalOptions="Center"
-        WidthRequest="40"
-        Color="Purple" />
+    <skia:SKLottieView
+        HeightRequest="200"
+        HorizontalOptions="CenterAndExpand"
+        RepeatCount="-1"
+        RepeatMode="Restart"
+        Source="loading.json"
+        VerticalOptions="CenterAndExpand"
+        WidthRequest="200" />
 
 </ContentPage>

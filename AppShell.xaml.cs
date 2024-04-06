@@ -1,10 +1,11 @@
 ﻿namespace DemyAI;
+
 public partial class AppShell : Shell {
 
     public AppShell(AppShellViewModel appShellViewModel) {
 
         InitializeComponent();
-        //SetupNavigationView();
+        // SetupNavigationView();
         BindingContext = appShellViewModel;
 
         Routing.RegisterRoute(nameof(MyCoursesDetailPage), typeof(MyCoursesDetailPage));
@@ -14,18 +15,17 @@ public partial class AppShell : Shell {
 
         FlyoutHelper.GetDefaultMenuItems();
 
-        base.OnAppearing();
     }
+
+
+    //    private void SetupNavigationView() {
+    //#if WINDOWS
+    //        Loaded += delegate {
+    //            Microsoft.UI.Xaml.Controls.NavigationView navigationView = (Microsoft.UI.Xaml.Controls.NavigationView)flyout.Handler!.PlatformView!;
+    //            navigationView.PaneDisplayMode = Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.LeftMinimal;
+
+    //        };
+    //    }
+    //#endif
 }
-
-//    private void SetupNavigationView() {
-//#if WINDOWS
-//        Loaded += delegate {
-//            Microsoft.UI.Xaml.Controls.NavigationView navigationView = (Microsoft.UI.Xaml.Controls.NavigationView)flyout.Handler!.PlatformView!;
-//            navigationView.PaneDisplayMode = Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Left;
-
-//        };
-//    }
-//}
-//#endif
 

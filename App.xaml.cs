@@ -15,11 +15,11 @@ public partial class App : Application {
             MainPage = shell;
         }
 
-        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("RemoveBorder", (handler, view) => {
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("BorderlessEntry", (handler, view) => {
             if (view is BorderlessEntry) {
 #if ANDROID
-        handler.PlatformView.Background = null;
-        handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                handler.PlatformView.Background = null;
+                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
 
 #elif WINDOWS
                 handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
@@ -30,7 +30,25 @@ public partial class App : Application {
 
 #endif
             }
+        });
 
+        Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping("BorderlessSearchBar", (handler, view) => {
+            if (view is BorderlessSearchBar) {
+#if ANDROID
+                Android.Widget.LinearLayout? linearLayout = handler.PlatformView.GetChildAt(0) as Android.Widget.LinearLayout;
+                linearLayout = linearLayout?.GetChildAt(2) as Android.Widget.LinearLayout;
+                linearLayout = linearLayout?.GetChildAt(1) as Android.Widget.LinearLayout;
+                linearLayout!.Background = null;
+
+#elif WINDOWS
+                handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+#elif IOS || MACCATALYST
+
+                handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+                handler.PlatformView.SearchBarStyle = UIKit.UISearchBarStyle.Minimal;
+
+#endif
+            }
         });
     }
 }

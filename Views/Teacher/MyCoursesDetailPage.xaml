@@ -4,10 +4,11 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:helpers="clr-namespace:DemyAI.Helpers"
+    xmlns:local="clr-namespace:DemyAI"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:model="clr-namespace:DemyAI.Models"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
-    Title="MyCoursesDetailPage"
+    Title="Course detail"
     x:DataType="vm:MyCoursesDetailPageViewModel">
 
     <ContentPage.Behaviors>
@@ -16,51 +17,113 @@
             EventName="Appearing" />
     </ContentPage.Behaviors>
 
-    <CollectionView
-        Margin="20"
-        HorizontalOptions="Center"
-        ItemsSource="{Binding Students}">
-        <CollectionView.ItemTemplate>
+    <Shell.TitleView>
+        <Border
+            Margin="10"
+            StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8" />
+            </Border.StrokeShape>
+            <local:BorderlessSearchBar
+                x:Name="SearchStudentBar"
+                Placeholder="Search for student"
+                WidthRequest="400">
+                <local:BorderlessSearchBar.Behaviors>
+                    <mct:EventToCommandBehavior
+                        Command="{Binding SearchCommand}"
+                        CommandParameter="{Binding Text, Source={x:Reference SearchStudentBar}}"
+                        EventName="TextChanged" />
+                </local:BorderlessSearchBar.Behaviors>
+            </local:BorderlessSearchBar>
+        </Border>
+    </Shell.TitleView>
 
-            <DataTemplate x:DataType="model:DemyUser">
+    <Grid
+        ColumnDefinitions="*,*,*"
+        RowDefinitions="Auto,*">
 
-                <Border
-                    Padding="10"
-                    StrokeShape="RoundRectangle 8"
-                    StrokeThickness="2">
+        <Grid
+            Grid.ColumnSpan="3"
+            IsVisible="{Binding IsDesktop}">
 
-                    <Grid
-                        ColumnDefinitions="Auto,*"
-                        HorizontalOptions="FillAndExpand"
-                        RowDefinitions="20,20">
-
-                        <Label
-                            FontAttributes="Bold"
-                            Text="{Binding DemyId, StringFormat='Id: {0}'}" />
-
-                        <Label
-                            Grid.Row="1"
-                            FontAttributes="Bold"
-                            Text="{Binding FullName, StringFormat='Name: {0}'}" />
-
-                        <Label
-                            Grid.RowSpan="2"
-                            Grid.Column="1"
-                            FontFamily="Mat"
-                            FontSize="Header"
-                            HorizontalOptions="EndAndExpand"
-                            Text="{x:Static helpers:IconFont.Email}"
-                            TextColor="CornflowerBlue"
-                            VerticalTextAlignment="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding Path=ContactCommand, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesDetailPageViewModel}}}"
-                                    CommandParameter="{Binding Email}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Grid>
+            <Grid
+                Grid.Column="1"
+                HorizontalOptions="Center">
+                <Border Margin="20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <local:BorderlessSearchBar
+                        x:Name="SearchStudentBarMobile"
+                        Placeholder="Search for student"
+                        WidthRequest="400">
+                        <local:BorderlessSearchBar.Behaviors>
+                            <mct:EventToCommandBehavior
+                                Command="{Binding SearchCommand}"
+                                CommandParameter="{Binding Text, Source={x:Reference SearchStudentBarMobile}}"
+                                EventName="TextChanged" />
+                        </local:BorderlessSearchBar.Behaviors>
+                    </local:BorderlessSearchBar>
                 </Border>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+            </Grid>
+        </Grid>
+
+        <CollectionView
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="{OnIdiom Desktop='10,5,10,0',
+                             Phone='10,20,10,0'}"
+            HorizontalOptions="Center"
+            ItemsSource="{Binding Students}">
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate x:DataType="model:DemyUser">
+
+                    <Border
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="2">
+
+                        <Grid
+                            Margin="10"
+                            ColumnDefinitions="*,*"
+                            RowDefinitions="20,20">
+
+                            <Label
+                                FontAttributes="Bold"
+                                Text="{Binding DemyId, StringFormat='Id: {0}'}" />
+
+                            <Label
+                                Grid.Row="1"
+                                FontAttributes="Bold"
+                                Text="{Binding FullName, StringFormat='Name: {0}'}" />
+
+                            <Label
+                                x:Name="ContactLbl"
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                FontFamily="Mat"
+                                FontSize="40"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{x:Static helpers:IconFont.Email}"
+                                TextColor="{OnIdiom Phone=#1f66e5}"
+                                VerticalTextAlignment="Center">
+                                <Label.GestureRecognizers>
+                                    <PointerGestureRecognizer
+                                        PointerEnteredCommand="{Binding Path=ContactPointerEnteredCommand, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesDetailPageViewModel}}}"
+                                        PointerEnteredCommandParameter="{Binding Source={x:Reference ContactLbl}}"
+                                        PointerExitedCommand="{Binding Path=ContactPointerExitedCommand, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesDetailPageViewModel}}}"
+                                        PointerExitedCommandParameter="{Binding Source={x:Reference ContactLbl}}" />
+                                    <TapGestureRecognizer
+                                        Command="{Binding Path=TapOnContactCommand, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesDetailPageViewModel}}}"
+                                        CommandParameter="{Binding Source={Reference ContactLbl}}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
 </ContentPage>

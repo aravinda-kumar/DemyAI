@@ -69,18 +69,17 @@ namespace DemyAI {
                 .ConfigureLifecycleEvents(events => {
 #if WINDOWS
                     events.AddWindows(windows => windows
-                            .OnLaunched((window, args) => {
+                            .OnWindowCreated((window) => {
 
-                                var activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
-
-                                Windows.ApplicationModel.Activation.ProtocolActivatedEventArgs? appActivationArguments =
-                                activatedEventArgs.Data as Windows.ApplicationModel.Activation.ProtocolActivatedEventArgs;
-
-                                var MeettingURL = appActivationArguments?.Uri;
-
-                                if (MeettingURL != null) {
-                                    HandleUri(MeettingURL);
-                                }
+                                //window.ExtendsContentIntoTitleBar = false;
+                                //var handle = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                                //var id = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(handle);
+                                //var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(id);
+                                //switch (appWindow.Presenter) {
+                                //    case Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter:
+                                //        overlappedPresenter.Maximize();
+                                //        break;
+                                //}
                             }));
 #endif
                 })
@@ -108,7 +107,7 @@ namespace DemyAI {
             builder.Services.AddSingleton(SecureStorage.Default);
             builder.Services.AddSingleton(firebaseAuthClient);
 
-            builder.Services.AddSingleton<AppShell, AppShellViewModel>();
+            builder.Services.AddTransient<AppShell, AppShellViewModel>();
             builder.Services.AddTransient<RegisterStudentPage, RegisterStudentPageViewModel>();
             builder.Services.AddSingleton<NoInternetPage>();
             builder.Services.AddTransient<LoginPage, LoginPageViewModel>();
@@ -123,8 +122,6 @@ namespace DemyAI {
             builder.Services.AddTransient<RoleSelectionPage, RoleSelectionPageViewModel>();
             builder.Services.AddTransient<RoomPage, RoomPageViewModel>();
             builder.Services.AddTransient<MyCoursesDetailPage, MyCoursesDetailPageViewModel>();
-
-
 
 
             builder.Services.AddSingleton<IAuthenticationService>(serviceProvider => {
