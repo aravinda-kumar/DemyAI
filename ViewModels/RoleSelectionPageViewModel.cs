@@ -79,7 +79,7 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
 
         FlyoutHelper.CreateFlyoutMenu(updatedUser?.CurrentRole!);
 
-        await NvigationHelper.NavigatoToDashboardRoleAsync(updatedUser?.CurrentRole!);
+        await NvigationHelper.NavigatoToDashboardRoleAsync(updatedUser!);
     }
     private ObservableCollection<UserRoles> GetRoles() {
 

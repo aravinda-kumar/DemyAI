@@ -2,11 +2,15 @@
 
 public static class NvigationHelper {
 
-    public static async Task NavigatoToDashboardRoleAsync(string role) {
+    public static async Task NavigatoToDashboardRoleAsync(DemyUser demyUser) {
 
-        var pageNage = $"{role}DashboardPage";
+        var pageNage = $"{demyUser.CurrentRole}DashboardPage";
 
-        Debug.WriteLine(Shell.Current.Items);
+        FlyoutHelper.GetDefaultMenuItems();
+
+        FlyoutHelper.CreateFlyoutHeader(demyUser);
+
+        FlyoutHelper.CreateFlyoutMenu(demyUser?.CurrentRole!);
 
         await Shell.Current.GoToAsync($"//{pageNage}", true);
     }

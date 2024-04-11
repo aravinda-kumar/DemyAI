@@ -140,6 +140,7 @@ public static class FlyoutHelper {
 
 
     public static void GetDefaultMenuItems() {
+
         var defaultItems = new List<ShellContent> {
 
              new() { ContentTemplate = new DataTemplate(typeof(StartupPage)),

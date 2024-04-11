@@ -46,7 +46,6 @@ public partial class App : Application {
 
                 handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
                 handler.PlatformView.SearchBarStyle = UIKit.UISearchBarStyle.Minimal;
-
 #endif
             }
         });

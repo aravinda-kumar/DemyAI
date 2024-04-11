@@ -10,6 +10,7 @@
     x:DataType="vm:AppShellViewModel"
     FlyoutBehavior="{OnIdiom Desktop=Locked,
                              Phone=Flyout}"
+    
     Shell.NavBarIsVisible="{OnIdiom Phone=True,
                                     Desktop=False}"
     Shell.TabBarIsVisible="False">

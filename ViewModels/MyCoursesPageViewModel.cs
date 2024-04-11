@@ -1,5 +1,4 @@
 ﻿
-
 namespace DemyAI.ViewModels;
 
 public partial class MyCoursesPageViewModel(

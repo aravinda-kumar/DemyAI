@@ -31,11 +31,7 @@ public class StartupPageViewModel : BaseViewModel {
             var loggedUser = await dataService.GetByEmailAsync(Constants.USERS,
                 currentUserEmail);
 
-            FlyoutHelper.CreateFlyoutHeader(loggedUser);
-
-            FlyoutHelper.CreateFlyoutMenu(loggedUser?.CurrentRole!);
-
-            await NvigationHelper.NavigatoToDashboardRoleAsync(loggedUser?.CurrentRole!);
+            await NvigationHelper.NavigatoToDashboardRoleAsync(loggedUser!);
 
         }
     }

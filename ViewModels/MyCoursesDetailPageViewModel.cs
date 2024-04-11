@@ -1,10 +1,4 @@
-﻿#if MACCATALYST
-using DemyAI.Platforms.MacCatalyst;
-#elif WINDOWS
-using DemyAI.Platforms.Windows;
-#endif
-
-namespace DemyAI.ViewModels;
+﻿namespace DemyAI.ViewModels;
 
 [QueryProperty($"{nameof(Course)}", "Course")]
 public partial class MyCoursesDetailPageViewModel : BaseViewModel {
@@ -32,9 +26,6 @@ public partial class MyCoursesDetailPageViewModel : BaseViewModel {
     [RelayCommand]
     void ContactPointerEntered(Label emailLabel) {
 
-#if WINDOWS || MACCATALYST
-        emailLabel.SetCustomCursor(CursorIcon.Hand, emailLabel.Handler?.MauiContext);
-#endif
         emailLabel.TextColor = Color.FromArgb("1f66e5");
     }
 
