@@ -44,35 +44,36 @@
 
         <Grid
             Grid.ColumnSpan="3"
-            IsVisible="{Binding IsDesktop}">
+            IsVisible="{OnIdiom Phone=false,
+                                Desktop=true}">
 
             <Grid
                 Grid.Column="1"
                 HorizontalOptions="Center">
-                <Border Margin="20">
+                <Border Margin="10">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
                     <local:BorderlessSearchBar
-                        x:Name="SearchStudentBarMobile"
                         Placeholder="Search for student"
+                        Text="{Binding TextToSearch}"
                         WidthRequest="400">
                         <local:BorderlessSearchBar.Behaviors>
                             <mct:EventToCommandBehavior
                                 Command="{Binding SearchCommand}"
-                                CommandParameter="{Binding Text, Source={x:Reference SearchStudentBarMobile}}"
+                                CommandParameter="{Binding TextToSearch}"
                                 EventName="TextChanged" />
                         </local:BorderlessSearchBar.Behaviors>
                     </local:BorderlessSearchBar>
                 </Border>
             </Grid>
+            
         </Grid>
 
         <CollectionView
             Grid.Row="1"
             Grid.ColumnSpan="3"
-            Margin="{OnIdiom Desktop='10,5,10,0',
-                             Phone='10,20,10,0'}"
+            Margin="5"
             HorizontalOptions="Center"
             ItemsSource="{Binding Students}">
 

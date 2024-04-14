@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:helpers="clr-namespace:DemyAI.Helpers"
+    xmlns:local="clr-namespace:DemyAI"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:model="clr-namespace:DemyAI.Models"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
@@ -18,24 +19,85 @@
             EventName="Appearing" />
     </ContentPage.Behaviors>
 
-    <Grid Margin="20">
+    <Shell.TitleView>
+        <Border
+            Margin="10"
+            IsVisible="{Binding isNotBusy}"
+            StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8" />
+            </Border.StrokeShape>
+            <local:BorderlessSearchBar
+                Placeholder="Search for student"
+                Text="{Binding TextToSearch}"
+                WidthRequest="400">
+                <local:BorderlessSearchBar.Behaviors>
+                    <mct:EventToCommandBehavior
+                        Command="{Binding SearchCommand}"
+                        CommandParameter="{Binding TextToSearch}"
+                        EventName="TextChanged" />
+                </local:BorderlessSearchBar.Behaviors>
+            </local:BorderlessSearchBar>
+        </Border>
+    </Shell.TitleView>
+
+    <Grid
+        ColumnDefinitions="*,*,*"
+        RowDefinitions="Auto,*">
+
+        <Grid
+            Grid.ColumnSpan="3"
+            IsVisible="{OnIdiom Desktop=true,
+                                Phone=false}">
+
+            <Grid
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                IsVisible="{Binding isNotBusy}">
+
+                <Border Margin="10">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <local:BorderlessSearchBar
+                        x:Name="SearchStudentBarMobile"
+                        Placeholder="Search for student"
+                        Text="{Binding TextToSearch}"
+                        WidthRequest="400">
+                        <local:BorderlessSearchBar.Behaviors>
+                            <mct:EventToCommandBehavior
+                                Command="{Binding SearchCommand}"
+                                CommandParameter="{Binding TextToSearch}"
+                                EventName="TextChanged" />
+                        </local:BorderlessSearchBar.Behaviors>
+                    </local:BorderlessSearchBar>
+                </Border>
+            </Grid>
+
+        </Grid>
 
         <core:SfBusyIndicator
             x:Name="busyIndicator"
             Title="We are getting you courses ready"
+            Grid.RowSpan="2"
+            Grid.Column="1"
             AnimationType="SingleCircle"
             HeightRequest="200"
+            HorizontalOptions="Center"
             IsRunning="{Binding IsBusy}"
+            VerticalOptions="Center"
             WidthRequest="200" />
 
         <CollectionView
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="5"
             IsVisible="{Binding isNotBusy}"
             ItemsSource="{Binding CoursesAssigned}">
+
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Course">
-                    <Border
-                        Margin="{OnIdiom Desktop=50}"
-                        StrokeThickness="2">
+                    <Border StrokeThickness="2">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="8" />
                         </Border.StrokeShape>
@@ -46,8 +108,9 @@
                                 PressedBackgroundColor="CornflowerBlue" />
                         </Border.Behaviors>
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Path=GoToDetailsCommand, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesPageViewModel}}}"
-                                                  CommandParameter="{Binding .}"/>
+                            <TapGestureRecognizer
+                                Command="{Binding Path=GoToDetailsCommand, Source={x:RelativeSource AncestorType={x:Type vm:MyCoursesPageViewModel}}}"
+                                CommandParameter="{Binding .}" />
                         </Border.GestureRecognizers>
                         <Grid
                             Margin="5"

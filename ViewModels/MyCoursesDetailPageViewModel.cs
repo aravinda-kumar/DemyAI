@@ -9,7 +9,7 @@ public partial class MyCoursesDetailPageViewModel : BaseViewModel {
     Course? course;
 
     [ObservableProperty]
-    bool isDesktop;
+    string textToSearch;
 
     public ObservableCollection<DemyUser> Students { get; set; } = [];
 
@@ -17,10 +17,6 @@ public partial class MyCoursesDetailPageViewModel : BaseViewModel {
 
     public MyCoursesDetailPageViewModel(IDataService<DemyUser> dataService) {
         this.dataService = dataService;
-
-        if (DeviceInfo.Idiom == DeviceIdiom.Desktop) {
-            IsDesktop = true;
-        }
     }
 
     [RelayCommand]
@@ -62,9 +58,13 @@ public partial class MyCoursesDetailPageViewModel : BaseViewModel {
 
     [RelayCommand]
     void Search(string text) {
+        PerformSearch(text);
 
+    }
+
+    private void PerformSearch(string text) {
         if (!string.IsNullOrEmpty(text)) {
-            var newStudents = Students.Where(u => u.FullName.ToLower().Contains(text.Trim().ToLower())).ToList();
+            var newStudents = Students.Where(u => u.FullName.Contains(text, StringComparison.OrdinalIgnoreCase)).ToList();
             Students.Clear();
             foreach (var student in newStudents) {
                 Students.Add(student);
@@ -75,6 +75,5 @@ public partial class MyCoursesDetailPageViewModel : BaseViewModel {
                 Students.Add(item);
             }
         }
-
     }
 }

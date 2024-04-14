@@ -1,4 +1,5 @@
 ﻿
+
 namespace DemyAI.ViewModels;
 
 public partial class MyCoursesPageViewModel(
@@ -10,8 +11,13 @@ public partial class MyCoursesPageViewModel(
 
     public ObservableCollection<string> CoursesStudents { get; set; } = [];
 
+    public ObservableCollection<Course> OriginalCourseList { get; set; } = [];
+
     [ObservableProperty]
     int total;
+
+    [ObservableProperty]
+    string textToSearch;
 
     bool areCousesLoaded;
 
@@ -19,6 +25,7 @@ public partial class MyCoursesPageViewModel(
     async Task Appearing() {
         if (areCousesLoaded == false) {
             await GetCourses();
+            OriginalCourseList = new ObservableCollection<Course>(CoursesAssigned);
         }
     }
 
@@ -40,6 +47,7 @@ public partial class MyCoursesPageViewModel(
 
         foreach (var course in coursesAssigned) {
             CoursesAssigned.Add(course);
+            OriginalCourseList.Add(course);
         }
 
         foreach (var course in courses) {
@@ -49,6 +57,27 @@ public partial class MyCoursesPageViewModel(
         IsBusy = false;
         areCousesLoaded = true;
 
+    }
+
+    [RelayCommand]
+    void Search() {
+
+        PerformSearch(TextToSearch);
+    }
+
+    private void PerformSearch(string text) {
+        if (!string.IsNullOrEmpty(text)) {
+            var newStudents = CoursesAssigned.Where(c => c.Name!.Contains(text, StringComparison.OrdinalIgnoreCase)).ToList();
+            CoursesAssigned.Clear();
+            foreach (var student in newStudents) {
+                CoursesAssigned.Add(student);
+            }
+        } else {
+            CoursesAssigned.Clear();
+            foreach (var item in OriginalCourseList) {
+                CoursesAssigned.Add(item);
+            }
+        }
     }
 
     [RelayCommand]

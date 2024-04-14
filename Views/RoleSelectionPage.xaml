@@ -10,10 +10,10 @@
     Shell.NavBarIsVisible="False">
 
     <Border
+        Margin="{OnIdiom Phone=20}"
         BackgroundColor="#E1E4D8"
         HorizontalOptions="Center"
-        VerticalOptions="Center"
-        WidthRequest="800">
+        VerticalOptions="Center">
 
         <VerticalStackLayout>
 

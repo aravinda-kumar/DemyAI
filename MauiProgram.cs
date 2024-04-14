@@ -120,7 +120,6 @@ namespace DemyAI {
             builder.Services.AddTransient<ManageCoursePage, ManageCoursePageViewModel>();
             builder.Services.AddSingleton<StartupPage, StartupPageViewModel>();
             builder.Services.AddTransient<RoleSelectionPage, RoleSelectionPageViewModel>();
-            builder.Services.AddTransient<RoomPage, RoomPageViewModel>();
             builder.Services.AddTransient<MyCoursesDetailPage, MyCoursesDetailPageViewModel>();
 
 
