@@ -31,10 +31,7 @@ public partial class LoginPageViewModel(IDataService<DemyUser> dataService, IApp
 
             if (currentUser?.CurrentRole is not null) {
 
-                FlyoutHelper.CreateFlyoutMenu(currentUser.CurrentRole!);
-                FlyoutHelper.CreateFlyoutHeader(currentUser);
-
-                await appService.NavigateTo($"//{currentUser.CurrentRole}DashboardPage", true);
+                await NvigationHelper.NavigatoToDashboardRoleAsync(currentUser);
 
             } else {
 
