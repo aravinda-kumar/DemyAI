@@ -13,7 +13,8 @@
     
     Shell.NavBarIsVisible="{OnIdiom Phone=True,
                                     Desktop=False}"
-    Shell.TabBarIsVisible="False">
+    
+    Shell.TabBarIsVisible="True">
 
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>

@@ -13,6 +13,7 @@
         Margin="{OnIdiom Phone=20}"
         BackgroundColor="#E1E4D8"
         HorizontalOptions="Center"
+        WidthRequest="{OnIdiom Desktop=800, Phone=350}"
         VerticalOptions="Center">
 
         <VerticalStackLayout>
@@ -34,8 +35,7 @@
                         <DataTemplate x:DataType="model:UserRoles">
                             <Border
                                 Margin="10"
-                                BackgroundColor="{Binding SelectedColor}"
-                                HorizontalOptions="FillAndExpand">
+                                BackgroundColor="{Binding SelectedColor}">
                                 <Label
                                     Margin="10"
                                     HorizontalTextAlignment="Center"
