@@ -8,8 +8,11 @@
     x:Name="flyout"
     Title="DemyAI"
     x:DataType="vm:AppShellViewModel"
-    FlyoutBehavior="{OnIdiom Desktop=Locked,
+    FlyoutBackgroundColor="{OnIdiom Desktop=#d4d9ec}"
+    
+    FlyoutBehavior="{OnIdiom Desktop=Disabled,
                              Phone=Flyout}"
+    
     Shell.NavBarIsVisible="{OnIdiom Phone=True,
                                     Desktop=False}"
     Shell.TabBarIsVisible="False">

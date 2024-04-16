@@ -12,6 +12,15 @@ public static class NvigationHelper {
 
         FlyoutHelper.CreateFlyoutMenu(demyUser?.CurrentRole!);
 
+        if (DeviceInfo.Platform == DevicePlatform.MacCatalyst
+            || DeviceInfo.Platform == DevicePlatform.WinUI) {
+
+            Shell.Current.FlyoutIsPresented = true;
+
+            Shell.Current.FlyoutBehavior = FlyoutBehavior.Locked;
+
+        }
+
         await Shell.Current.GoToAsync($"//{pageNage}", true);
     }
 }
