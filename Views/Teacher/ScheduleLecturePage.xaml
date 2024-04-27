@@ -7,6 +7,7 @@
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:picker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Picker"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     x:DataType="vm:ScheduleLecturePageViewModel">
 
@@ -16,13 +17,15 @@
             EventName="Appearing" />
     </ContentPage.Behaviors>
 
-    <ScrollView>
+    <skia:SKLottieView
+        HeightRequest="600"
+        HorizontalOptions="CenterAndExpand"
+        RepeatCount="-1"
+        RepeatMode="Restart"
+        Source="construction.json"
+        VerticalOptions="CenterAndExpand"
+        WidthRequest="600" />
 
-        <Grid
-            Margin="10"
-            ColumnDefinitions="*,*"
-            RowDefinitions="Auto,50,60,*" />
-    </ScrollView>
 
 
 </ContentPage>

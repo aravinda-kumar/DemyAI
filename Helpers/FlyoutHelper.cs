@@ -91,7 +91,7 @@ public static class FlyoutHelper {
 
              new ShellContent {
                  Title = "Schedule lecture",
-                 ContentTemplate = new DataTemplate (typeof(NewLecturePage)),
+                 ContentTemplate = new DataTemplate (typeof(ScheduleLecturePage)),
              },
 
              new ShellContent {

@@ -63,6 +63,7 @@
 	  <None Remove="Resources\Images\demy.png" />
 	  <None Remove="Resources\Images\teacher.png" />
 	  <None Remove="Resources\Images\user.png" />
+	  <None Remove="Resources\Raw\construction.json" />
 	  <None Remove="Resources\Raw\demy_message.wav" />
 	  <None Remove="Resources\Raw\loading.json" />
 	  <None Remove="Resources\Raw\no_data.json" />

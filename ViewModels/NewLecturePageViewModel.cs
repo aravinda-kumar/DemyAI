@@ -82,14 +82,13 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
         var meetingOptions = new MeetingOptions {
             EnableAdvancedChat = true,
             EnableEmojiReactions = true,
-            EnableNoiseCancellationUi = true,
+            EnableNoiseCancellationUI = true,
             EnableHandRaising = true,
-            EnablePrejoinUi = true,
-            EnablePipUi = true,
+            EnablePrejoinUI = true,
             EnableScreenshare = true,
-            EnableVideoProcessingUi = true,
-            EnablePeopleUi = false,
+            EnableVideoProcessingUI = true,
             EnableChat = true,
+            EnableNetworkUI = true,
 
             // Set other meeting option properties as needed
         };
