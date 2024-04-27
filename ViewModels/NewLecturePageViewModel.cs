@@ -5,10 +5,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
 
     public ObservableCollection<DemyUser> Student { get; set; } = [];
 
-    public ObservableCollection<string> TimeZones { get; set; } = [];
-
-    [ObservableProperty]
-    DateTime selectedDateTime;
+    public List<string> TimeZones { get; set; } = [];
 
     [ObservableProperty]
     bool isMeetingPopUpOpen;
@@ -22,28 +19,12 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     [ObservableProperty]
     string? roomURL;
 
-    [RelayCommand]
-    void OpenPicker(SfDateTimePicker picker) {
-
-        if (picker != null) {
-            picker.IsOpen = true;
-        }
-    }
+    [ObservableProperty]
+    bool isDatetimePickerOpened;
 
     [RelayCommand]
-    void DateTimeOkButton(SfDateTimePicker picker) {
-
-        if (picker != null) {
-            IsDateTimeSelected = true;
-            picker.IsOpen = false;
-        }
-    }
-
-    [RelayCommand]
-    void DateTimeCanelButton(SfDateTimePicker picker) {
-        if (picker != null) {
-            picker.IsOpen = false;
-        }
+    void DateTimepickerOpen() {
+        IsDatetimePickerOpened = true;
     }
 
     [RelayCommand]

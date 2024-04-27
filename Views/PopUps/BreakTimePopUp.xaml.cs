@@ -3,6 +3,7 @@ namespace DemyAI.Views.PopUps;
 public partial class BreakTimePopUp : PopupPage {
 
     private readonly IAudioManager audioManager;
+    IAudioPlayer? audioPlayer;
 
     public BreakTimePopUp(IAudioManager audioManager) {
         InitializeComponent();
@@ -12,11 +13,14 @@ public partial class BreakTimePopUp : PopupPage {
 
     public async void Speak() {
 
-        CancellationToken token = CancellationToken.None;
-        var player = audioManager.CreateAsyncPlayer(
+        audioPlayer = audioManager.CreatePlayer(
             await FileSystem.OpenAppPackageFileAsync("demy_message.wav"));
 
-        await player.PlayAsync(token);
+        audioPlayer.Play();
     }
 
+    private void PopupPage_Disappearing(object sender, EventArgs e) {
+
+        audioPlayer?.Stop();
+    }
 }

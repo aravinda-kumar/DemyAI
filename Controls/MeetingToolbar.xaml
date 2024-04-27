@@ -4,21 +4,42 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:helper="clr-namespace:DemyAI.Helpers"
+    xmlns:icons="clr-namespace:DemyAI.Helpers"
     x:Name="toolbar">
 
     <Grid
-        ColumnDefinitions="Auto,*"
+        ColumnDefinitions="*,*"
         ColumnSpacing="10"
         IsVisible="{Binding Visibility, Source={x:Reference toolbar}}"
         RowDefinitions="20, Auto">
 
         <Label Text="{Binding RoomName, StringFormat='RoomName: {0}', Source={x:Reference toolbar}}" />
 
-        <Label Grid.Row="2"
-               Margin="0,0,0,0"
-               FontAttributes="Bold"
-               Text="{Binding Time, StringFormat='Time: {0}', Source={x:Reference toolbar}}" />
+        <Label
+            Grid.Row="2"
+            Grid.Column="1"
+            FontFamily="Mat"
+            FontSize="Header"
+            HorizontalTextAlignment="End"
+            Margin="0,0,10,0"
+            Text="{Static helper:IconFont.People}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding ShowParticipantCmmand, Source={x:Reference toolbar}}"
+                    CommandParameter="{Binding ParticipantsList, Source={x:Reference toolbar}}" />
+            </Label.GestureRecognizers>
+        </Label>
+
+        <Label
+            Grid.Column="2"
+            HorizontalTextAlignment="End"
+            Text="Participants" />
+
+        <Label
+            Grid.Row="2"
+            Margin="0,0,0,0"
+            FontAttributes="Bold"
+            Text="{Binding Time, StringFormat='Time: {0}', Source={x:Reference toolbar}}" />
     </Grid>
 
 </ContentView>
-

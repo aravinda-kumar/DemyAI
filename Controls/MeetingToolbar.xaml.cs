@@ -28,6 +28,26 @@ public partial class MeetingToolbar : ContentView {
         get => (bool)GetValue(VisibilityProperty);
         set => SetValue(VisibilityProperty, value);
     }
+
+
+    public static readonly BindableProperty ShowParticipantCmmandProperty = BindableProperty.Create(
+        nameof(ShowParticipantCmmand), typeof(RelayCommand<object>), typeof(MeetingToolbar));
+
+    public RelayCommand<object> ShowParticipantCmmand {
+        get => (RelayCommand<object>)GetValue(ShowParticipantCmmandProperty);
+        set => SetValue(ShowParticipantCmmandProperty, value);
+    }
+
+
+    public static readonly BindableProperty ParticipantsListProperty = BindableProperty.Create(
+        nameof(ParticipantsList), typeof(object), typeof(MeetingToolbar));
+
+    public object ParticipantsList {
+        get => GetValue(ParticipantsListProperty);
+        set => SetValue(ParticipantsListProperty, value);
+    }
+
+
 }
 
 

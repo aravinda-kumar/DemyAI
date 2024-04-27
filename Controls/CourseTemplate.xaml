@@ -15,7 +15,6 @@
         <editors:SfComboBox
             DisplayMemberPath="Name"
             DropDownBackground="Transparent"
-            DropDownItemHeight="300"
             IsDropdownButtonVisible="False"
             IsEditable="True"
             ItemsSource="{Binding Data, Source={x:Reference CourseCustomTemplate}}"

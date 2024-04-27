@@ -34,7 +34,9 @@ public partial class MyCoursesDetailPageViewModel : BaseViewModel {
     [RelayCommand]
     async Task TapOnContact(Label emailLabel) {
 
-        await EmailHelper.OpenEmailClientAsync(emailLabel.Text);
+        var contactList = new string[] { emailLabel.Text };
+
+        await EmailHelper.OpenEmailClientAsync(contactList);
     }
 
 

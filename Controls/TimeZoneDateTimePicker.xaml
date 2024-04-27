@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:picker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Picker"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     x:Name="CustomPicker"
     Margin="10">
 
@@ -13,10 +14,11 @@
         RowDefinitions="60">
 
         <picker:SfDateTimePicker
-            x:Name="TimeZonePicker"
-            CancelButtonClicked="TimeZonePicker_CancelButtonClicked"
+            x:Name="DateTimePicker"
+            CancelButtonClicked="DateTimePicker_CancelButtonClicked"
             Mode="Dialog"
-            OkButtonClicked="TimeZonePicker_OkButtonClicked">
+            MinimumDate="{x:Static sys:DateTime.Now}"
+            OkButtonClicked="DateTimePicker_OkButtonClicked">
 
             <picker:SfDateTimePicker.FooterView>
                 <picker:PickerFooterView
@@ -28,11 +30,12 @@
 
 
         <picker:SfPicker
-            x:Name="Picker"
+            x:Name="TimeZonePicker"
+            CancelButtonClicked="TimeZonePicker_CancelButtonClicked"
             HeightRequest="600"
             Mode="Dialog"
-            OkButtonClicked="Picker_OkButtonClicked"
-            SelectionChanged="Picker_SelectionChanged">
+            OkButtonClicked="TimeZonePicker_OkButtonClicked"
+            SelectionChanged="TimeZonePicker_SelectionChanged">
 
             <picker:SfPicker.Columns>
                 <picker:PickerColumn
@@ -50,11 +53,10 @@
 
 
         <Button
-            x:Name="OpenPicker"
-            Clicked="OpenPicker_Clicked"
+            x:Name="OpenDateTimePicker"
+            Clicked="OpenDateTimePicker_Clicked"
             HorizontalOptions="StartAndExpand"
-            Text="Open Date Time picker"
-            WidthRequest="180" />
+            Text="Open Date Time picker" />
 
 
         <Label

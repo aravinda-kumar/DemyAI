@@ -71,15 +71,15 @@ namespace DemyAI {
                     events.AddWindows(windows => windows
                             .OnWindowCreated((window) => {
 
-                                //window.ExtendsContentIntoTitleBar = false;
-                                //var handle = WinRT.Interop.WindowNative.GetWindowHandle(window);
-                                //var id = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(handle);
-                                //var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(id);
-                                //switch (appWindow.Presenter) {
-                                //    case Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter:
-                                //        overlappedPresenter.Maximize();
-                                //        break;
-                                //}
+                                window.ExtendsContentIntoTitleBar = false;
+                                var handle = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                                var id = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(handle);
+                                var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(id);
+                                switch (appWindow.Presenter) {
+                                    case Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter:
+                                        overlappedPresenter.Maximize();
+                                        break;
+                                }
                             }));
 #endif
                 })

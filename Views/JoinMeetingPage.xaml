@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:DemyAI"
     xmlns:mc="clr-namespace:CommunityToolkit.Maui.ApplicationModel;assembly=CommunityToolkit.Maui.Core"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:models="clr-namespace:DemyAI.Models"
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     x:DataType="vm:JoinMeetingPageViewModel">
 
@@ -15,28 +16,33 @@
         Margin="10,0,10,10"
         ColumnDefinitions="*,Auto"
         RowDefinitions="Auto,*">
+
         <controls:MeetingToolbar
             Grid.ColumnSpan="2"
+            Margin="0,10,0,0"
+            Visibility="{Binding IsMeetingToolbarVisible}"
+            ParticipantsList="{Binding Source={x:Reference ParticippantsList}}"
             RoomName="{Binding RoomName}"
-            Time="{Binding ElapsedTimeString}"
-            Visibility="{Binding IsMeetingToolbarVisible}" />
-        <Border
-            Margin="10"
-            IsVisible="{Binding IsSearhBarVisible}"
-            StrokeShape="RoundRectangle 8,8,8,8">
-            <Grid ColumnDefinitions="180,*">
+            ShowParticipantCmmand="{Binding ShowParticipantCommand}"
+            Time="{Binding ElapsedTimeString}" />
+
+        <Border Margin="0,10,0,0" IsVisible="{Binding IsSearhBarVisible}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="Auto, *">
                 <BoxView
-                    BackgroundColor="DarkGray"
-                    CornerRadius="8,0,0,0" />
+                    BackgroundColor="#B08585"
+                    HeightRequest="40"
+                    WidthRequest="170" />
                 <Label
-                    Margin="5"
+                    Margin="5,0,0,0"
                     Text="https://demy-ia.daily.co/"
                     VerticalTextAlignment="Center" />
                 <local:BorderlessEntry
                     Grid.Column="1"
-                    Placeholder="paste the name of your meeting"
-                    Text="{Binding RoomName}"
-                    VerticalTextAlignment="Center">
+                    Placeholder="Paste the name of the meeting"
+                    Text="{Binding RoomName}">
                     <local:BorderlessEntry.Behaviors>
                         <mct:EventToCommandBehavior
                             Command="{Binding EntryCompletedCommand}"
@@ -45,14 +51,32 @@
                 </local:BorderlessEntry>
             </Grid>
         </Border>
+
         <WebView
             Grid.Row="1"
+            Margin="0,0,0,0"
             IsVisible="{Binding IsWebViewVisible}"
             Source="{Binding WebviewSorce}" />
+
         <CollectionView
+            x:Name="ParticippantsList"
             Grid.Row="1"
             Grid.Column="1"
             Margin="5,0,0,0"
-            ItemsSource="{Binding meetingData}" />
+            BackgroundColor="#6464B8"
+            IsVisible="False"
+            ItemsSource="{Binding meetingData}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Datum">
+                    <Label Text="{Binding userName}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
     </Grid>
+
+
+
+
 </ContentPage>

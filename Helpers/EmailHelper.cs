@@ -2,10 +2,10 @@
 
 public class EmailHelper {
 
-    public static async Task OpenEmailClientAsync(string email) {
+    public static async Task OpenEmailClientAsync(string[] recipients) {
 
         var message = new EmailMessage {
-            To = { email },
+            To = new List<string>(recipients),
             Subject = "Subject",
             Body = "Body of the email"
         };
