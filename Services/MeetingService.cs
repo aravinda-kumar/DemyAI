@@ -1,4 +1,6 @@
-﻿namespace DemyAI.Services;
+﻿using Encoding = System.Text.Encoding;
+
+namespace DemyAI.Services;
 
 public class MeetingService(IHttpService httpService) : IMeetingService {
 

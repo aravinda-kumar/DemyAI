@@ -3,7 +3,7 @@ public class Constants {
 
     //syncfusion Key
 
-    public const string LICENSE = "MzE4ODMxOEAzMjM1MmUzMDJlMzBuS1ZZUXNXenJDdU5pWGZ6TjJVSkdRaldIbWU4d0pnaVJJRjJGWENyeFFjPQ==";
+    public const string LICENSE = "MzMyMzg3OUAzMjM2MmUzMDJlMzBBV1daSzR6aU56dk03QXJ5NDhFR0tsdUhqbFBxejRiWUdIeVBEQXhyUWJZPQ==";
 
     //firebase RealTime-Database
 
@@ -45,9 +45,4 @@ public class Constants {
 
     public const string APP_PASSWORD = "dirhiyojixsinyxz";
 
-    //colors
-
-    public static readonly Color DefaultUnselectedColor = Color.FromRgb(255, 255, 255);
-
-    public static readonly Color SelectedColor = Color.FromRgb(100, 149, 237);
 }

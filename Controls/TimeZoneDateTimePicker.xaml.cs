@@ -27,7 +27,7 @@ public partial class TimeZoneDateTimePicker : ContentView {
 
         TimeZonePicker.IsOpen = true;
 
-        SelectedDateTime = DateTimePicker.SelectedDate;
+        SelectedDateTime = (DateTime)DateTimePicker.SelectedDate!;
 
     }
 

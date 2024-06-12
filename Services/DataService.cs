@@ -45,6 +45,7 @@ public class DataService<T> : IDataService<T> {
 
                 // Retrieve the value of the Uid property for the current object
                 var value = Prop.GetValue(item.Object);
+                Console.WriteLine($"Email property value: {value}");
 
                 // Check if the Uid property value matches the provided uid
                 if (value != null && value.ToString() == email) {
@@ -58,7 +59,7 @@ public class DataService<T> : IDataService<T> {
         return default;
     }
 
-    public async Task<T> GetByUidAsync<T>(string nodeName, string Uid) {
+    public async Task<T?> GetByUidAsync<T>(string nodeName, string Uid) {
 
         var objects = await _client.Child(nodeName).OnceAsync<T>();
 

@@ -20,8 +20,6 @@
 
             <Label
                 Padding="10"
-                FontAttributes="Bold"
-                FontSize="Medium"
                 HorizontalOptions="Center"
                 Text="{Binding WelcomeText}" />
 

@@ -32,7 +32,7 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
         if (string.IsNullOrEmpty(demyUser?.CurrentRole)) {
             WelcomeText = $"Welcome {demyUser?.FullName}, please chose a role";
         } else {
-            WelcomeText = $"Do you want to change you current role as {demyUser?.CurrentRole}";
+            WelcomeText = $"Do you want to change you current role as {demyUser?.CurrentRole}?";
         }
     }
 
@@ -44,9 +44,9 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
             role.IsSelected = role == SelectedRole; // Set IsSelected to true only for the selected rol
 
             if (role.IsSelected) {
-                role.SelectedColor = Constants.SelectedColor;
+                role.SelectedColor = (Color)Application.Current!.Resources["SelectedColor"]; ;
             } else {
-                role.SelectedColor = Constants.DefaultUnselectedColor;
+                role.SelectedColor = (Color)Application.Current!.Resources["DefaultUnselectedColor"]; ;
             }
         }
 
