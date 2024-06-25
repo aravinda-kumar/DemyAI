@@ -58,7 +58,7 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
             }
         }
 
-        selectedRole = SelectedRole.Name.ToString();
+        selectedRole = SelectedRole?.Name.ToString();
     }
 
     [RelayCommand]
