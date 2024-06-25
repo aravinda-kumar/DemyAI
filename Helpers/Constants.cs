@@ -45,4 +45,10 @@ public class Constants {
 
     public const string APP_PASSWORD = "dirhiyojixsinyxz";
 
+    //colors
+
+    public static readonly Color DefaultUnselectedColor = Color.FromRgb(255, 255, 255);
+
+    public static readonly Color SelectedColor = Color.FromRgb(100, 149, 237);
+
 }

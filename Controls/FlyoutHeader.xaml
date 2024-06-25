@@ -15,7 +15,7 @@
         <Label
             FontAttributes="Bold"
             Text="{Binding DemyId, StringFormat='Demy ID: {0}'}" />
-        <Label Text="{Binding Email, StringFormat='Name: {0}'}" />
+        <Label Text="{Binding Email, StringFormat='Email: {0}'}" />
         <Label Text="{Binding Name, StringFormat='Name: {0}'}" />
         <Label Text="{Binding CurrentRole, StringFormat='Role: {0}'}" />
     </VerticalStackLayout>

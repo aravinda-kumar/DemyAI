@@ -3,15 +3,8 @@
 public partial class NewLecturePageViewModel(IAppService appService, IHttpService httpService,
     IDataService<DemyUser> dataService, IMeetingService meetingService) : BaseViewModel {
 
-    public ObservableCollection<DemyUser> Student { get; set; } = [];
-
-    public List<string> TimeZones { get; set; } = [];
-
     [ObservableProperty]
     bool isMeetingPopUpOpen;
-
-    [ObservableProperty]
-    bool isDateTimeSelected;
 
     [ObservableProperty]
     string? roomName;
@@ -19,32 +12,6 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     [ObservableProperty]
     string? roomURL;
 
-    [ObservableProperty]
-    bool isDatetimePickerOpened;
-
-    [RelayCommand]
-    void DateTimepickerOpen() {
-        IsDatetimePickerOpened = true;
-    }
-
-    [RelayCommand]
-    async Task Appearing() {
-
-        await GetTimeZones();
-    }
-
-    private async Task GetTimeZones() {
-
-        var zones =
-            await httpService.GetAsync<List<string>>(
-                "https://www.timeapi.io/api/TimeZone/AvailableTimeZones");
-
-        foreach (var item in zones!.Take(250)) {
-
-            TimeZones.Add(item);
-
-        }
-    }
 
     //private async Task GetStudents() {
 

@@ -12,6 +12,6 @@ public partial class UserRoles : ObservableObject {
     Color? selectedColor;
 
     public UserRoles() {
-        selectedColor = (Color)Application.Current!.Resources["DefaultUnselectedColor"];
+        selectedColor = Constants.DefaultUnselectedColor;
     }
 }

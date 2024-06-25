@@ -54,6 +54,7 @@
 
             <Button
                 Margin="20"
+      IsEnabled="{Binding IsSelectedRoleBtnEnabled}"
                 BackgroundColor="#007BFF"
                 Command="{Binding UpdateUserCurrentRoleCommand}"
                 CornerRadius="8"

@@ -11,9 +11,9 @@
     x:DataType="vm:NewLecturePageViewModel">
 
     <ContentPage.Behaviors>
-        <mct:EventToCommandBehavior
+        <!--<mct:EventToCommandBehavior
             Command="{Binding AppearingCommand}"
-            EventName="Appearing" />
+            EventName="Appearing" />-->
     </ContentPage.Behaviors>
 
     <Grid

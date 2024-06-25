@@ -11,11 +11,11 @@
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     x:DataType="vm:ScheduleLecturePageViewModel">
 
-    <ContentPage.Behaviors>
+    <!--<ContentPage.Behaviors>
         <mct:EventToCommandBehavior
             Command="{Binding AppearingCommand}"
             EventName="Appearing" />
-    </ContentPage.Behaviors>
+    </ContentPage.Behaviors>-->
 
     <skia:SKLottieView
         HeightRequest="600"

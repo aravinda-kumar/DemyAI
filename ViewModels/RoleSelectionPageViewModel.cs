@@ -15,6 +15,9 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
 
     string? CurrentUserEmail;
 
+    [ObservableProperty]
+    bool isSelectedRoleBtnEnabled;
+
     DemyUser? demyUser;
 
     public RoleSelectionPageViewModel(IDataService<DemyUser> dataService, ISecureStorage secureStorage) {
@@ -39,14 +42,19 @@ public partial class RoleSelectionPageViewModel : BaseViewModel {
     [RelayCommand]
     public void RoleSelected(UserRoles SelectedRole) {
 
+        if (SelectedRole != null) {
+
+            IsSelectedRoleBtnEnabled = true;
+        }
+
         foreach (var role in Roles!) {
 
             role.IsSelected = role == SelectedRole; // Set IsSelected to true only for the selected rol
 
             if (role.IsSelected) {
-                role.SelectedColor = (Color)Application.Current!.Resources["SelectedColor"]; ;
+                role.SelectedColor = Constants.SelectedColor;
             } else {
-                role.SelectedColor = (Color)Application.Current!.Resources["DefaultUnselectedColor"]; ;
+                role.SelectedColor = Constants.DefaultUnselectedColor;
             }
         }
 
