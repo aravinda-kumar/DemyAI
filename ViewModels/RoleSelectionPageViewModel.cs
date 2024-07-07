@@ -1,6 +1,5 @@
 ﻿namespace DemyAI.ViewModels;
 
-
 public partial class RoleSelectionPageViewModel : BaseViewModel {
 
     ISecureStorage _secureStorage;
