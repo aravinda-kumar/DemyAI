@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="DemyAI.Controls.DateTimeZonePicker"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icon="clr-namespace:DemyAI.Helpers"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:picker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Picker"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+    x:Name="DateTmeZone">
+
+    <Grid
+        Margin="20"
+        ColumnDefinitions="*,*"
+        RowDefinitions="350,60,*">
+        <Label Text="Select date an time" />
+        <Label
+            Grid.Column="1"
+            FontFamily="Mat"
+            FontSize="32"
+            HorizontalTextAlignment="End"
+            Text="{Static icon:IconFont.Date_range}">
+            <Label.Behaviors>
+                <mct:TouchBehavior Command="{Binding OpenDateTimePickerCommnd, Source={x:Reference DateTmeZone}}" />
+            </Label.Behaviors>
+        </Label>
+        <picker:SfDateTimePicker
+            Grid.Column="1"
+            DateFormat="dd_MMM_yyyy"
+            HeightRequest="350"
+            HorizontalOptions="End"
+            IsVisible="{Binding IsDateTimePickerVisible, Source={x:Reference DateTmeZone}}"
+            MinimumDate="{Static sys:DateTime.Now}"
+            SelectedDate="{Binding SelectedDateTime, Mode=TwoWay, Source={x:Reference DateTmeZone}}"
+            TimeFormat="HH_mm"
+            VerticalOptions="Start"
+            WidthRequest="350">
+            <picker:SfDateTimePicker.HeaderView>
+
+                <picker:DateTimePickerHeaderView
+                    DateFormat="MMM/dd/yyyy"
+                    TimeFormat="HH:mm" />
+
+            </picker:SfDateTimePicker.HeaderView>
+
+            <picker:SfDateTimePicker.FooterView>
+
+                <picker:PickerFooterView
+                    Height="40"
+                    OkButtonText="Select date"
+                    ShowOkButton="True" />
+
+            </picker:SfDateTimePicker.FooterView>
+
+            <picker:SfDateTimePicker.Behaviors>
+                <mct:EventToCommandBehavior
+                    Command="{Binding OkButtonClickedCommand, Source={x:Reference DateTmeZone}}"
+                    EventName="OkButtonClicked" />
+                <mct:EventToCommandBehavior
+                    Command="{Binding CancelButtonClickedCommand, Source={x:Reference DateTmeZone}}"
+                    EventName="CancelButtonClicked" />
+            </picker:SfDateTimePicker.Behaviors>
+        </picker:SfDateTimePicker>
+        <Label
+            Grid.Row="1"
+            Text="Time Zone"
+            VerticalTextAlignment="Center" />
+        <Picker
+            Title="Choose your timezone"
+            Grid.Row="1"
+            Grid.Column="1"
+            FontAttributes="Bold"
+            ItemsSource="{Binding Timezones, Source={x:Reference DateTmeZone}}"
+            SelectedItem="{Binding SelectedTimeZone, Mode=TwoWay, Source={x:Reference DateTmeZone}}" />
+
+        <Button
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            IsEnabled="{Binding IsButtonEnabled, Source={x:Reference DateTmeZone}}"
+            Text="{Binding ButtonText, Source={x:Reference DateTmeZone}}"
+            Command="{Binding ButtnClickCommand, Source={x:Reference DateTmeZone}}"
+            VerticalOptions="EndAndExpand" />
+    </Grid>
+</ContentView>

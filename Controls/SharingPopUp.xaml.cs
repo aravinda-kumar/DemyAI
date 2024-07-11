@@ -6,7 +6,8 @@ public partial class SharingPopUp : ContentView {
     }
 
     public static readonly BindableProperty IsOpenProperty = BindableProperty.Create(
-        nameof(IsOpen), typeof(bool), typeof(SharingPopUp));
+        nameof(IsOpen), typeof(bool), typeof(SharingPopUp),
+        false, BindingMode.TwoWay);
 
     public bool IsOpen {
         get => (bool)GetValue(IsOpenProperty);

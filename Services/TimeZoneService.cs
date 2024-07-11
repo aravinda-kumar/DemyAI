@@ -1,9 +1,9 @@
 ﻿namespace DemyAI.Services;
 public class TimeZoneService {
-    private static List<string> GetTimeZones() {
+    public static List<string> GetTimeZones() {
 
         return [
-            "Europe/Madrid",
+            "America/Caracas",
             "America/Guayaquil",
             "Europe/Madrid",
             "America/New_York",

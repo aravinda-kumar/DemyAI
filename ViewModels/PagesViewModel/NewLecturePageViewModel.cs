@@ -90,9 +90,9 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     [RelayCommand]
     async Task ShareURLLink() {
 
-        if (!string.IsNullOrEmpty(RoomURL)) {
+        if (!string.IsNullOrEmpty(RoomName)) {
             await Share.Default.RequestAsync(new ShareTextRequest {
-                Text = $"This is the meeting name: \n\n{RoomName}",
+                Text = $"This is the meeting name: \n\n{RoomName}"
             });
         }
     }
@@ -100,7 +100,7 @@ public partial class NewLecturePageViewModel(IAppService appService, IHttpServic
     [RelayCommand]
     async Task CopyLink() {
 
-        if (!string.IsNullOrEmpty(RoomURL)) {
+        if (!string.IsNullOrEmpty(RoomName)) {
             await Clipboard.Default.SetTextAsync(RoomName);
             await appService.DisplayToast("Meeting name has been copied",
                 ToastDuration.Short,

@@ -3,6 +3,7 @@
     x:Class="DemyAI.Views.ScheduleLecturePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:contols="clr-namespace:DemyAI.Controls"
     xmlns:controls="clr-namespace:DemyAI.Controls"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -11,20 +12,23 @@
     xmlns:vm="clr-namespace:DemyAI.ViewModels"
     x:DataType="vm:ScheduleLecturePageViewModel">
 
-    <!--<ContentPage.Behaviors>
+    <ContentPage.Behaviors>
         <mct:EventToCommandBehavior
             Command="{Binding AppearingCommand}"
             EventName="Appearing" />
-    </ContentPage.Behaviors>-->
+    </ContentPage.Behaviors>
 
-    <skia:SKLottieView
-        HeightRequest="600"
-        HorizontalOptions="CenterAndExpand"
-        RepeatCount="-1"
-        RepeatMode="Restart"
-        Source="construction.json"
-        VerticalOptions="CenterAndExpand"
-        WidthRequest="600" />
+    <contols:DateTimeZonePicker
+        ButtnClickCommand="{Binding ScheduleButtonClickedCommand}"
+        ButtonText="{Binding ButtonText}"
+        CancelButtonClickedCommand="{Binding CancelButtonClickedCommand}"
+        IsButtonEnabled="{Binding IsButtonEnabled}"
+        IsDateTimePickerVisible="{Binding IsDateTimeZonePickerVisible}"
+        OkButtonClickedCommand="{Binding OkButtonClickedCommand}"
+        OpenDateTimePickerCommnd="{Binding OpenDateTimePickerCommand}"
+        SelectedDateTime="{Binding SelectedDateTime}"
+        SelectedTimeZone="{Binding SelectedTimeZone}"
+        Timezones="{Binding Timezones}" />
 
 
 
